@@ -7,6 +7,8 @@ import Plays from "./pages/Plays";
 import Press from "./pages/Press";
 import Contact from "./pages/Contact";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import SocialMediaBar from './components/SocialMediaBar';
+
 function App() {
   return (
     <div className="App">
@@ -21,6 +23,9 @@ function App() {
         <Route path = "/contact" element =  {<Contact/>}/>
       </Routes>
       </Router>
+    
+    
+      <SocialMediaBar/>
     </div>
   );
 }
