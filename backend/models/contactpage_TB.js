@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
         agent_info: {
             type: DataTypes.STRING
         },
+    }, {
+        tableName: "Contactpage",
+        timestamps: false
     });
     return Contactpage;
 };

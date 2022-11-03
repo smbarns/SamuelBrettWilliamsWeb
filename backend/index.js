@@ -9,8 +9,25 @@ app.use(express.urlencoded({
     extended: false
 }));
 
-app.get('/', (req, res) => {
-    res.send('Hello World');
+app.get('/api/homepage', async (req, res) => {
+    try {
+        const homepage = await db.Homepage.findall({
+            include: [db.Films]
+        });
+        res.send(homepage);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+app.post("/api/homepage", async (req, res) => {
+    const data = req.body;
+    try {
+        const homepage = await db.Homepage.create(data);
+        res.send(homepage);
+    } catch (err) {
+        res.send(err);
+    }
 });
 
 db.sequelize.sync().then(

@@ -8,6 +8,9 @@ module.exports = (sequelize, DataTypes) => {
         photo: {
             type: DataTypes.TEXT
         },
+    }, {
+        tableName: "Still_photos",
+        timestamps: false
     });
     Still_photos.associate = (models) => {
         Still_photos.belongsTo(models.Films, {

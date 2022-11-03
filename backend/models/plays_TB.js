@@ -23,6 +23,9 @@ module.exports = (sequelize, DataTypes) => {
         link_photo: {
             type: DataTypes.TEXT
         },
+    }, {
+        tableName: "Plays",
+        timestamps: false
     });
     Plays.associate = models => {
         Plays.hasMany(models.Still_photos, {

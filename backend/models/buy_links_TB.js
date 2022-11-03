@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
         link_photo: {
             type: DataTypes.TEXT
         },
+    }, {
+        tableName: "Buy_links",
+        timestamps: false
     });
     Buy_links.associate = (models) => {
         Buy_links.belongsTo(models.Films, {

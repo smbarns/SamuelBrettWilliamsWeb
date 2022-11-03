@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         press_link: {
             type: DataTypes.TEXT
         },
+    }, {
+        tableName: "Press",
+        timestamps: false
     });
     return Press;
 };

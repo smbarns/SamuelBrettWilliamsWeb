@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
         client_photo: {
             type: DataTypes.TEXT
         },
+    }, {
+        tableName: "Homepage",
+        timestamps: false
     });
     Homepage.associate = models => {
         Homepage.hasMany(models.Films, {

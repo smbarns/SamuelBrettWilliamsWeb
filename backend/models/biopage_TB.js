@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
         client_photo: {
             type: DataTypes.TEXT
         },
+    }, {
+        tableName: "Biopage",
+        timestamps: false
     });
     return Biopage;
 };

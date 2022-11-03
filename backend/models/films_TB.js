@@ -26,6 +26,9 @@ module.exports = (sequelize, DataTypes) => {
         description: {
             type: DataTypes.TEXT
         },
+    }, {
+        tableName: "Films",
+        timestamps: false
     });
     Films.associate = models => {
         Films.belongsTo(models.Homepage, {

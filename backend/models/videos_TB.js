@@ -8,6 +8,9 @@ module.exports = (sequelize, DataTypes) => {
         video: {
             type: DataTypes.TEXT
         },
+    }, {
+        tableName: "Videos",
+        timestamps: false
     });
     Videos.associate = (models) => {
         Videos.belongsTo(models.Films, {
