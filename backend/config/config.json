@@ -4,7 +4,8 @@
     "password": "OS8phMigF5U4GBtKGEaW",
     "database": "sbw_db",
     "host": "samuel-brett-williams.czmrtlnmyepb.us-west-2.rds.amazonaws.com",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "timestamps": "false"
   },
   "test": {
     "username": "root",
