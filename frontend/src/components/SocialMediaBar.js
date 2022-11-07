@@ -8,6 +8,8 @@ import {
     faTwitter,
     faInstagram
   } from "@fortawesome/free-brands-svg-icons";
+import '../styles/SocialMediaBar.css'
+
 
 
 function SocialMediaBar() {

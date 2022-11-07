@@ -1,15 +1,31 @@
 .home{
     color:white;
-    
-    padding-left: 75px;
+}
+
+
+.aboutBody{
    
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom:100px;
     
+ 
+}
+.samImg{
+    margin-left:100px;
+    margin-top: auto;
+    width:300px;
 }
 h1{
     font-weight: 400;
+    margin-top:50px;
+    
 }
 h2{
-    
+    margin-top:-50px;
     font-weight: 300;
+    padding-right:50px;
    
 }
