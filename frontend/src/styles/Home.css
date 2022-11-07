@@ -1,8 +1,12 @@
 .home{
     color:white;
+    
 }
 
 
+.upcomingProjects{
+    margin-left: 300px;
+}
 .aboutBody{
    
     display:flex;
@@ -18,6 +22,30 @@
     margin-top: auto;
     width:300px;
 }
+.blank1{
+    height: 300px;
+    width: 500px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+}
+.clearfix{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.imgContainer{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 33.33%;
+}
+.blank{
+    height: 300px;
+    width: 300px;
+}
+.caption{
+    text-align: 10px;
+}
 h1{
     font-weight: 400;
     margin-top:50px;
@@ -28,4 +56,7 @@ h2{
     font-weight: 300;
     padding-right:50px;
    
+}
+h3{
+    font-size: xx-large;
 }

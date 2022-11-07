@@ -1,6 +1,7 @@
 import React from 'react'
 import '../styles/Home.css'
 import sam from '../assets/sam.jpg'
+import blank from '../assets/blank.jpg'
 
 function Home() {
   return (
@@ -20,8 +21,25 @@ function Home() {
       
         <img className = 'samImg' src = {sam} />
         </div>
-    
-        
+      </div>
+      <div className = 'upcomingProjects'>
+        <h3>Upcoming Projects</h3>
+        <div className = 'clearfix'>
+          <div className = "imgContainer">
+            <img className = 'blank' src = {blank}/>
+            <span className = 'caption'>File Name 1</span>
+            </div>
+          <div className = "imgContainer">
+            <img className = 'blank' src = {blank}/>
+            <span className = 'caption'>File Name 2</span>
+          </div>
+          <div className = "imgContainer">
+            <img className = 'blank' src = {blank}/>
+            <span className = 'caption'>File Name 3</span>
+          </div>
+          </div>
+      </div>
+      <div>
       </div>
     </div>
  
