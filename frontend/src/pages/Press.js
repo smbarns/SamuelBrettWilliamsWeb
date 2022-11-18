@@ -2,7 +2,7 @@ import React from 'react'
 
 function Press() {
   return (
-    <div>Press</div>
+    <div className="page">Press</div>
   )
 }
 
