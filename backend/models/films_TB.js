@@ -26,27 +26,29 @@ module.exports = (sequelize, DataTypes) => {
         description: {
             type: DataTypes.TEXT
         },
+        type_film: {
+            type: DataTypes.STRING(30)
+        },
     }, {
         tableName: "Films",
         timestamps: false
     });
+
     Films.associate = models => {
         Films.belongsTo(models.Homepage, {
+            as: 'homepage',
             foreignKey: 'homeId'
         });
-    };
-    Films.associate = models => {
         Films.hasMany(models.Buy_links, {
+            as: 'buy_links',
             foreignKey: 'filmId'
         });
-    };
-    Films.associate = models => {
         Films.hasMany(models.Still_photos, {
+            as: 'still_photos',
             foreignKey: 'filmId'
         });
-    };
-    Films.associate = models => {
         Films.hasMany(models.Videos, {
+            as: 'videos',
             foreignKey: 'filmId'
         });
     };

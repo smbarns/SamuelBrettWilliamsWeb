@@ -1,3 +1,5 @@
+const films_TB = require("./films_TB");
+
 module.exports = (sequelize, DataTypes) => {
     const Homepage = sequelize.define("Homepage", {
         id: {
@@ -17,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     Homepage.associate = models => {
         Homepage.hasMany(models.Films, {
+            as: 'films',
             foreignKey: 'homeId'
         });
     };

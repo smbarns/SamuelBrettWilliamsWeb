@@ -1,62 +1,68 @@
-.home{
+.home {
     color:white;
-    
 }
 
-
-.upcomingProjects{
-    margin-left: 300px;
+.upcomingProjects {
+    margin-left: 0px;
 }
-.aboutBody{
-   
+
+.aboutBody {
     display:flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-bottom:100px;
-    
- 
 }
-.samImg{
+
+.samImg {
     margin-left:100px;
     margin-top: auto;
     width:300px;
 }
-.blank1{
+
+.blank1 {
     height: 300px;
     width: 500px;
     padding-right: 50px;
     padding-bottom: 50px;
 }
-.clearfix{
+
+.clearfix {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
-.imgContainer{
+
+.imgContainer {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     width: 33.33%;
 }
-.blank{
+
+.blank {
     height: 300px;
     width: 300px;
 }
-.caption{
-    text-align: 10px;
+
+.caption {
+    text-align: left;
 }
-h1{
+
+h1 {
     font-weight: 400;
-    margin-top:50px;
-    
 }
-h2{
+
+h2 {
     margin-top:-50px;
     font-weight: 300;
     padding-right:50px;
-   
 }
-h3{
+
+h3 {
     font-size: xx-large;
+}
+
+.page {
+    min-height: 75vh;
+    margin: 100px 100px;
 }
