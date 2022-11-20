@@ -9,15 +9,24 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+  });
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'assets/index.html'));
 });
 
+//JSON API for homepage
 app.get('/api/homepage', async (req, res) => {
     try {
         const homepage = await db.Homepage.findAll({
-            include: [db.Films]
+            include: [{model: db.Films, as: "films"}]
         });
         res.send(homepage);
     } catch (err) {
@@ -25,6 +34,20 @@ app.get('/api/homepage', async (req, res) => {
     }
 });
 
+app.get('/api/films', async (req, res) => {
+    try {
+        const films = await db.Films.findAll({
+            include: [{model: db.Buy_links, as: "buy_links"},
+                      {model: db.Videos, as: "videos"},
+                      {model: db.Still_photos, as: "still_photos"}]
+        });
+        res.send(films);
+    } catch (err) {
+        res.send(err.toString());
+    }
+});
+
+//JSON for about description
 app.get('/api/homepage/about_description', async (req, res) => {
     try {
         const homepage = await db.Homepage.findAll({
@@ -36,6 +59,7 @@ app.get('/api/homepage/about_description', async (req, res) => {
     }
 });
 
+//JSON for client photo
 app.get('/api/homepage/client_photo', async (req, res) => {
     try {
         const homepage = await db.Homepage.findAll({
@@ -47,6 +71,7 @@ app.get('/api/homepage/client_photo', async (req, res) => {
     }
 });
 
+//Post method for homepage
 app.post("/api/homepage", async (req, res) => {
     const data = req.body;
     try {

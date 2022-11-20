@@ -17,7 +17,12 @@ module.exports = (sequelize, DataTypes) => {
     });
     Buy_links.associate = (models) => {
         Buy_links.belongsTo(models.Films, {
+            as: 'films',
             foreignKey: 'filmId'
+        });
+        Buy_links.belongsTo(models.Plays, {
+            as: 'plays',
+            foreignKey: 'playId'
         });
     };
     return Buy_links;

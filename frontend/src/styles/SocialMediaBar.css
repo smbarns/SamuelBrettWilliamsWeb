@@ -1,4 +1,17 @@
 .socialBar{
-    display:flex;
-    padding-left:812px;
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(51, 20, 20, .65);
+    height: 60px;
+    width: 100%;
+}
+
+.icons {
+    color: #b3a6a7;
+    padding: 25px;
+}
+
+.links {
+    height: 30px;
+    padding: 15px;
 }

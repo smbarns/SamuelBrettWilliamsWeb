@@ -23,17 +23,25 @@ module.exports = (sequelize, DataTypes) => {
         link_photo: {
             type: DataTypes.TEXT
         },
+        type_play: {
+            type: DataTypes.STRING(30)
+        },
     }, {
         tableName: "Plays",
         timestamps: false
     });
+
     Plays.associate = models => {
         Plays.hasMany(models.Still_photos, {
+            as: 'still_photos',
             foreignKey: 'playId'
         });
-    };
-    Plays.associate = models => {
         Plays.hasMany(models.Videos, {
+            as: 'videos',
+            foreignKey: 'playId'
+        });
+        Plays.hasMany(models.Buy_links, {
+            as: 'buy_links',
             foreignKey: 'playId'
         });
     };

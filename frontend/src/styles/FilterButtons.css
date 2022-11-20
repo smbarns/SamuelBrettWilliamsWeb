@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Abel');
+
+.filterButtons .fbutton {
+    background-color: rgba(0,0,0,.0); 
+    border: 1px solid #242526; 
+    color: white; /* White text */
+    padding: 5px;  /*Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+    font-family: Abel;
+    position: relative;
+    height: 30px;
+    width: 130px;
+}
+
+.fbutton:first-child {
+    border-radius: 4px 0px 0px 4px;
+}
+
+.fbutton:last-child {
+    border-radius: 0px 4px 4px 0px;
+}
+  
+/* Clear floats (clearfix hack) */
+.filterButtons:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+  
+.filterButtons .fbutton:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+}
+  
+/* Add a background color on hover */
+.filterButtons .fbutton:hover {
+    background-color: #322f30;
+}
+
+.filterButtons .fbutton.active {
+    background-color: #242122;
+    color: #f75e5e
+}
