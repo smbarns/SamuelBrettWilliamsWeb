@@ -1,10 +1,12 @@
 import React from 'react'
 import '../styles/Biography.css'
-import bioImg from '../assets/camera.jpg'
+import bioImg from '../assets/sam.jpg'
+import banner_img from '../assets/biography_background.jpeg'
 
 function Biography() {
   return (
     <div className = "biography">
+        <img className = 'bannerImg' src = {banner_img} />
         <div className = "bioBanner">
         BIOGRAPHY
         </div>
