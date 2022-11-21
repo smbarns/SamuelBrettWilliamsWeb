@@ -1,0 +1,35 @@
+
+.blank1{
+    height: 300px;
+    width: 500px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+}
+
+.imgContainer{
+    display: flex;
+    flex-direction: column;
+    
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+}
+.blank{
+    height:380px;
+    width: 380px;
+}
+.caption{
+    text-align: 10px;
+}
+
+.playButton{
+    position: absolute;
+    background-color: rgba(1,1,1,1);
+    top:40%;
+    }
+.playButton img{
+        width:50px;
+}
+
+    

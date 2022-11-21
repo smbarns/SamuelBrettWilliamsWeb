@@ -18,7 +18,7 @@
 body {
   padding: 0;
   margin: 0;
-  background-color: #0d0d0d;
+  background-color: rgb(10, 5, 2);
   letter-spacing: .1rem;
   color:white;
   font-size:x-large;

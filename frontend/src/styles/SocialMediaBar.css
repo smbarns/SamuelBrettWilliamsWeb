@@ -8,10 +8,15 @@
 
 .icons {
     color: #b3a6a7;
-    padding: 25px;
+    
+    padding-left:50px
+   
 }
 
 .links {
+    flex-direction: row;
     height: 30px;
     padding: 15px;
+  
+
 }

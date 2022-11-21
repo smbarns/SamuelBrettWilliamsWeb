@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import '../styles/Navbar.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faYoutube,
@@ -13,9 +14,9 @@ function SocialMediaBar() {
     return (
         <div className='socialBar'>
             <div className='links'>
-                <a href = "https://www.Twitter.com" className = "icons">
+            <a href = "https://www.Twitter.com" className = "icons">
                     <FontAwesomeIcon icon = {faTwitter}/>
-                </a>
+                    </a>
                 <a href = "https://www.facebook.com/samuel.b.williams.18" className = "icons">
                     <FontAwesomeIcon icon = {faFacebookF}/>
                 </a>
@@ -24,8 +25,7 @@ function SocialMediaBar() {
                 </a>
                 <a href = "https://www.youtube.com" className = "icons">
                     <FontAwesomeIcon icon = {faYoutube}/>
-                </a>
-
+                    </a>
             </div>
 
         </div>
