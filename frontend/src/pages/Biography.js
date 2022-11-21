@@ -5,13 +5,16 @@ import banner_img from '../assets/biography_background.jpeg'
 
 function Biography() {
   return (
+   
     <div className = "biography">
-        <img className = 'bannerImg' src = {banner_img} />
+      <div class="test"><img className = 'bannerImg' src = {banner_img} /></div>
         <div className = "bioBanner">
         BIOGRAPHY
         </div>
         <div className = "bioBody">
-        <h2> Samuel Brett Williams is an award winning playwright,
+        <img className='bioImg' src = {bioImg} />
+        
+        <span>Samuel Brett Williams is an award winning playwright,
            screenwriter, and director. His plays have been
            developed/produced at the Eugene O'Neil National Playwrights
            Conference, Cherry Lane Theatre, Ars Nova, New York Theatre
@@ -34,8 +37,7 @@ function Biography() {
            2017, Brett's original screenplay PRETTY NEAR PERFECT (co-written with Jennifer Gerber) will be filmed. In 2018,
            Brett's original screenplay for the horror series SX_TAPE will be produced by Sebastian Aloi and directed by the
            acclaimed Laurent Briet.
-           </h2>
-           <img className = 'bioImg' src = {bioImg} />
+           </span>           
            </div>
     </div>
    

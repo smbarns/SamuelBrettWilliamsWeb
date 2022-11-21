@@ -3,32 +3,56 @@
 .biography{
     padding-left:75px;   
 }
+.test{
+    padding-left:0px !important; 
+    margin-left: -121px;
+    padding-top: 100px;
+}
 .bannerImg{
     width: 100%;
     height: 10em;
-    position: absolute;
+    /*position: absolute;*/
 }
 .bioBanner{
     font-size: 80px;
     position: relative;
-    margin-top: 70px;
+    margin-top: -156px;
     /*padding-left: 100px;*/
     /*letter-spacing: 10px;*/
     letter-spacing: .2rem;
     font-family: Abel;
 }
-h2{
+span{
     font-size: 16px;
     padding-top: 50px;
 }
-.bioBody img {
-    width: 1000px;
-    height: 300px;
-    margin-top: 100px;
-}
 .bioBody{
-    display: flex;
+    /*display: flex;
     flex-direction: row;
     margin-top: 100px;
-    position: relative;
+    position: relative;*/
+    /* margin: 20px; */
+    /* text-align: center; */
+    margin-top: 100px;
+    margin-left: 5px;
 }
+.bioBody img {
+    width: 280px;
+    height: 250px;
+    float: right;
+    margin: 25px;
+
+    /*margin-top: 100px;*/
+}
+.p {
+    text-align: justify;
+    font-size: 25px;
+  }
+/*.bioImg {
+    width: 100% !important;
+    height: 100% !important;
+    
+}*/
+.container img {
+    width: 100%;
+ }
