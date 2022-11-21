@@ -1,0 +1,27 @@
+.play{
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    align-items: center;
+}
+.playImg{
+    padding-top: 5px;
+    height: 250px;
+    width: 285px;
+}
+.playTitle{
+    font-weight: lighter;
+    font-size: medium;
+    margin-top: -50px;
+}
+
+.playDuration{
+    font-weight: lighter;
+    font-size: x-small;
+    margin-top: -48px;
+}
+.openDetails{
+    background-color: transparent;
+    border: none;
+    outline:none;
+    }

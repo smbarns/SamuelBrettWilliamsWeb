@@ -6,10 +6,9 @@ import Films from "./pages/Films";
 import Plays from "./pages/Plays";
 import Press from "./pages/Press";
 import Contact from "./pages/Contact";
-import Details from "./pages/Details";
 import {HashRouter as Router, Route, Routes} from "react-router-dom";
 import SocialMediaBar from './components/SocialMediaBar';
-
+import Details from './pages/Details'
 
 function App() {
   return (

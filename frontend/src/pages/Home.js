@@ -7,7 +7,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {useRef} from 'react'
 import Popup from '../components/Popup'
-
+import ReactPlayer from 'react-player'
 
 function Home() {
   const [buttonPopup,setButtonPopup] = useState(false
@@ -60,7 +60,20 @@ useEffect(()=> {
   return (
     <div className = "page" >
     <div className = "home">
+    <div className='player-wrapper'>
+          <ReactPlayer
+            className='react-player'
+            url='https://vimeo.com/730047025'
+            fluid = { false }
+            width=  '100%'
+            height= '100%'
+            playing= {true}
+            controls = {false}
+            muted = {true}
+            
 
+          />
+        </div>
       <div className = "about">  
           <div className = "aboutBody">
             <div>
