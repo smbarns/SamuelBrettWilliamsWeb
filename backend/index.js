@@ -160,7 +160,7 @@ app.get('/api/plays', async (req, res) => {
 app.get('/api/plays', async (req, res) => {
     try {
         const films = await db.Bio.findAll({
-          attributes: ['id', 'title', 'play_photo', 'writer', 'description', 'play_linkl', 'link_photo', 'type_play']
+          attributes: ['id', 'title', 'play_photo', 'writer', 'description', 'play_link', 'link_photo', 'type_play']
         });
         res.send(films);
     } catch (err) {
