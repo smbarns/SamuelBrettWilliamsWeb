@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Films.css'
 import '../styles/FilterButtons.css'
+import '../components/SearchBar.js'
+import '../styles/SearchBar.css'
+import SearchBar from '../components/SearchBar';
 
 export default function Films() {
   const [data, setData] = useState(null);
@@ -77,6 +80,7 @@ export default function Films() {
 
   return (
     <div className='page'>
+      <SearchBar placeholder="search"/>
       <ButtonGroup/>
       {
           filteredData && filteredData.map((data) => (
@@ -86,5 +90,7 @@ export default function Films() {
           ))
         }
     </div>
+
+    
   );
 }
