@@ -34,19 +34,6 @@ app.get('/api/homepage', async (req, res) => {
     }
 });
 
-app.get('/api/films', async (req, res) => {
-    try {
-        const films = await db.Films.findAll({
-            include: [{model: db.Buy_links, as: "buy_links"},
-                      {model: db.Videos, as: "videos"},
-                      {model: db.Still_photos, as: "still_photos"}]
-        });
-        res.send(films);
-    } catch (err) {
-        res.send(err.toString());
-    }
-});
-
 //JSON for about description
 app.get('/api/homepage/about_description', async (req, res) => {
     try {
@@ -116,23 +103,14 @@ app.post("/api/bio"), async (req, res) => {
 
 app.get('/api/films', async (req, res) => {
     try {
-        const films = await db.Bio.findAll({
-            include: [db.Films]
+        const films = await db.Films.findAll({
+            include: [{model: db.Buy_links, as: "buy_links"},
+                      {model: db.Videos, as: "videos"},
+                      {model: db.Still_photos, as: "still_photos"}]
         });
         res.send(films);
     } catch (err) {
-        res.send(err);
-    }
-});
-
-app.get('/api/films', async (req, res) => {
-    try {
-        const films = await db.Bio.findAll({
-          attributes: ['id', 'title', 'film_photo', 'director', 'writer', 'stars', 'status', 'description', 'type_film' ]
-        });
-        res.send(films);
-    } catch (err) {
-        res.send(err);
+        res.send(err.toString());
     }
 });
 
@@ -148,21 +126,12 @@ app.post("/api/films"), async (req, res) => {
 
 app.get('/api/plays', async (req, res) => {
     try {
-        const films = await db.plays.findAll({
-            include: [db.Plays]
+        const plays = await db.Plays.findAll({
+            include: [{model: db.Buy_links, as: "buy_links"},
+                      {model: db.Videos, as: "videos"},
+                      {model: db.Still_photos, as: "still_photos"}]
         });
         res.send(plays);
-    } catch (err) {
-        res.send(err);
-    }
-});
-
-app.get('/api/plays', async (req, res) => {
-    try {
-        const films = await db.Bio.findAll({
-          attributes: ['id', 'title', 'play_photo', 'writer', 'description', 'play_link', 'link_photo', 'type_play']
-        });
-        res.send(films);
     } catch (err) {
         res.send(err);
     }

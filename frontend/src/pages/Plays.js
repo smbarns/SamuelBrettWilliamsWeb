@@ -51,7 +51,7 @@ export default function Plays() {
   }
   
   const showType = (event, type) => {
-    var filtered_data = data.filter(data => data.type_film === type);
+    var filtered_data = data.filter(data => data.type_play === type);
     setFilteredData(filtered_data);
   }
 

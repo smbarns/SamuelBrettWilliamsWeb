@@ -17,12 +17,6 @@ module.exports = (sequelize, DataTypes) => {
         description: {
             type: DataTypes.TEXT
         },
-        play_link: {
-            type: DataTypes.TEXT
-        },
-        link_photo: {
-            type: DataTypes.TEXT
-        },
         type_play: {
             type: DataTypes.STRING(30)
         },
