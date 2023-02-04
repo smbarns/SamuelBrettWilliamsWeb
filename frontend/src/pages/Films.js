@@ -23,6 +23,14 @@ export default function Films() {
     )
   })
 
+  const setFilms = films => {
+    setFilteredData(films);
+  }
+
+  const setActiveProp = (tabname) => {
+    setActive(tabname);
+  }
+
   useEffect(() => {
     fetch('http://localhost:3000/api/films')
       .then(response => {
@@ -47,7 +55,7 @@ export default function Films() {
   if (loading) return <div className="page">Loading...</div>;
   if (error) return <div className="page">Error!</div>;
 
-  const showAll = event => {
+  const showAll = () => {
     setFilteredData(data);
   }
   
@@ -91,16 +99,17 @@ export default function Films() {
 
   return (
     <div className='page'>
-      <SearchBar placeholder="search"/>
+      <SearchBar setFilms={setFilms} showAll={showAll} setActiveProp={setActiveProp} name={"films"}/>
+
       <ButtonGroup/>
-      {
+        {
           filteredData && filteredData.map((data) => (
             <div className="filmIcons" key={data.id}>
               Place film icons here
             </div>
           ))
         } 
-        <div className = "films">
+      <div className = "films">
         {films}
       </div>
     </div>

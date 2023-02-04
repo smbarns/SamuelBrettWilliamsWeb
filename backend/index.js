@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path');
 const db = require('./models');
+const db_filter = require('./controllers/films_controller.js');
 
 const app = express();
 const PORT = 3000;
@@ -102,13 +103,22 @@ app.post("/api/bio"), async (req, res) => {
 }
 
 app.get('/api/films', async (req, res) => {
+    const search = req.query;
+
     try {
-        const films = await db.Films.findAll({
-            include: [{model: db.Buy_links, as: "buy_links"},
-                      {model: db.Videos, as: "videos"},
-                      {model: db.Still_photos, as: "still_photos"}]
-        });
-        res.send(films);
+        if (search) {
+            db_filter.getByTitle(req, res);
+            console.log("hello");
+        }
+        else {
+            const films = await db.Films.findAll({
+                include: [{model: db.Buy_links, as: "buy_links"},
+                          {model: db.Videos, as: "videos"},
+                          {model: db.Still_photos, as: "still_photos"}]
+            });
+            res.send(films);
+            console.log("hello");
+        }
     } catch (err) {
         res.send(err.toString());
     }

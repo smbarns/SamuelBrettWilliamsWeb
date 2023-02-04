@@ -8,6 +8,9 @@ module.exports = (sequelize, DataTypes) => {
         quote: {
             type: DataTypes.TEXT
         },
+        press_title: {
+            type: DataTypes.STRING
+        },
         press_image: {
             type: DataTypes.TEXT
         },

@@ -2,15 +2,16 @@
 
 .filterButtons .fbutton {
     background-color: rgba(0,0,0,.0); 
-    border: 1px solid #242526; 
+    border: 2px solid #242526; 
     color: white; /* White text */
     padding: 5px;  /*Some padding */
     cursor: pointer; /* Pointer/hand icon */
     float: left; /* Float the buttons side by side */
     font-family: Abel;
     position: relative;
-    height: 30px;
-    width: 130px;
+    height: 43px;
+    width: 170px;
+    font-size: 20px;
 }
 
 .fbutton:first-child {
