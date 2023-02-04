@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Plays.css'
-import '../styles/FilterButtons.css'
+import '../components/ButtonGroup.js'
 import '../components/SearchBar.js'
 import '../styles/SearchBar.css'
-import SearchBar from '../components/SearchBar';
+import SearchBar from '../components/SearchBar'
+import ButtonGroup from '../components/ButtonGroup'
 import Play from '../components/Play.js'
 import playData from '../samples/samplePlays'
 
@@ -21,6 +22,14 @@ export default function Plays() {
       />
     )
   })
+
+  const setPlays = plays => {
+    setFilteredData(plays);
+  }
+
+  const setActiveProp = (tabname) => {
+    setActive(tabname);
+  }
 
   useEffect(() => {
     fetch('http://localhost:3000/api/plays')
@@ -69,33 +78,11 @@ export default function Plays() {
       event: showType
     }];
 
-  function ButtonGroup() {
-    return (
-        <div className="filterButtons">
-          <button
-              key={"All"}
-              className={active === "All" ? "active fbutton": "fbutton" }
-              onClick={() => { showAll(); setActive("All");}}
-            >
-              {"ALL"}
-          </button>
-          {types.map((typeObject) => (
-            <button
-              key={typeObject.type}
-              className={active === typeObject.type ? "active fbutton": "fbutton"}
-              onClick={e => { typeObject.event(e, typeObject.type); setActive(typeObject.type);}}
-            >
-              {typeObject.type.toUpperCase()}S
-            </button>
-          ))}
-        </div>
-    );
-  }
-
   return (
     <div className="page">
-      <SearchBar placeholder="search"/>
-      <ButtonGroup/>
+      <SearchBar setContent={setPlays} showAll={showAll} setActiveProp={setActiveProp} name={"plays"}/>
+
+      <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active}/>
       {
           filteredData && filteredData.map((data) => (
             <div className="playIcons" key={data.id}>

@@ -1,7 +1,8 @@
 const express = require('express')
 const path = require('path');
 const db = require('./models');
-const db_filter = require('./controllers/films_controller.js');
+const db_filter_films = require('./controllers/films_controller.js');
+const db_filter_plays = require('./controllers/plays_controller.js');
 
 const app = express();
 const PORT = 3000;
@@ -107,8 +108,7 @@ app.get('/api/films', async (req, res) => {
 
     try {
         if (search) {
-            db_filter.getByTitle(req, res);
-            console.log("hello");
+            db_filter_films.getByTitle(req, res);
         }
         else {
             const films = await db.Films.findAll({
@@ -117,7 +117,6 @@ app.get('/api/films', async (req, res) => {
                           {model: db.Still_photos, as: "still_photos"}]
             });
             res.send(films);
-            console.log("hello");
         }
     } catch (err) {
         res.send(err.toString());
@@ -135,13 +134,20 @@ app.post("/api/films"), async (req, res) => {
 }
 
 app.get('/api/plays', async (req, res) => {
+    const search = req.query;
+
     try {
-        const plays = await db.Plays.findAll({
-            include: [{model: db.Buy_links, as: "buy_links"},
-                      {model: db.Videos, as: "videos"},
-                      {model: db.Still_photos, as: "still_photos"}]
-        });
-        res.send(plays);
+        if (search) {
+            db_filter_plays.getByTitle(req, res);
+        }
+        else {
+            const plays = await db.Plays.findAll({
+                include: [{model: db.Buy_links, as: "buy_links"},
+                          {model: db.Videos, as: "videos"},
+                          {model: db.Still_photos, as: "still_photos"}]
+            });
+            res.send(plays);
+        }
     } catch (err) {
         res.send(err);
     }

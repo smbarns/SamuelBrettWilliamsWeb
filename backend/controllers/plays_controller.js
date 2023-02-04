@@ -24,7 +24,7 @@ exports.getByID = (req, res) => {
 
 exports.getByTitle = (req, res) => {
     const title = req.query.title;
-    var condition = title ? {title: { [Op.like]: '%${title}%' } } : null;
+    var condition = title ? {title: { [Op.like]: `%${title}%` } } : null;
 
     Plays.findAll({ where: condition })
     .then(data => {

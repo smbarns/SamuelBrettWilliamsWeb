@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Films.css'
-import '../styles/FilterButtons.css'
 import '../components/SearchBar.js'
+import '../components/ButtonGroup.js'
 import '../styles/SearchBar.css'
 import Film from '../components/Film.js'
-import SearchBar from '../components/SearchBar';
+import SearchBar from '../components/SearchBar'
+import ButtonGroup from '../components/ButtonGroup'
 import filmData from '../samples/sampleFilms'
 
 export default function Films() {
@@ -74,34 +75,11 @@ export default function Films() {
       event: showType
     }];
 
-  function ButtonGroup() {
-    return (
-        <div className="filterButtons">
-          <button
-              key={"All"}
-              className={active === "All" ? "active fbutton": "fbutton" }
-              onClick={() => { showAll(); setActive("All");}}
-            >
-              {"ALL"}
-          </button>
-          {types.map((typeObject) => (
-            <button
-              key={typeObject.type}
-              className={active === typeObject.type ? "active fbutton": "fbutton"}
-              onClick={e => { typeObject.event(e, typeObject.type); setActive(typeObject.type);}}
-            >
-              {typeObject.type.toUpperCase()}S
-            </button>
-          ))}
-        </div>
-    );
-  }
-
   return (
     <div className='page'>
-      <SearchBar setFilms={setFilms} showAll={showAll} setActiveProp={setActiveProp} name={"films"}/>
+      <SearchBar setContent={setFilms} showAll={showAll} setActiveProp={setActiveProp} name={"films"}/>
 
-      <ButtonGroup/>
+      <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active}/>
         {
           filteredData && filteredData.map((data) => (
             <div className="filmIcons" key={data.id}>

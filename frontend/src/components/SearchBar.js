@@ -23,7 +23,7 @@ function SearchBar(props){
                 throw response;
               })
               .then(data => {
-                props.setFilms(data);
+                props.setContent(data);
                 props.setActiveProp(null);
                 setData(data);
               })
