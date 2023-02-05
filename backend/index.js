@@ -1,11 +1,18 @@
 const express = require('express')
 const path = require('path');
 const db = require('./models');
+const bcrypt = require("bcrypt");
 const db_filter_films = require('./controllers/films_controller.js');
 const db_filter_plays = require('./controllers/plays_controller.js');
 
+module.exports = {
+    validatePassword,
+    express
+}
+
 const app = express();
 const PORT = 3000;
+const saltRounds = 10;
 
 app.use(express.json());
 app.use(express.urlencoded({
@@ -93,7 +100,7 @@ app.get('/api/bio/client_photo', async (req, res) => {
     }
 });
 
-app.post("/api/bio"), async (req, res) => {
+app.post("/api/bio", async (req, res) => {
     const data = req.body;
     try {
         const bio = await db.Bio.create(data);
@@ -101,7 +108,7 @@ app.post("/api/bio"), async (req, res) => {
     } catch (err) {
         res.send(err);
     }
-}
+});
 
 app.get('/api/films', async (req, res) => {
     const search = req.query;
@@ -123,7 +130,7 @@ app.get('/api/films', async (req, res) => {
     }
 });
 
-app.post("/api/films"), async (req, res) => {
+app.post("/api/films", async (req, res) => {
     const data = req.body;
     try {
         const films = await db.Films.create(data);
@@ -131,7 +138,7 @@ app.post("/api/films"), async (req, res) => {
     } catch (err) {
         res.send(err);
     }
-}
+});
 
 app.get('/api/plays', async (req, res) => {
     const search = req.query;
@@ -153,7 +160,7 @@ app.get('/api/plays', async (req, res) => {
     }
 });
 
-app.post("/api/plays"), async (req, res) => {
+app.post("/api/plays", async (req, res) => {
     const data = req.body;
     try {
         const plays = await db.Plays.create(data);
@@ -161,6 +168,46 @@ app.post("/api/plays"), async (req, res) => {
     } catch (err) {
         res.send(err);
     }
+});
+
+app.put("/api/admin/:id/password", async (req, res) => {
+    const enteredPass = req.body.password;
+    const adminId = req.params.id;
+
+    try {
+        db.Admin.findByPk(adminId)
+        .then(admin => {
+            admin.password = enteredPass;
+            return admin.save();
+        })
+        .then(() => {
+            res.sendStatus(200);
+        })
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+db.Admin.beforeUpdate((admin, options) => {
+    admin.password = bcrypt.hashSync(admin.password, saltRounds);
+});
+
+db.Admin.beforeCreate((admin, options) => {
+    return bcrypt.hash(admin.password, saltRounds).then(hashedPassword => {
+        admin.password = hashedPassword;
+    });
+});
+
+async function validatePassword(email, password) {
+    const admin = await db.Admin.findByEmail(email);
+    if (!admin) {
+        throw new Error("Admin not found");
+    }
+    const passwordMatch = await bcrypt.compareSync(password, admin.password);
+    if (!passwordMatch) {
+        throw new Error("Incorrect password");
+    }
+    return true;
 }
 
 db.sequelize.sync().then(
