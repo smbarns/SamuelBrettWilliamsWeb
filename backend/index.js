@@ -170,6 +170,69 @@ app.post("/api/plays", async (req, res) => {
     }
 });
 
+//Press api for quotes
+app.get("/api/press", async (req,res)=>{
+    const data= req.body;
+    try{
+        const quote = await db.quote.findAll({
+            attributes: ['id', 'quote']
+        });
+        res.send(quote);
+    } catch (err) {
+        res.send(err);
+    }
+})
+
+//Press api for press image
+app.get("/api/press/press_image", async (req,res)=>{
+    const data= req.body;
+    try{
+        const press_image = await db.press_image.findAll({
+            attributes: ['id', 'press_image']
+        });
+        res.send(press_image);
+    } catch (err) {
+        res.send(err);
+    }
+})
+
+//Press api for press link
+app.get("/api/press/press_link", async (req,res)=>{
+    const data= req.body;
+    try{
+        const press_link = await db.press_link.findAll({
+            attributes: ['id', 'press_link']
+        });
+        res.send(press_link);
+    } catch (err) {
+        res.send(err);
+    }
+})
+
+//Press api for author
+app.get("/api/press/author", async (req,res)=>{
+    const data= req.body;
+    try{
+        const press_authorlink = await db.author.findAll({
+            attributes: ['id', 'author']
+        });
+        res.send(author);
+    } catch (err) {
+        res.send(err);
+    }
+})
+
+app.post("/api/press", async (req, res) => {
+    const data = req.body;
+    try {
+        const press = await db.Press.create(data);
+        res.send(press);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+
 app.put("/api/admin/:id/password", async (req, res) => {
     const enteredPass = req.body.password;
     const adminId = req.params.id;
