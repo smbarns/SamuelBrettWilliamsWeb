@@ -4,6 +4,7 @@ import '../components/ButtonGroup.js'
 import Press from '../components/Press.js'
 import ButtonGroup from '../components/ButtonGroup'
 import pressData from '../samples/samplePress'
+import banner_img from '../assets/press-bg.jpg'
 
 export default function Press() {
     
@@ -72,23 +73,25 @@ export default function Press() {
       event: showType
     }];
 
-  return (
-    <div className='page'>
-      <SearchBar setContent={setPress} showAll={showAll} setActiveProp={setActiveProp} name={"press"}/>
 
-      <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active}/>
-        {
-          filteredData && filteredData.map((data) => (
-            <div className="pressIcons" key={data.id}>
-              Insert reviews
-            </div>
-          ))
-        } 
-      <div className = "press">
+  return (
+    <><div className='page'>
+      <SearchBar setContent={setPress} showAll={showAll} setActiveProp={setActiveProp} name={"press"} />
+
+      <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
+      {filteredData && filteredData.map((data) => (
+        <div className="pressIcons" key={data.id}>
+          Insert reviews
+        </div>
+      ))}
+      <div className="press">
         {press}
       </div>
-    </div>
-
-    
-  );
+    </div><div className="press">
+        <div class="test"><img className='bannerImg' src={banner_img} /></div>
+        <div className="pressBanner">
+          PRESS
+        </div>
+      </div></>
+  )
 }
