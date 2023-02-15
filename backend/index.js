@@ -216,7 +216,7 @@ app.get("/api/press/author", async (req,res)=>{
         const press_authorlink = await db.author.findAll({
             attributes: ['id', 'author']
         });
-        res.send(author);
+        res.send(press_authorlink);
     } catch (err) {
         res.send(err);
     }

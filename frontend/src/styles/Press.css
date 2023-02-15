@@ -1,0 +1,40 @@
+.press{
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    align-items: center;
+}
+.press_title{
+    font-weight: lighter;
+    font-size: x-small;
+    margin-top: -48px;
+}
+
+.press_image{
+    padding-top: 5px;
+    height: 150px;
+    width: 285px;
+}
+.quote{
+    font-weight: lighter;
+    font-size: medium;
+    margin-top: -50px;
+}
+
+.press_link{
+    font-weight: lighter;
+    font-size: x-small;
+    margin-top: -48px;
+}
+
+.author{
+    font-weight: lighter;
+    font-size: x-small;
+    margin-top: -48px;
+}
+
+.openDetails{
+    background-color: transparent;
+    border: none;
+    outline:none;
+    }
