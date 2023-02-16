@@ -4,6 +4,10 @@ const db = require('./models');
 const bcrypt = require("bcrypt");
 const db_filter_films = require('./controllers/films_controller.js');
 const db_filter_plays = require('./controllers/plays_controller.js');
+const cors = require('cors');
+const nodemailer = require('nodemailer');
+const bodyParser = require('body-parser');
+require('dotenv').config();
 
 module.exports = {
     validatePassword,
@@ -14,6 +18,13 @@ const app = express();
 const PORT = 3000;
 const saltRounds = 10;
 
+app.use(cors({
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200,
+    credentials: true,
+}));
+app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
@@ -231,6 +242,44 @@ app.post("/api/press", async (req, res) => {
         res.send(err);
     }
 });
+
+
+//For contactPage email
+const validateEmail = (req, res, next) => {
+    const { email } = req.body;
+    if (!validator.validate(email)) {
+      res.status(400).send('Invalid email address');
+    } else {
+      next();
+    }
+  };
+
+  // contact page send email *UNFINISHED*
+app.post('http://localhost:3000/api/sendEmail', cors(),validateEmail,async (req, res) => {
+    const { firstName, lastName, email, message } = req.body;
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+    const mailOptions = {
+      from: email,
+      to: req.query.to,
+      subject: 'New email from contact form',
+      text: `Name: ${firstName} ${lastName}\nEmail: ${email}\nMessage: ${message}`,
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+        res.status(500).send('Failed to send email2');
+      } else {
+        console.log('Email sent: ' + info.response);
+        res.status(200).send('Email sent successfully');
+      }
+    });
+  });
 
 
 app.put("/api/admin/:id/password", async (req, res) => {
