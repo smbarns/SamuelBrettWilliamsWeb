@@ -151,6 +151,18 @@ app.post("/api/films", async (req, res) => {
     }
 });
 
+app.get("/api/films/getImage/:title", async (req, res) => {
+    var title = req.params['title'];
+    try {
+        const film = db.film.getByTitle(title);
+        const film_photo = film.film_photo;
+        res.send(film_photo);
+    }
+    catch (err) {
+        res.send(err);
+    }
+});
+
 app.get('/api/plays', async (req, res) => {
     const search = req.query;
 
@@ -177,6 +189,18 @@ app.post("/api/plays", async (req, res) => {
         const plays = await db.Plays.create(data);
         res.send(plays);
     } catch (err) {
+        res.send(err);
+    }
+});
+
+app.get("/api/plays/getImage/:title", async (req, res) => {
+    var title = req.params['title'];
+    try {
+        const play = db.play.getByTitle(title);
+        const play_photo = play.play_photo;
+        res.send(play_photo);
+    }
+    catch (err) {
         res.send(err);
     }
 });
