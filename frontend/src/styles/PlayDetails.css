@@ -1,0 +1,53 @@
+.playDetails{
+    display: flex;
+    flex-direction: row;
+    font-family: Abel;
+    margin-top: 60px;
+    margin-left: 150px;
+    margin-right: 150px;
+    gap: 100px;
+    justify-content: center;
+}
+.left{
+    display: flex;
+    flex-direction: column;
+}
+
+.playCoverImg{
+    width: 600px;
+    height: auto;
+}
+.playsTitle{
+    display: flex;
+    font-size: 65px;
+    border-bottom: white;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    width: 200px;
+    height: auto;
+    white-space: nowrap;
+    margin-top: -80px;
+}
+.playSynopsis{
+    font-size: 20px;
+    margin-top: -10px;
+}
+.production{
+    display: flex;
+    flex-direction: column;
+    font-size: 24px;
+}
+.productionList{
+    margin-top: -40px;
+    font-size: 18px;
+}
+.development{
+    margin-top: -10px;
+    display: flex;
+    flex-direction: column;
+    font-size: 24px;
+}
+.developmentList{
+    margin-top: -40px;
+    font-size: 18px;
+}
