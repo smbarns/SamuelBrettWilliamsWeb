@@ -10,7 +10,7 @@ function Film(props) {
         <Link to={`/details/${props.title}`} state={{
             title:props.title,
             photos:props.photos
-            }} ><img className = "filmImg" src = {placeholder} /></Link>
+            }} ><img className = "filmImg" src = "http://localhost:3000/plays/getImage/{props.title}" /></Link>
         <span className = "filmTitle"> {props.title} </span>
         <span className = "filmType">  FILM </span>
   </div>
