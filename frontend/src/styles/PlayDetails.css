@@ -51,3 +51,14 @@
     margin-top: -40px;
     font-size: 18px;
 }
+
+.detailPageVideos{
+    display:flex;
+    flex-direction: column;
+    margin-bottom:100px;
+    align-items:center;
+    justify-content:center
+}
+.detailPageVideos .arrows{
+    padding-left:160px;
+}

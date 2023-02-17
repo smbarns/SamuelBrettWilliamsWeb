@@ -49,7 +49,7 @@ useEffect(()=> {
   fetch('https://api.imgflip.com/get_memes')
     .then((response) => response.json())
     .then((data) =>
-    setPic(data.data.memes[10].url))
+    setPic(data.data.memes[18].url))
 },[])
  
  

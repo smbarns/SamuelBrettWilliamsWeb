@@ -15,7 +15,8 @@ function Play(props) {
             synopsis: props.synopsis,
             production: props.production,
             development: props.development,
-            info: props.info
+            info: props.info,
+            videos: props.videos,
             }} ><img className = "playImg" src = {placeholder} /></Link>
         <span className = "playTitle"> {props.title} </span>
         <span className = "playDuration"> {props.duration} </span>
