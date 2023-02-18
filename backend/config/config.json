@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "admin",
-    "password": "",
+    "password": "sdl5GlBmZfqssX9kW5JB",
     "database": "sbw_db",
-    "host": "",
+    "host": "samuel-brett-williams.czmrtlnmyepb.us-west-2.rds.amazonaws.com",
     "dialect": "mysql",
     "timestamps": "false"
   },

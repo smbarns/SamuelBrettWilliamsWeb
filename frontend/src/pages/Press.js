@@ -76,7 +76,7 @@ export default function Press() {
 
   return (
     <><div className='page'>
-      <SearchBar setContent={setPress} showAll={showAll} setActiveProp={setActiveProp} name={"press"} />
+      {/* <SearchBar setContent={setPress} showAll={showAll} setActiveProp={setActiveProp} name={"press"} /> */}
 
       <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
       {filteredData && filteredData.map((data) => (
