@@ -62,7 +62,7 @@ h3{
    
     display: flex;
     gap:50px;
-    overflow-x: auto;
+    overflow: hidden;
     max-width: 1240px;
     
   }
@@ -76,9 +76,9 @@ h3{
 .topReel{
     display: flex;
     flex-direction: row;
- 
+    align-items:center;
+    justify-content:center
 }
-
 
 .page {
     min-height: 75vh;

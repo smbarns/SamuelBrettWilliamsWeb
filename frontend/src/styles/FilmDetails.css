@@ -1,0 +1,103 @@
+.photoReel{
+    display:flex;
+    flex-direction: row;
+}
+
+.filmDetails{
+    display: flex;
+    flex-direction: row;
+    font-family: Abel;
+    justify-content: center;
+    margin-left: 350px;
+    margin-right: 350px;
+    gap: 100px;
+    margin-top: -40px;
+    
+}
+
+.right{
+    display: flex;
+    flex-direction: column;
+    margin-top: 80px;
+    
+}
+
+.left{
+    display: flex;
+    flex-direction: column;
+}
+
+.filmCoverImg{
+    display: flex;
+    height: auto;
+    width: 490px;
+}
+
+.filmsTitle{
+    display: flex;
+    font-size: 65px;
+    border-bottom: white;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    width: 200px;
+    height: auto;
+    white-space: nowrap;
+    margin-top: -80px;
+}
+
+.director{
+    display: flex;
+    margin-top: -55px;
+    font-size: 22px;
+}
+.writer{
+    display: flex;
+    margin-top: -30px;
+    font-size: 22px;
+}
+.stars{
+    display: flex;
+    margin-top: -30px;
+    font-size: 22px;
+    overflow-wrap: normal;
+    
+}
+.status{
+    display: flex;
+    margin-top: -15px;
+    font-size: 22px;
+}
+.platforms{
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    font-size: 22px;
+}
+.logos{
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+    margin-left: 30px;
+    margin-bottom: 40px;
+}
+.logo{
+    height: 40px;
+    width: auto;
+    margin-inline-end: 20px;
+    
+}
+.filmSynopsis{
+    font-size: 22px;
+    
+}
+
+.detailPageVideos{
+    display:flex;
+    flex-direction: column;
+    margin-bottom:100px;
+    align-items:center;
+    justify-content:center
+}
+.detailPageVideos .arrows{
+    padding-left:160px;
+}

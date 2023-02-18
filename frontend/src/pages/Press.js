@@ -5,6 +5,7 @@ import PressComp from '../components/Press.js'
 import ButtonGroup from '../components/ButtonGroup'
 import pressData from '../samples/samplePress'
 import banner_img from '../assets/press-bg.jpg'
+import SearchBar from '../components/SearchBar'
 
 export default function Press() {
     
