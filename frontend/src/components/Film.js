@@ -7,9 +7,17 @@ function Film(props) {
   return (
     
     <div className = "film">
-        <Link to={`/details/${props.title}`} state={{
-            title:props.title,
-            photos:props.photos
+        <Link to={`/filmdetails/${props.title}`} state={{
+            cover: props.cover,
+            title: props.title,
+            director: props.director,
+            writer: props.writer,
+            stars: props.stars,
+            status: props.status,
+            available: props.available,
+            synopsis: props.synopsis,
+            photos: props.photos,
+            videos: props.videos
             }} ><img className = "filmImg" src = {placeholder} /></Link>
         <span className = "filmTitle"> {props.title} </span>
         <span className = "filmType">  FILM </span>

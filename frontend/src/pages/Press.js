@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Press.css'
 import '../components/ButtonGroup.js'
-import Press from '../components/Press.js'
+import PressComp from '../components/Press.js'
 import ButtonGroup from '../components/ButtonGroup'
 import pressData from '../samples/samplePress'
 import banner_img from '../assets/press-bg.jpg'
+import SearchBar from '../components/SearchBar'
 
 export default function Press() {
     
@@ -16,7 +17,7 @@ export default function Press() {
 
   const press = pressData.map(item => {
     return(
-      <Press key = {item.id}
+      <PressComp key = {item.id}
       {...item}
       />
     )
@@ -76,7 +77,7 @@ export default function Press() {
 
   return (
     <><div className='page'>
-      <SearchBar setContent={setPress} showAll={showAll} setActiveProp={setActiveProp} name={"press"} />
+      {/* <SearchBar setContent={setPress} showAll={showAll} setActiveProp={setActiveProp} name={"press"} /> */}
 
       <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
       {filteredData && filteredData.map((data) => (
