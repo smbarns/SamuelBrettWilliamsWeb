@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import Biography from "./pages/Biography";
 import Films from "./pages/Films";
 import Plays from "./pages/Plays";
-import Press from "./pages/Press";
+import Press from "./pages/PressPages";
 import Contact from "./pages/Contact";
 import {HashRouter as Router, Route, Routes} from "react-router-dom";
 import SocialMediaBar from './components/SocialMediaBar';
