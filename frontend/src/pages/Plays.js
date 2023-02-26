@@ -23,64 +23,64 @@ export default function Plays() {
     )
   })
 
-  // const setPlays = plays => {
-  //   setFilteredData(plays);
-  // }
+  const setPlays = plays => {
+     setFilteredData(plays);
+   }
 
-  // const setActiveProp = (tabname) => {
-  //   setActive(tabname);
-  // }
+   const setActiveProp = (tabname) => {
+     setActive(tabname);
+   }
 
-  // useEffect(() => {
-  //   fetch('http://localhost:3000/api/plays')
-  //     .then(response => {
-  //       if (response.ok) {
-  //         return response.json()
-  //       }
-  //       throw response;
-  //     })
-  //     .then(data => {
-  //       setData(data);
-  //       setFilteredData(data);
-  //     })
-  //     .catch(error => {
-  //       console.error("Error fetching data: ", error);
-  //       setError(error);
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     })
-  // }, [])
+   useEffect(() => {
+     fetch('http://localhost:3000/api/plays')
+       .then(response => {
+         if (response.ok) {
+           return response.json()
+         }
+         throw response;
+       })
+       .then(data => {
+         setData(data);
+         setFilteredData(data);
+       })
+       .catch(error => {
+         console.error("Error fetching data: ", error);
+         setError(error);
+       })
+       .finally(() => {
+         setLoading(false);
+       })
+   }, [])
 
-  // if (loading) return <div className="page">Loading...</div>;
-  // if (error) return <div className="page">Error!</div>;
+   if (loading) return <div className="page">Loading...</div>;
+   if (error) return <div className="page">Error!</div>;
 
-  // const showAll = event => {
-  //   setFilteredData(data);
-  // }
+   const showAll = event => {
+     setFilteredData(data);
+   }
   
-  // const showType = (event, type) => {
-  //   var filtered_data = data.filter(data => data.type_play === type);
-  //   setFilteredData(filtered_data);
-  // }
+   const showType = (event, type) => {
+     var filtered_data = data.filter(data => data.type_play === type);
+     setFilteredData(filtered_data);
+   }
 
-  // const types = [
-  //   {
-  //     type: "Full Length",
-  //     event: showType
-  //   },
-  //   {
-  //     type: "One Act",
-  //     event: showType
-  //   },
-  //   {
-  //     type: "Ten Minute",
-  //     event: showType
-  //   }];
+   const types = [
+     {
+       type: "Full Length",
+       event: showType
+     },
+     {
+       type: "One Act",
+       event: showType
+     },
+     {
+       type: "Ten Minute",
+       event: showType
+     }];
 
   return (
     <div className="page">
-      {/* <SearchBar setContent={setPlays} showAll={showAll} setActiveProp={setActiveProp} name={"plays"}/>
+      <SearchBar setContent={setPlays} showAll={showAll} setActiveProp={setActiveProp} name={"plays"}/>
 
       <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active}/>
       {
@@ -89,7 +89,7 @@ export default function Plays() {
               Place play icons here
             </div>
           ))
-        } */}
+        } 
         <div className = "plays">
         {plays}
       </div>

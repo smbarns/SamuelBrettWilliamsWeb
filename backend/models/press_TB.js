@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
         press_title: {
             type: DataTypes.STRING
         },
-        press_image: {
-            type: DataTypes.TEXT
+        project_name: {
+            type: DataTypes.STRING
         },
-        press_link: {
+        press_image: {
             type: DataTypes.TEXT
         },
         author: {

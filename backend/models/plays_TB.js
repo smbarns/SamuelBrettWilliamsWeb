@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true
         },
         title: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            unique: true
         },
         play_photo: {
             type: DataTypes.TEXT
@@ -15,6 +16,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING
         },
         description: {
+            type: DataTypes.TEXT
+        },
+        productions: {
+            type: DataTypes.TEXT
+        },
+        development: {
             type: DataTypes.TEXT
         },
         type_play: {

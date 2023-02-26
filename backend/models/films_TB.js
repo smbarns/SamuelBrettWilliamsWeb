@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true
         },
         title: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            unique: true
         },
         film_photo: {
             type: DataTypes.TEXT
@@ -14,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         director: {
             type: DataTypes.STRING
         },
-        writer: {
+        screenplay: {
             type: DataTypes.STRING
         },
         stars: {

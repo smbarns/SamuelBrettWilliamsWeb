@@ -24,60 +24,60 @@ export default function Films() {
     )
   })
 
-  // const setFilms = films => {
-  //   setFilteredData(films);
-  // }
+   const setFilms = films => {
+     setFilteredData(films);
+   }
 
-  // const setActiveProp = (tabname) => {
-  //   setActive(tabname);
-  // }
+   const setActiveProp = (tabname) => {
+     setActive(tabname);
+   }
 
-  // useEffect(() => {
-  //   fetch('http://localhost:3000/api/films')
-  //     .then(response => {
-  //       if (response.ok) {
-  //         return response.json()
-  //       }
-  //       throw response;
-  //     })
-  //     .then(data => {
-  //       setData(data);
-  //       setFilteredData(data);
-  //     })
-  //     .catch(error => {
-  //       console.error("Error fetching data: ", error);
-  //       setError(error);
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     })
-  // }, [])
+   useEffect(() => {
+     fetch('http://localhost:3000/api/films')
+       .then(response => {
+         if (response.ok) {
+           return response.json()
+         }
+         throw response;
+       })
+       .then(data => {
+         setData(data);
+         setFilteredData(data);
+       })
+       .catch(error => {
+         console.error("Error fetching data: ", error);
+         setError(error);
+       })
+       .finally(() => {
+         setLoading(false);
+       })
+   }, [])
 
-  // if (loading) return <div className="page">Loading...</div>;
-  // if (error) return <div className="page">Error!</div>;
+   if (loading) return <div className="page">Loading...</div>;
+   if (error) return <div className="page">Error!</div>;
 
-  // const showAll = () => {
-  //   setFilteredData(data);
-  // }
+   const showAll = () => {
+     setFilteredData(data);
+   }
   
-  // const showType = (event, type) => {
-  //   var filtered_data = data.filter(data => data.type_film === type);
-  //   setFilteredData(filtered_data);
-  // }
+   const showType = (event, type) => {
+     var filtered_data = data.filter(data => data.type_film === type);
+     setFilteredData(filtered_data);
+   }
 
-  // const types = [
-  //   {
-  //     type: "Feature Film",
-  //     event: showType
-  //   },
-  //   {
-  //     type: "Short Film",
-  //     event: showType
-  //   }];
+   const types = [
+     {
+       type: "Feature Film",
+       event: showType
+     },
+     {
+       type: "Short Film",
+       event: showType
+     }];
 
   return (
     <div className='page'>
-      {/* <SearchBar setContent={setFilms} showAll={showAll} setActiveProp={setActiveProp} name={"films"}/>
+       <SearchBar setContent={setFilms} showAll={showAll} setActiveProp={setActiveProp} name={"films"}/>
 
       <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active}/>
         {
@@ -86,7 +86,7 @@ export default function Films() {
               Place film icons here
             </div>
           ))
-        }  */}
+        }
       <div className = "films">
         {films}
       </div>

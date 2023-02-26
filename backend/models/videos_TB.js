@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true
         },
         video: {
-            type: DataTypes.TEXT
+            type: DataTypes.STRING,
+            unique: true
         },
     }, {
         tableName: "Videos",

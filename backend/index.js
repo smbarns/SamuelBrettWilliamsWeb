@@ -82,50 +82,43 @@ app.get('/api/homepage/client_photo', async (req, res) => {
 app.post("/api/homepage", async (req, res) => {
     const data = req.body;
     try {
-        const homepage = await db.Homepage.create(data);
+        const homepage = await db.Homepage.create({
+            about_des: data.about_des,
+            client_photo: data.client_photo
+        });
         res.send(homepage);
     } catch (err) {
         res.send(err);
     }
 });
 
-app.get('/api/bio', async (req, res) => {
+// JSON for all attributes of Biopage table
+app.get('/api/biopage', async (req, res) => {
     try {
-        const bio = await db.Bio.findAll({
-            attributes: ['id', 'Bio']
-        });
-        res.send(bio);
+        const biopage = await db.Biopage.findAll();
+        res.send(biopage);
     } catch (err) {
         res.send(err);
     }
 });
 
-app.get('/api/bio/client_photo', async (req, res) => {
-    try {
-        const bio = await db.Bio.findAll({
-            attributes: ['id', 'client_photo']
-        });
-        res.send(bio);
-    } catch (err) {
-        res.send(err);
-    }
-});
-
-app.post("/api/bio", async (req, res) => {
+// Post method for Biopage table
+app.post("/api/biopage", async (req, res) => {
     const data = req.body;
     try {
-        const bio = await db.Bio.create(data);
-        res.send(bio);
+        const biopage = await db.Biopage.create(data);
+        res.send(biopage);
     } catch (err) {
         res.send(err);
     }
 });
 
+// Search for film by title and display for all attributes of Films table
 app.get('/api/films', async (req, res) => {
     const search = req.query;
 
     try {
-        if (search) {
+        if (Object.keys(search)) {
             db_filter_films.getByTitle(req, res);
         }
         else {
@@ -141,11 +134,54 @@ app.get('/api/films', async (req, res) => {
     }
 });
 
+// Post method for Films
 app.post("/api/films", async (req, res) => {
     const data = req.body;
     try {
-        const films = await db.Films.create(data);
-        res.send(films);
+        const homepage = await db.Homepage.findByPk(data.homeId);
+
+        db.Films.create({
+            title: data.title,
+            film_photo: data.film_photo,
+            director: data.director,
+            screenplay: data.screenplay,
+            stars: data.stars,
+            status: data.status,
+            description: data.description,
+            type_film: data.type_film,
+            homeId: homepage?.id || null
+        })
+        .then(film => {
+            if (data.buy_links != null) {
+                data.buy_links.forEach(linkObject => {
+                    db.Buy_links.create({
+                        link: linkObject.link,
+                        link_photo: linkObject.link_photo,
+                        filmId: film.id
+                    });
+                });
+            }
+
+            if (data.videos != null) {
+                data.videos.forEach(videoObject => {
+                    db.Videos.create({
+                        video: videoObject.video,
+                        filmId: film.id
+                    });
+                });
+            }
+
+            if (data.still_photos != null) {
+                data.still_photos.forEach(photoObject => {
+                    db.Still_photos.create({
+                        photo: photoObject.photo,
+                        filmId: film.id
+                    });
+                });
+            }
+
+            res.send(film);
+        })
     } catch (err) {
         res.send(err);
     }
@@ -163,11 +199,12 @@ app.get("/api/films/getImage/:title", async (req, res) => {
     }
 });
 
+// Search for plays by title and display attributes of plays table
 app.get('/api/plays', async (req, res) => {
     const search = req.query;
 
     try {
-        if (search) {
+        if (Object.keys(search)) {
             db_filter_plays.getByTitle(req, res);
         }
         else {
@@ -183,11 +220,50 @@ app.get('/api/plays', async (req, res) => {
     }
 });
 
+// Post method for plays
 app.post("/api/plays", async (req, res) => {
     const data = req.body;
     try {
-        const plays = await db.Plays.create(data);
-        res.send(plays);
+        db.Plays.create({
+            title: data.title,
+            play_photo: data.play_photo,
+            writer: data.writer,
+            productions: data.productions,
+            development: data.development,
+            description: data.description,
+            type_play: data.type_play
+        })
+        .then(play => {
+            if (data.buy_links != null) {
+                data.buy_links.forEach(linkObject => {
+                    db.Buy_links.create({
+                        link: linkObject.link,
+                        link_photo: linkObject.link_photo,
+                        playId: play.id
+                    });
+                });
+            }
+
+            if (data.videos != null) {
+                data.videos.forEach(videoObject => {
+                    db.Videos.create({
+                        video: videoObject.video,
+                        playId: play.id
+                    });
+                });
+            }
+
+            if (data.still_photos != null) {
+                data.still_photos.forEach(photoObject => {
+                    db.Still_photos.create({
+                        photo: photoObject.photo,
+                        playId: play.id
+                    });
+                });
+            }
+
+            res.send(play);
+        })
     } catch (err) {
         res.send(err);
     }
@@ -205,11 +281,22 @@ app.get("/api/plays/getImage/:title", async (req, res) => {
     }
 });
 
-//Press api for quotes
+//Press api for all attributes
 app.get("/api/press", async (req,res)=>{
     const data= req.body;
     try{
-        const quote = await db.quote.findAll({
+        const press = await db.Press.findAll();
+        res.send(press);
+    } catch (err) {
+        res.send(err);
+    }
+})
+
+//Press api for quotes
+app.get("/api/press/quote", async (req,res)=>{
+    const data= req.body;
+    try{
+        const quote = await db.Press.findAll({
             attributes: ['id', 'quote']
         });
         res.send(quote);
@@ -222,23 +309,10 @@ app.get("/api/press", async (req,res)=>{
 app.get("/api/press/press_image", async (req,res)=>{
     const data= req.body;
     try{
-        const press_image = await db.press_image.findAll({
+        const press_image = await db.Press.findAll({
             attributes: ['id', 'press_image']
         });
         res.send(press_image);
-    } catch (err) {
-        res.send(err);
-    }
-})
-
-//Press api for press link
-app.get("/api/press/press_link", async (req,res)=>{
-    const data= req.body;
-    try{
-        const press_link = await db.press_link.findAll({
-            attributes: ['id', 'press_link']
-        });
-        res.send(press_link);
     } catch (err) {
         res.send(err);
     }
@@ -248,10 +322,10 @@ app.get("/api/press/press_link", async (req,res)=>{
 app.get("/api/press/author", async (req,res)=>{
     const data= req.body;
     try{
-        const press_authorlink = await db.author.findAll({
+        const author = await db.Press.findAll({
             attributes: ['id', 'author']
         });
-        res.send(press_authorlink);
+        res.send(author);
     } catch (err) {
         res.send(err);
     }
@@ -262,6 +336,27 @@ app.post("/api/press", async (req, res) => {
     try {
         const press = await db.Press.create(data);
         res.send(press);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+// JSON for contact page
+app.get('/api/contactpage', async (req, res) => {
+    try {
+        const contactpage = await db.Contactpage.findAll();
+        res.send(contactpage);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+// Post method for contact page
+app.post('/api/contactpage', async (req, res) => {
+    const data = req.body;
+    try {
+        const contactpage = await db.Contactpage.create(data);
+        res.send(contactpage);
     } catch (err) {
         res.send(err);
     }
@@ -305,7 +400,7 @@ app.post('http://localhost:3000/api/sendEmail', cors(),validateEmail,async (req,
     });
   });
 
-
+// updates password if the user exists in database
 app.put("/api/admin/:id/password", async (req, res) => {
     const enteredPass = req.body.password;
     const adminId = req.params.id;
@@ -324,16 +419,19 @@ app.put("/api/admin/:id/password", async (req, res) => {
     }
 });
 
+// Hashes password before it is updated to the database
 db.Admin.beforeUpdate((admin, options) => {
     admin.password = bcrypt.hashSync(admin.password, saltRounds);
 });
 
+// Hashes password before it is created in the database
 db.Admin.beforeCreate((admin, options) => {
     return bcrypt.hash(admin.password, saltRounds).then(hashedPassword => {
         admin.password = hashedPassword;
     });
 });
 
+// Validates password and if the admin exists
 async function validatePassword(email, password) {
     const admin = await db.Admin.findByEmail(email);
     if (!admin) {

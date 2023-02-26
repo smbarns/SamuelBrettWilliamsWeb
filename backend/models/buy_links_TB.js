@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true
         },
         link: {
-            type: DataTypes.TEXT
+            type: DataTypes.STRING,
+            unique: true
         },
         link_photo: {
             type: DataTypes.TEXT
