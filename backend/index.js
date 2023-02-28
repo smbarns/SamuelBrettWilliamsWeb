@@ -7,7 +7,10 @@ const db_filter_plays = require('./controllers/plays_controller.js');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
-require('dotenv').config();
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+const aws = require('aws-sdk');
+require('dotenv').config({path: './config/.env'});
 
 module.exports = {
     validatePassword,
@@ -17,6 +20,87 @@ module.exports = {
 const app = express();
 const PORT = 3000;
 const saltRounds = 10;
+
+const s3 = new aws.S3({
+    accessKeyId: process.env.AWS_access_key_id,
+    secretAccessKey: process.env.AWS_secret_access_key,
+    region: process.env.AWS_region
+});
+
+// Set destination directory and filename of each uploaded file
+const storage = multerS3({
+    s3: s3,
+    bucket: 'samuel-brett-williams',
+    acl: 'public-read',
+    key: function (req, file, cb) {
+        cb(null, Date.now().toString() + '-' + file.originalname);
+    }
+})
+
+// Set maximum number of files that can be uploaded at once
+const upload = multer({
+    storage: storage
+}).array('files', 5);
+
+// Handle file upload and then delete (for testing purposes)
+app.post('/upload', (req, res) => {
+    upload(req, res, function(err) {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({error: err})
+        }
+
+        const uploadedPhotos = req.files;
+        const urls =[];
+
+        for(let i=0; i<uploadedPhotos.length; i++) {
+            const url = `https://s3-${s3.config.region}.amazonaws.com/${uploadedPhotos[i].bucket}/${uploadedPhotos[i].key}`;
+            urls.push(url);
+        }
+
+        console.log(urls);
+
+        const uploadedFileKeys = req.files.map(file => file.key);
+
+        const params = {
+            Bucket: 'samuel-brett-williams',
+            Delete: {
+                Objects: uploadedFileKeys.map(key => ({Key: key})),
+                Quiet: false
+            }
+        };
+
+        s3.deleteObjects(params, function(err, data) {
+            if (err) {
+                console.log('Error deleting files:', err);
+            } else {
+                console.log('Files deleted successfully:', data);
+            }
+        });
+
+        return res.status(200).json({ message: 'Files uploaded and deleted successfully' });
+    });
+});
+
+// Delete file at specific key
+app.delete('/delete/:objectKey', (req, res) => {
+    const objectKey = req.params.objectKey;
+  
+    const params = {
+      Bucket: 'samuel-brett-williams',
+      Key: objectKey,
+    };
+  
+    s3.deleteObject(params, (err, data) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error deleting object from S3');
+      } else {
+        console.log(`Successfully deleted object: ${data}`);
+        res.status(200).send(`Deleted object: ${data}`);
+      }
+    });
+  });  
 
 app.use(cors({
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
