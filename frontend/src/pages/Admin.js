@@ -1,8 +1,6 @@
 
-
 import React, {useState} from "react"
 import '../styles/Admin.css'
-import axios from "axios";
 
 const Admin =()=>{
   const [email, setEmail] = useState("");
@@ -11,20 +9,25 @@ const Admin =()=>{
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("hello")
-    try {
-      const response = await axios.post("http://localhost:3000/api/admin", { email, password })
-      .then(function(response){
-        console.log(response);
-        
-      })
-    } catch (error) {
-      console.log("error123")
-      console.error(error);
-      setError(error.response.data.error);
-    }
-  };
-
+    fetch('http://localhost:3000/api/admin', {
+      method: 'POST',
+      body: JSON.stringify({email, password})
+    })
+    .then(res => {
+      if(!res.ok){
+        throw new Error('Error');
+      }
+      console.log(res); 
+      return res.json();
+    })
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => { 
+    console.error(error);
+    setError(error.response.data.error);
+  });
+  }
     return (
         <section className='admin'>
             <div className="admin__content">

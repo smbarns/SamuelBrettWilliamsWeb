@@ -552,16 +552,14 @@ async function validatePassword(email, password) {
     return true;
 }
 
+// Uses above function to see if email and password are valid
 app.post("/api/admin", async (req, res) => {
-    const { email, password } = req.body;
+    const email = req.body.email;
+    const password = req.body.password;
   try {
     const result = await validatePassword(email, password);
-    console.log("success");
-    // if the function succeeds, return a success message
-    res.send({ success: true, message: "Login successful" });
+    res.send({ success: true, email: email, password: password });
   } catch (error) {
-    // if the function fails, return an error message
-    console.log("fail")
     res.send({ success: false, message: error.message });
   }
 })
