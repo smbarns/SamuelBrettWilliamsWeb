@@ -10,7 +10,7 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const aws = require('aws-sdk');
-require('dotenv').config({path: './config/.env'});
+require('dotenv').config({ path: './config/.env' });
 
 module.exports = {
     validatePassword,
@@ -44,16 +44,16 @@ const upload = multer({
 
 // Handle file upload and then delete (for testing purposes)
 app.post('/upload', (req, res) => {
-    upload(req, res, function(err) {
+    upload(req, res, function (err) {
         if (err) {
             console.log(err);
-            return res.status(500).json({error: err})
+            return res.status(500).json({ error: err })
         }
 
         const uploadedPhotos = req.files;
-        const urls =[];
+        const urls = [];
 
-        for(let i=0; i<uploadedPhotos.length; i++) {
+        for (let i = 0; i < uploadedPhotos.length; i++) {
             const url = `https://s3-${s3.config.region}.amazonaws.com/${uploadedPhotos[i].bucket}/${uploadedPhotos[i].key}`;
             urls.push(url);
         }
@@ -65,12 +65,12 @@ app.post('/upload', (req, res) => {
         const params = {
             Bucket: 'samuel-brett-williams',
             Delete: {
-                Objects: uploadedFileKeys.map(key => ({Key: key})),
+                Objects: uploadedFileKeys.map(key => ({ Key: key })),
                 Quiet: false
             }
         };
 
-        s3.deleteObjects(params, function(err, data) {
+        s3.deleteObjects(params, function (err, data) {
             if (err) {
                 console.log('Error deleting files:', err);
             } else {
@@ -85,22 +85,22 @@ app.post('/upload', (req, res) => {
 // Delete file at specific key
 app.delete('/delete/:objectKey', (req, res) => {
     const objectKey = req.params.objectKey;
-  
+
     const params = {
-      Bucket: 'samuel-brett-williams',
-      Key: objectKey,
+        Bucket: 'samuel-brett-williams',
+        Key: objectKey,
     };
-  
+
     s3.deleteObject(params, (err, data) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Error deleting object from S3');
-      } else {
-        console.log(`Successfully deleted object: ${data}`);
-        res.status(200).send(`Deleted object: ${data}`);
-      }
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error deleting object from S3');
+        } else {
+            console.log(`Successfully deleted object: ${data}`);
+            res.status(200).send(`Deleted object: ${data}`);
+        }
     });
-  });  
+});
 
 app.use(cors({
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -116,11 +116,11 @@ app.use(express.urlencoded({
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
     );
     next();
-  });
+});
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'assets/index.html'));
@@ -130,7 +130,7 @@ app.get('/', (req, res) => {
 app.get('/api/homepage', async (req, res) => {
     try {
         const homepage = await db.Homepage.findAll({
-            include: [{model: db.Films, as: "films"}]
+            include: [{ model: db.Films, as: "films" }]
         });
         res.send(homepage);
     } catch (err) {
@@ -186,6 +186,30 @@ app.get('/api/biopage', async (req, res) => {
     }
 });
 
+//JSON for client photo
+app.get('/api/biopage/client_photo', async (req, res) => {
+    try {
+        const biopage = await db.Biopage.findAll({
+            attributes: ['id', 'client_photo']
+        });
+        res.send(biopage);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+//JSON for bio description
+app.get('/api/biopage/bio_des', async (req, res) => {
+    try {
+        const biopage = await db.Biopage.findAll({
+            attributes: ['id', 'bio_des']
+        });
+        res.send(biopage);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
 // Post method for Biopage table
 app.post("/api/biopage", async (req, res) => {
     const data = req.body;
@@ -207,9 +231,9 @@ app.get('/api/films', async (req, res) => {
         }
         else {
             const films = await db.Films.findAll({
-                include: [{model: db.Buy_links, as: "buy_links"},
-                          {model: db.Videos, as: "videos"},
-                          {model: db.Still_photos, as: "still_photos"}]
+                include: [{ model: db.Buy_links, as: "buy_links" },
+                { model: db.Videos, as: "videos" },
+                { model: db.Still_photos, as: "still_photos" }]
             });
             res.send(films);
         }
@@ -235,37 +259,37 @@ app.post("/api/films", async (req, res) => {
             type_film: data.type_film,
             homeId: homepage?.id || null
         })
-        .then(film => {
-            if (data.buy_links != null) {
-                data.buy_links.forEach(linkObject => {
-                    db.Buy_links.create({
-                        link: linkObject.link,
-                        link_photo: linkObject.link_photo,
-                        filmId: film.id
+            .then(film => {
+                if (data.buy_links != null) {
+                    data.buy_links.forEach(linkObject => {
+                        db.Buy_links.create({
+                            link: linkObject.link,
+                            link_photo: linkObject.link_photo,
+                            filmId: film.id
+                        });
                     });
-                });
-            }
+                }
 
-            if (data.videos != null) {
-                data.videos.forEach(videoObject => {
-                    db.Videos.create({
-                        video: videoObject.video,
-                        filmId: film.id
+                if (data.videos != null) {
+                    data.videos.forEach(videoObject => {
+                        db.Videos.create({
+                            video: videoObject.video,
+                            filmId: film.id
+                        });
                     });
-                });
-            }
+                }
 
-            if (data.still_photos != null) {
-                data.still_photos.forEach(photoObject => {
-                    db.Still_photos.create({
-                        photo: photoObject.photo,
-                        filmId: film.id
+                if (data.still_photos != null) {
+                    data.still_photos.forEach(photoObject => {
+                        db.Still_photos.create({
+                            photo: photoObject.photo,
+                            filmId: film.id
+                        });
                     });
-                });
-            }
+                }
 
-            res.send(film);
-        })
+                res.send(film);
+            })
     } catch (err) {
         res.send(err);
     }
@@ -293,9 +317,9 @@ app.get('/api/plays', async (req, res) => {
         }
         else {
             const plays = await db.Plays.findAll({
-                include: [{model: db.Buy_links, as: "buy_links"},
-                          {model: db.Videos, as: "videos"},
-                          {model: db.Still_photos, as: "still_photos"}]
+                include: [{ model: db.Buy_links, as: "buy_links" },
+                { model: db.Videos, as: "videos" },
+                { model: db.Still_photos, as: "still_photos" }]
             });
             res.send(plays);
         }
@@ -317,37 +341,37 @@ app.post("/api/plays", async (req, res) => {
             description: data.description,
             type_play: data.type_play
         })
-        .then(play => {
-            if (data.buy_links != null) {
-                data.buy_links.forEach(linkObject => {
-                    db.Buy_links.create({
-                        link: linkObject.link,
-                        link_photo: linkObject.link_photo,
-                        playId: play.id
+            .then(play => {
+                if (data.buy_links != null) {
+                    data.buy_links.forEach(linkObject => {
+                        db.Buy_links.create({
+                            link: linkObject.link,
+                            link_photo: linkObject.link_photo,
+                            playId: play.id
+                        });
                     });
-                });
-            }
+                }
 
-            if (data.videos != null) {
-                data.videos.forEach(videoObject => {
-                    db.Videos.create({
-                        video: videoObject.video,
-                        playId: play.id
+                if (data.videos != null) {
+                    data.videos.forEach(videoObject => {
+                        db.Videos.create({
+                            video: videoObject.video,
+                            playId: play.id
+                        });
                     });
-                });
-            }
+                }
 
-            if (data.still_photos != null) {
-                data.still_photos.forEach(photoObject => {
-                    db.Still_photos.create({
-                        photo: photoObject.photo,
-                        playId: play.id
+                if (data.still_photos != null) {
+                    data.still_photos.forEach(photoObject => {
+                        db.Still_photos.create({
+                            photo: photoObject.photo,
+                            playId: play.id
+                        });
                     });
-                });
-            }
+                }
 
-            res.send(play);
-        })
+                res.send(play);
+            })
     } catch (err) {
         res.send(err);
     }
@@ -366,9 +390,9 @@ app.get("/api/plays/getImage/:title", async (req, res) => {
 });
 
 //Press api for all attributes
-app.get("/api/press", async (req,res)=>{
-    const data= req.body;
-    try{
+app.get("/api/press", async (req, res) => {
+    const data = req.body;
+    try {
         const press = await db.Press.findAll();
         res.send(press);
     } catch (err) {
@@ -377,9 +401,9 @@ app.get("/api/press", async (req,res)=>{
 })
 
 //Press api for quotes
-app.get("/api/press/quote", async (req,res)=>{
-    const data= req.body;
-    try{
+app.get("/api/press/quote", async (req, res) => {
+    const data = req.body;
+    try {
         const quote = await db.Press.findAll({
             attributes: ['id', 'quote']
         });
@@ -390,9 +414,9 @@ app.get("/api/press/quote", async (req,res)=>{
 })
 
 //Press api for press image
-app.get("/api/press/press_image", async (req,res)=>{
-    const data= req.body;
-    try{
+app.get("/api/press/press_image", async (req, res) => {
+    const data = req.body;
+    try {
         const press_image = await db.Press.findAll({
             attributes: ['id', 'press_image']
         });
@@ -403,9 +427,9 @@ app.get("/api/press/press_image", async (req,res)=>{
 })
 
 //Press api for author
-app.get("/api/press/author", async (req,res)=>{
-    const data= req.body;
-    try{
+app.get("/api/press/author", async (req, res) => {
+    const data = req.body;
+    try {
         const author = await db.Press.findAll({
             attributes: ['id', 'author']
         });
@@ -451,38 +475,38 @@ app.post('/api/contactpage', async (req, res) => {
 const validateEmail = (req, res, next) => {
     const { email } = req.body;
     if (!validator.validate(email)) {
-      res.status(400).send('Invalid email address');
+        res.status(400).send('Invalid email address');
     } else {
-      next();
+        next();
     }
-  };
+};
 
-  // contact page send email *UNFINISHED*
-app.post('http://localhost:3000/api/sendEmail', cors(),validateEmail,async (req, res) => {
+// contact page send email *UNFINISHED*
+app.post('http://localhost:3000/api/sendEmail', cors(), validateEmail, async (req, res) => {
     const { firstName, lastName, email, message } = req.body;
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USERNAME,
-        pass: process.env.EMAIL_PASSWORD,
-      },
+        service: 'gmail',
+        auth: {
+            user: process.env.EMAIL_USERNAME,
+            pass: process.env.EMAIL_PASSWORD,
+        },
     });
     const mailOptions = {
-      from: email,
-      to: req.query.to,
-      subject: 'New email from contact form',
-      text: `Name: ${firstName} ${lastName}\nEmail: ${email}\nMessage: ${message}`,
+        from: email,
+        to: req.query.to,
+        subject: 'New email from contact form',
+        text: `Name: ${firstName} ${lastName}\nEmail: ${email}\nMessage: ${message}`,
     };
     transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-        res.status(500).send('Failed to send email2');
-      } else {
-        console.log('Email sent: ' + info.response);
-        res.status(200).send('Email sent successfully');
-      }
+        if (error) {
+            console.log(error);
+            res.status(500).send('Failed to send email2');
+        } else {
+            console.log('Email sent: ' + info.response);
+            res.status(200).send('Email sent successfully');
+        }
     });
-  });
+});
 
 // updates password if the user exists in database
 app.put("/api/admin/:id/password", async (req, res) => {
@@ -491,13 +515,13 @@ app.put("/api/admin/:id/password", async (req, res) => {
 
     try {
         db.Admin.findByPk(adminId)
-        .then(admin => {
-            admin.password = enteredPass;
-            return admin.save();
-        })
-        .then(() => {
-            res.sendStatus(200);
-        })
+            .then(admin => {
+                admin.password = enteredPass;
+                return admin.save();
+            })
+            .then(() => {
+                res.sendStatus(200);
+            })
     } catch (err) {
         res.send(err);
     }
@@ -530,11 +554,11 @@ async function validatePassword(email, password) {
 
 db.sequelize.sync().then(
     (result) => {
-    app.use(express.static(__dirname + '/assets'));
-    app.listen(PORT, (() => {
-        console.log('Server started on port 3000');
-    }))
-})
-.catch((err) => {
-    console.log(err);
-});
+        app.use(express.static(__dirname + '/assets'));
+        app.listen(PORT, (() => {
+            console.log('Server started on port 3000');
+        }))
+    })
+    .catch((err) => {
+        console.log(err);
+    });
