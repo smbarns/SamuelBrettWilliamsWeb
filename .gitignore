@@ -157,4 +157,4 @@ dist
 start.sh
 
 config/
-/backend/config/config.json
+./backend/config/config.json
