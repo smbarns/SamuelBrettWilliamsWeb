@@ -552,6 +552,20 @@ async function validatePassword(email, password) {
     return true;
 }
 
+app.post("/api/admin", async (req, res) => {
+    const { email, password } = req.body;
+  try {
+    const result = await validatePassword(email, password);
+    console.log("success");
+    // if the function succeeds, return a success message
+    res.send({ success: true, message: "Login successful" });
+  } catch (error) {
+    // if the function fails, return an error message
+    console.log("fail")
+    res.send({ success: false, message: error.message });
+  }
+})
+
 db.sequelize.sync().then(
     (result) => {
         app.use(express.static(__dirname + '/assets'));
