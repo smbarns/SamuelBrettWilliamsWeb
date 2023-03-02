@@ -552,6 +552,18 @@ async function validatePassword(email, password) {
     return true;
 }
 
+// Uses above function to see if email and password are valid
+app.post("/api/admin", async (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+  try {
+    const result = await validatePassword(email, password);
+    res.send({ success: true, email: email, password: password });
+  } catch (error) {
+    res.send({ success: false, message: error.message });
+  }
+})
+
 db.sequelize.sync().then(
     (result) => {
         app.use(express.static(__dirname + '/assets'));
