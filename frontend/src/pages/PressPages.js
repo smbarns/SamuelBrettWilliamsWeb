@@ -66,11 +66,7 @@ export default function Press() {
 
   const types = [
     {
-      type: "Feature Film",
-      event: showType
-    },
-    {
-      type: "Short Film",
+      type: "Review",
       event: showType
     }];
 
@@ -82,7 +78,7 @@ export default function Press() {
       <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
       {filteredData && filteredData.map((data) => (
         <div className="pressIcons" key={data.id}>
-          Insert reviews
+          
         </div>
       ))}
       <div className="press">
