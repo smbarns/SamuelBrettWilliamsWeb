@@ -20,7 +20,7 @@ export default function Biography() {
       })
       .catch(error => {
         console.error("Error fetching data: ", error);
-        throw error;
+        setError(error);
       })
       .finally(() => {
         setLoading(false);
