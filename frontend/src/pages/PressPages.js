@@ -72,7 +72,13 @@ export default function Press() {
 
 
   return (
-    <><div className='page'>
+    <><div>
+        <img className='bannerImg' src={banner_img} />
+        <div className="banner">
+          PRESS
+        </div>
+      </div>
+    <div className='page'>
       {/* <SearchBar setContent={setPress} showAll={showAll} setActiveProp={setActiveProp} name={"press"} /> */}
 
       <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
@@ -84,11 +90,6 @@ export default function Press() {
       <div className="press">
         {press}
       </div>
-    </div><div className="press">
-        <div class="test"><img className='bannerImg' src={banner_img} /></div>
-        <div className="pressBanner">
-          PRESS
-        </div>
-      </div></>
+    </div></>
   )
 }

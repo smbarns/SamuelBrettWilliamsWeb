@@ -1,9 +1,3 @@
-.press{
-    display: flex;
-    flex-direction: column;
-    padding-top: 20px;
-    align-items: center;
-}
 .press_title{
     font-weight: lighter;
     font-size: x-small;
@@ -44,24 +38,3 @@
     padding-left: 75px;
 }
 
-.test {
-    padding-left: 0px !important;
-    margin-left: -121px;
-    padding-top: 100px;
-}
-
-.bannerImg {
-    width: 100%;
-    height: 10em;
-    /*position: absolute;*/
-}
-
-.pressBanner {
-    font-size: 80px;
-    position: relative;
-    margin-top: -156px;
-    /*padding-left: 100px;*/
-    /*letter-spacing: 10px;*/
-    letter-spacing: .2rem;
-    font-family: Abel;
-}

@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import '../styles/Biography.css'
 import banner_img from '../assets/biography_background.jpeg'
+import '../styles/Banner.css'
 
 export default function Biography() {
 
@@ -32,17 +33,19 @@ export default function Biography() {
 
   return (
 
-    <div className="biography">
-      <img className='bannerImg' src={banner_img} />
-      <div className="bioBanner">
-        BIOGRAPHY
+    <><div>
+        <img className='bannerImg' src={banner_img} />
+        <div className="banner">
+          BIOGRAPHY
+        </div>
       </div>
-      <div className="bioBody">
-        <img className='bioImg' src={pic} />
-        <span>
-          {des}
-        </span>
-      </div>
-    </div>
+      <div className='page'>
+        <div className="bioBody">
+          <img className='bioImg' src={pic} />
+          <span>
+            {des}
+          </span>
+        </div>
+      </div></>
   )
 }

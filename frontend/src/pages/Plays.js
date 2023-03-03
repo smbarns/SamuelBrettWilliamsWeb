@@ -7,6 +7,8 @@ import SearchBar from '../components/SearchBar'
 import ButtonGroup from '../components/ButtonGroup'
 import Play from '../components/Play.js'
 import playData from '../samples/samplePlays'
+import banner_img from '../assets/plays_background.png'
+import '../styles/Banner.css'
 
 export default function Plays() {
   const [data, setData] = useState(null);
@@ -79,20 +81,24 @@ export default function Plays() {
      }];
 
   return (
-    <div className="page">
-      <SearchBar setContent={setPlays} showAll={showAll} setActiveProp={setActiveProp} name={"plays"}/>
-
-      <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active}/>
-      {
-          filteredData && filteredData.map((data) => (
-            <div className="playIcons" key={data.id}>
-              Place play icons here
-            </div>
-          ))
-        } 
-        <div className = "plays">
-        {plays}
-      </div>
+    <><div>
+        <img className='bannerPlays' src={banner_img} />
+        <div className="banner">
+          PLAYS
+        </div>
     </div>
+    <div className="page">
+        <SearchBar setContent={setPlays} showAll={showAll} setActiveProp={setActiveProp} name={"plays"} />
+
+        <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
+        {filteredData && filteredData.map((data) => (
+          <div className="playIcons" key={data.id}>
+            Place play icons here
+          </div>
+        ))}
+        <div className="plays">
+          {plays}
+        </div>
+      </div></>
   );
 }
