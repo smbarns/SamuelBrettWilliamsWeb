@@ -7,6 +7,8 @@ import Film from '../components/Film.js'
 import SearchBar from '../components/SearchBar'
 import ButtonGroup from '../components/ButtonGroup'
 import filmData from '../samples/sampleFilms'
+import banner_img from '../assets/films_background.png'
+import '../styles/Banner.css'
 
 export default function Films() {
     
@@ -76,6 +78,12 @@ export default function Films() {
      }];
 
   return (
+    <><div>
+        <img className='bannerFilms' src={banner_img} />
+        <div className="banner">
+          FILMS
+        </div>
+    </div>
     <div className='page'>
        <SearchBar setContent={setFilms} showAll={showAll} setActiveProp={setActiveProp} name={"films"}/>
 
@@ -90,7 +98,7 @@ export default function Films() {
       <div className = "films">
         {films}
       </div>
-    </div>
+    </div></>
 
     
   );

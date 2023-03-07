@@ -40,7 +40,13 @@ export default function PressPages() {
   if (error) return <div className="page">Error!</div>;
 
   return (
-    <><div className='page'>
+    <><div>
+        <img className='bannerImg' src={banner_img} />
+        <div className="banner">
+          PRESS
+        </div>
+      </div>
+    <div className='page'>
       {/* <SearchBar setContent={setPress} showAll={showAll} setActiveProp={setActiveProp} name={"press"} /> */}
 
       {filteredData && filteredData.map((data) => (

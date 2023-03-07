@@ -1,7 +1,7 @@
 import React from 'react'
 import '../styles/Home.css'
 import {useEffect, useState} from 'react'
-import data from '../sampleprojects.js'
+import dataSP from '../sampleprojects.js'
 import Project from '../components/Project'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -12,52 +12,74 @@ import ReactPlayer from 'react-player'
 function Home() {
   const [buttonPopup,setButtonPopup] = useState(false
     );
-    const [popupUrl,setPopupUrl] =useState('')
-  
- 
+  const [popupUrl,setPopupUrl] =useState('')
 
-
+  const [data,setData] = useState(null);
   const [pic,setPic] = useState();
-  // const [projects, setProjects] = useState([]); // fetch data from api into this state 
-  //then use it .map instead of data.map
+  const [desc,setDesc] = useState();
+  const [projs,setProjects] = useState();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
 
   const scrollElement = useRef(null)
 
   const scrollRight = () =>{
     scrollElement.current.scrollLeft = 
-    scrollElement.current.scrollLeft + 1290
+    scrollElement.current.scrollLeft + 1700
   }
 
   const scrollLeft = () =>{
     scrollElement.current.scrollLeft = 
-    scrollElement.current.scrollLeft - 1290
+    scrollElement.current.scrollLeft - 1700
   }
-  const projectReel = data.map(item => {   // later data will be equal to the state variable that accepted the api data from the fetch request
-    return(
-      <Project
-          key = {item.id}
-          setButtonPopup = {setButtonPopup}
-          setUrl = {setPopupUrl}
-          {...item}
-      />
-    )
-  })
- 
-
- 
-useEffect(()=> {
-  fetch('https://api.imgflip.com/get_memes')
-    .then((response) => response.json())
-    .then((data) =>
-    setPic(data.data.memes[18].url))
-},[])
- 
- 
- 
 
  
  
+useEffect(() => {
+  fetch('http://localhost:3000/api/homepage')
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      }
+      throw response;
+    })
+    .then(data => {
+      setData(data);
+      setPic(data[0].client_photo);
+      setDesc(data[0].about_des);
+      setProjects(data[0].films)
+    })
+    .catch(error => {
+      console.error("Error fetching data: ", error);
+      setError(error);
+    })
+    .finally(() => {
+      setLoading(false);
+    })
+}, [])
+
+
+ 
+if (loading) return <div className="page">Loading...</div>;
+if (error) return <div className="page">Error!</div>;
+console.log(data)
+console.log(projs)
+
+const projectReel = projs.map(item => {   // later data will be equal to the state variable that accepted the api data from the fetch request
+  return(
+    <Project
+        key = {item.id}
+        setButtonPopup = {setButtonPopup}
+        setUrl = {setPopupUrl}
+        {...item}
+    />
+  )
+})
+console.log(data.Films)
+
   return (
+    
     <div className = "page" >
     <div className = "home">
     <div className='player-wrapper'>
@@ -78,13 +100,9 @@ useEffect(()=> {
           <div className = "aboutBody">
             <div>
             <h1>ABOUT</h1>
-            <h2>Samuel Brett Williams is an award-winning playwright,<br />
-          screenwriter, and director. His plays have been produced<br />
-          everywhere form New York City to Moscow, Russia. He has<br />
-          developed films and television shows for 26 Keys<br />
-          Productions, Room 101, Character Brigade, Naked Faith<br />
-          Entertainment, and Hot Snakes Media.
-        </h2>
+            <h2 className = "clientDesc">
+              {desc}
+            </h2>
             </div>
      
         <img className = 'samImg' src = {pic} />

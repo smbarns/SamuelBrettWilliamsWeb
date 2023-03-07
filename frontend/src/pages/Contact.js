@@ -58,7 +58,7 @@ function Contact() {
 
   // return (
   //   <div className="page">
-  //     <div className='banner'><img src = {contactBackground}/></div>
+  //     <div className='bannerContact'><img src = {contactBackground}/></div>
   //     <div className = "ContactBanner">
   //         <h2>CONTACT US</h2>
   //     </div>

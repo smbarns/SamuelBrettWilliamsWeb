@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Abel%27'); 
+
+.bannerImg{
+    width: 100%;
+    height: 18em;
+    object-fit: cover;
+}
+.banner{
+    font-size: 150px;
+    position: relative;
+    margin-top: -230px;
+    margin-left: 100px;
+    letter-spacing: .2rem;
+    font-family: Abel;
+    padding-bottom: 35px;
+}

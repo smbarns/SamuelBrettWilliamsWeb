@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Abel%27'); 
+
 .plays{
     display: grid;
     grid-template-columns: 0fr 0fr 0fr 0fr;
@@ -9,4 +11,11 @@
 
 .playIcons {
     padding-top: 30px;
+}
+
+.bannerPlays{
+    width: 100%;
+    height: 18em;
+    object-fit: cover;
+    object-position: 0px 40%;
 }
