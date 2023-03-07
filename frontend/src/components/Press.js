@@ -13,11 +13,11 @@ function Press(props) {
             author:props.author,
             quote:props.quote,
             link:props.Link
-            }} ><img className = "press_image" src = {placeholder} alt=""  /></Link>
-        <span classname = "press_title"> title goes here </span>
-        <span classname = "quote"> insert the quotes </span>
-        <span className = "author"> {props.title} </span>
-        <span className = "press_link">  LinkLonk </span>
+            }} ><img className = "press_image" src = {props.photos} alt=""  /></Link>
+        <span classname = "press_title"> {props.title} </span>
+        <span classname = "quote"> {props.quote} </span>
+        <span className = "author"> {props.author} </span>
+        <span className = "press_link">  {props.Link} </span>
   </div>
 
   )

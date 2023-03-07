@@ -1,9 +1,12 @@
 .PressPage{
-    display: grid;
-    grid-template-columns: 0fr 0fr 0fr 0fr;
-    align-items: center;
+    display: flex;
+    flex-direction: row;
+    font-family: Abel;
+    margin-top: 60px;
+    margin-left: 150px;
+    margin-right: 150px;
+    gap: 100px;
     justify-content: center;
-    gap:40px;
 }
 
 .PressIcons {
