@@ -1,42 +1,61 @@
+@import url('https://fonts.googleapis.com/css?family=Abel%27');
+@import url('https://fonts.googleapis.com/css?family=Oswald');
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+
 .press{
+    align-items: center;
+}
+
+.pressIcon{
+    width: 27%;
     display: inline-block;
-    width: 25%;
-    margin: 5% 5% 5% 5%;
     vertical-align: top;
-    /* display: flex;
-    flex-direction: column;
-    column-rule-width: 4px;
-    padding-top: 20px;
-    align-items: center; */
+    margin-inline: 50px;
+    margin-bottom: 100px;
 }
 
 .press_title{
-    font-weight: lighter;
-    font-size: small;
-    margin-top: -5px;
+    font-size: 45px;
+    height: 100px;
+    display: table-cell;
+    text-align: center;
+    width: 500px;
+    background-color: white;
+    color: black;
+    font-family: Lobster;
+    vertical-align: middle;
+}
+
+.project_title{
+    font-size: 30px;
+    position: relative;
+    text-align: center;
+    margin-top: 20px;
+    display: block;
+    margin-bottom: 35px;
+    font-family: Oswald;
 }
 
 .press_image{
-    padding-top: 5px;
-    height: 50px;
-    width: 200px;
+    max-height: 100px;
+    width: 100%;
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 .quote{
     font-weight: lighter;
-    font-size: medium;
-    margin-top: -50px;
-}
-
-.press_link{
-    font-weight: lighter;
-    font-size: x-small;
-    margin-top: -48px;
+    font-size: 20px;
+    font-family: Abel;
+    color: #D3D3D3;
 }
 
 .author{
-    font-weight: lighter;
-    font-size: x-small;
-    margin-top: -48px;
+    font-weight: 300;
+    font-size: 24px;
+    display: block;
+    padding-top: 25px;
 }
 
 .openDetails{
@@ -44,9 +63,5 @@
     border: none;
     outline:none;
     }
-@import url('https://fonts.googleapis.com/css?family=Abel%27');
 
-.plays {
-    padding-left: 75px;
-}
 
