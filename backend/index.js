@@ -482,31 +482,35 @@ const validateEmail = (req, res, next) => {
 };
 
 // contact page send email *UNFINISHED*
-app.post('http://localhost:3000/api/sendEmail', cors(), validateEmail, async (req, res) => {
-    const { firstName, lastName, email, message } = req.body;
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.EMAIL_USERNAME,
-            pass: process.env.EMAIL_PASSWORD,
-        },
+app.post(
+    "http://localhost:3000/api/sendEmail",
+    cors(),
+    validateEmail,
+    async (req, res) => {
+        const { firstName, lastName, email, message } = req.body;
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.EMAIL_USERNAME,
+                pass: process.env.EMAIL_PASSWORD,
+            },
+        });
+        const mailOptions = {
+            from: email,
+            to: req.query.to,
+            subject: 'New email from contact form',
+            text: `Name: ${firstName} ${lastName}\nEmail: ${email}\nMessage: ${message}`,
+        };
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+                res.status(500).send('Failed to send email2');
+            } else {
+                console.log('Email sent: ' + info.response);
+                res.status(200).send('Email sent successfully');
+            }
+        });
     });
-    const mailOptions = {
-        from: email,
-        to: req.query.to,
-        subject: 'New email from contact form',
-        text: `Name: ${firstName} ${lastName}\nEmail: ${email}\nMessage: ${message}`,
-    };
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-            res.status(500).send('Failed to send email2');
-        } else {
-            console.log('Email sent: ' + info.response);
-            res.status(200).send('Email sent successfully');
-        }
-    });
-});
 
 // updates password if the user exists in database
 app.put("/api/admin/:id/password", async (req, res) => {
@@ -564,6 +568,66 @@ app.post("/api/admin", async (req, res) => {
   }
 })
 
+// Route to handle forget password request
+app.post("/api/forgot-password", async (req, res) => {
+    const { email } = req.body;
+  
+    try {
+      const user = await db.User.findOne({ where: { email } });
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+  
+      // Generate password reset token and save to database
+      const token = bcrypt.hashSync(email + Date.now(), 10);
+      await db.PasswordReset.create({
+        email,
+        token,
+      });
+  
+      // Send password reset email to user
+      const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${token}`;
+      await transporter.sendMail({
+        to: email,
+        subject: "Reset your password",
+        html: `
+            <p>You have requested to reset your password. Please click the link below to reset your password:</p>
+            <a href="${resetLink}">${resetLink}</a>
+          `,
+      });
+  
+      res.send("Password reset email sent");
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  });
+  
+  // Route to handle password reset request
+  app.post("/api/reset-password", async (req, res) => {
+    const { token, password } = req.body;
+  
+    try {
+      const passwordReset = await db.PasswordReset.findOne({ where: { token } });
+      if (!passwordReset) {
+        return res.status(404).send("Invalid or expired token");
+      }
+  
+      // Update user password in the database
+      const user = await db.User.findOne({
+        where: { email: passwordReset.email },
+      });
+      const hashedPassword = bcrypt.hashSync(password, 10);
+      await user.update({ password: hashedPassword });
+  
+      // Delete the password reset token from the database
+      await db.PasswordReset.destroy({ where: { token } });
+  
+      res.send("Password updated successfully");
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  });
+  
 db.sequelize.sync().then(
     (result) => {
         app.use(express.static(__dirname + '/assets'));
