@@ -6,19 +6,16 @@ import play from '../assets/pbutton3.png'
 function Project(props) {
 
     function popupBtn(){
-        props.setButtonPopup(true
-          )
+        props.setButtonPopup(true)
          
-        props.setUrl(props.url)
+        props.setUrl(props.videos[0].video)
     }
 
-console.log(props.url)
   return (
     <div className = "imgContainer">
-    <button className = "playButton"  onClick  = {() =>popupBtn() }>
-      <img src = {play}></img></button>
-      <img className = 'blank' src = {blank}/>
-      <span className = 'caption'>File Name {props.id}</span>
+    <button className = "playButton"  onClick  = {() =>popupBtn() }></button>
+      <img className = 'blank' src = {props.photo}/>
+      <span className = 'caption'>{props.title.toUpperCase()}</span>
       </div>
   )
 }

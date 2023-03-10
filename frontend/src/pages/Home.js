@@ -110,7 +110,7 @@ console.log(data.Films)
       </div>
       <div className = 'upcomingProjects'>
         <div className = 'topReel'>
-          <div className = 'reelText'>Upcoming Projects
+          <div className = 'reelText'>UPCOMING PROJECTS
            </div>
            <div className = 'arrows'>
            <ArrowBackIosIcon onClick = {scrollLeft} ></ArrowBackIosIcon>

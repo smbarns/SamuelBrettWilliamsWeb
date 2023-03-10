@@ -130,8 +130,10 @@ app.get('/', (req, res) => {
 app.get('/api/homepage', async (req, res) => {
     try {
         const homepage = await db.Homepage.findAll({
-            include: [{ model: db.Films, as: "films" }]
+            include: [{ model: db.Films, attributes: ['title', 'photo'], as: "films",
+                        include: { model: db.Videos, as: "videos"}}]
         });
+        console.log(homepage);
         res.send(homepage);
     } catch (err) {
         res.send(err);
@@ -226,7 +228,7 @@ app.get('/api/films', async (req, res) => {
     const search = req.query;
 
     try {
-        if (Object.keys(search)) {
+        if (Object.values(search).join()) {
             db_filter_films.getByTitle(req, res);
         }
         else {
@@ -250,7 +252,7 @@ app.post("/api/films", async (req, res) => {
 
         db.Films.create({
             title: data.title,
-            film_photo: data.film_photo,
+            photo: data.photo,
             director: data.director,
             screenplay: data.screenplay,
             stars: data.stars,
@@ -299,7 +301,7 @@ app.get("/api/films/getImage/:title", async (req, res) => {
     var title = req.params['title'];
     try {
         const film = db.film.getByTitle(title);
-        const film_photo = film.film_photo;
+        const film_photo = film.photo;
         res.send(film_photo);
     }
     catch (err) {
@@ -312,7 +314,7 @@ app.get('/api/plays', async (req, res) => {
     const search = req.query;
 
     try {
-        if (Object.keys(search)) {
+        if (Object.keys(search).join()) {
             db_filter_plays.getByTitle(req, res);
         }
         else {
@@ -334,7 +336,7 @@ app.post("/api/plays", async (req, res) => {
     try {
         db.Plays.create({
             title: data.title,
-            play_photo: data.play_photo,
+            photo: data.photo,
             writer: data.writer,
             productions: data.productions,
             development: data.development,
@@ -381,7 +383,7 @@ app.get("/api/plays/getImage/:title", async (req, res) => {
     var title = req.params['title'];
     try {
         const play = db.play.getByTitle(title);
-        const play_photo = play.play_photo;
+        const play_photo = play.photo;
         res.send(play_photo);
     }
     catch (err) {

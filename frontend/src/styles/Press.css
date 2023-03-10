@@ -16,14 +16,13 @@
 
 .press_title{
     font-size: 45px;
-    height: 100px;
-    display: table-cell;
+    display: table;
     text-align: center;
-    width: 500px;
+    width: 100%;
+    height: 60px;
     background-color: white;
     color: black;
     font-family: Lobster;
-    vertical-align: middle;
 }
 
 .project_title{

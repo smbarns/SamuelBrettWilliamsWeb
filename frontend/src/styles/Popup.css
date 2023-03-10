@@ -26,6 +26,9 @@
     border: none;
     outline:none;
     color:white;
+    margin-right: 25px;
+    margin-top: -25px;
+    cursor: pointer;
 }
 
 .popup-wrapper{

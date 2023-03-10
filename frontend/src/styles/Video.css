@@ -16,16 +16,6 @@
     text-align: 10px;
 }
 
-.playButton{
-    position: absolute;
-    background-color: rgba(1,1,1,1);
-    top:40%;
-    }
-.playButton  img{
-
-        width:50px;
-}
-
 .video .playButton img {
     width:60px;
 }

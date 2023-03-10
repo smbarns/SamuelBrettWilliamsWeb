@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Abel%27');
+
 .home{
     margin-top:-100px
     
@@ -5,26 +7,26 @@
 
 
 .aboutBody{
-   
     display:flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-bottom:100px;
-   
-    
- 
+    margin-bottom:150px;
+    font-family: Abel;
+    margin-top: 100px;
 }
 .samImg{
     margin-left:100px;
     margin-top: auto;
     width:400px;
     height: 420px;
+    object-fit: cover;
 }
 
 h1{
     font-weight: 400;
-    margin-top:50px;
+    font-family: Abel;
+    margin-bottom: 40p;
     
 }
 h2{
@@ -48,6 +50,8 @@ h5 {
 .clientDesc{
     margin-top: -20px;
     max-width: 900px;
+    font-size: 32px;
+    font-family: Abel;
 }
 
 
@@ -78,20 +82,22 @@ h5 {
     gap:50px;
     overflow: hidden;
     max-width: 1450px;
+    width: 1450px;
     
   }
 
 .home .reelText{
-    padding-right:1160px;
-    font-size: xx-large;
-    margin-bottom:10px
+    padding-right:1050px;
+    font-size: 40px;
+    margin-bottom:20px;
+    font-family: Abel;
    
 }
 .home .topReel{
     display: flex;
     flex-direction: row;
     align-items:center;
-    justify-content:center
+    justify-content:center;
 }
 
 .page {
@@ -107,4 +113,8 @@ h5 {
 	margin-bottom: 6px;
     text-align: center;
 
+}
+
+.arrows {
+    cursor: pointer;
 }
