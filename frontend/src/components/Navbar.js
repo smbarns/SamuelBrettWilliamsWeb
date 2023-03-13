@@ -17,7 +17,7 @@ function Navbar() {
           <Link to ="films">FILMS</Link>
           <Link to ="press">PRESS</Link>
           <Link to ="contact">CONTACT</Link>
-          <Link to ="admin">ADMIN</Link>
+          <Link to ="admin_login">ADMIN</Link>
        </div>
       
     </div>

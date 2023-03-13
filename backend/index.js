@@ -10,6 +10,11 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const aws = require('aws-sdk');
+const session = require('express-session');
+const passport = require('passport');
+const flash = require('connect-flash');
+const { Op } = require('sequelize');
+const LocalStrategy = require('passport-local').Strategy;
 require('dotenv').config({ path: './config/.env' });
 
 module.exports = {
@@ -20,6 +25,17 @@ module.exports = {
 const app = express();
 const PORT = 3000;
 const saltRounds = 10;
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.use(session({
+  secret: process.env.session_secret_key,
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 const s3 = new aws.S3({
     accessKeyId: process.env.AWS_access_key_id,
@@ -40,7 +56,7 @@ const storage = multerS3({
 // Set maximum number of files that can be uploaded at once
 const upload = multer({
     storage: storage
-}).array('files', 5);
+});
 
 // Handle file upload and then delete (for testing purposes)
 app.post('/upload', (req, res) => {
@@ -102,13 +118,38 @@ app.delete('/delete/:objectKey', (req, res) => {
     });
 });
 
+app.get('/list-objects', function(req, res) {
+    // Set the parameters for listing objects in the bucket
+    const params = {
+        Bucket: 'samuel-brett-williams'
+    };
+
+    // Use the AWS SDK to list all the objects in the bucket
+    s3.listObjects(params, function(err, data) {
+        if (err) {
+        console.log(err, err.stack);
+        res.status(500).send('Error listing objects in S3 bucket');
+        } else {
+        // Loop through the objects and generate URLs for each object
+        const objectUrls = data.Contents.map(function(object) {
+            const objectParams = { Bucket: 'samuel-brett-williams', Key: object.Key };
+            return s3.getSignedUrl('getObject', objectParams);
+        });
+
+        // Send the generated URLs as a response to the HTTP request
+        res.send(objectUrls);
+        }
+    });
+});
+
 app.use(cors({
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    origin: 'http://localhost:3000',
+    origin: '*',
     optionsSuccessStatus: 200,
     credentials: true,
 }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
@@ -130,10 +171,9 @@ app.get('/', (req, res) => {
 app.get('/api/homepage', async (req, res) => {
     try {
         const homepage = await db.Homepage.findAll({
-            include: [{ model: db.Films, attributes: ['title', 'photo'], as: "films",
+            include: [{ model: db.Films, attributes: ['id', 'title', 'photo'], as: "films",
                         include: { model: db.Videos, as: "videos"}}]
         });
-        console.log(homepage);
         res.send(homepage);
     } catch (err) {
         res.send(err);
@@ -165,7 +205,7 @@ app.get('/api/homepage/client_photo', async (req, res) => {
 });
 
 //Post method for homepage
-app.post("/api/homepage", async (req, res) => {
+app.post("/api/homepage", ensureAuthenticated, async (req, res) => {
     const data = req.body;
     try {
         const homepage = await db.Homepage.create({
@@ -213,7 +253,7 @@ app.get('/api/biopage/bio_des', async (req, res) => {
 });
 
 // Post method for Biopage table
-app.post("/api/biopage", async (req, res) => {
+app.post("/api/biopage", ensureAuthenticated, async (req, res) => {
     const data = req.body;
     try {
         const biopage = await db.Biopage.create(data);
@@ -244,8 +284,21 @@ app.get('/api/films', async (req, res) => {
     }
 });
 
+// Returns list of film titles
+app.get('/api/films/titles', async (req, res) => {
+    const data = req.body;
+    try {
+        const titles = await db.Films.findAll({
+            attributes: ['title']
+        });
+        res.send(titles);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
 // Post method for Films
-app.post("/api/films", async (req, res) => {
+app.post("/api/films", ensureAuthenticated, async (req, res) => {
     const data = req.body;
     try {
         const homepage = await db.Homepage.findByPk(data.homeId);
@@ -276,7 +329,8 @@ app.post("/api/films", async (req, res) => {
                     data.videos.forEach(videoObject => {
                         db.Videos.create({
                             video: videoObject.video,
-                            filmId: film.id
+                            filmId: film.id,
+                            featured: false
                         });
                     });
                 }
@@ -331,7 +385,7 @@ app.get('/api/plays', async (req, res) => {
 });
 
 // Post method for plays
-app.post("/api/plays", async (req, res) => {
+app.post("/api/plays", ensureAuthenticated, async (req, res) => {
     const data = req.body;
     try {
         db.Plays.create({
@@ -358,7 +412,8 @@ app.post("/api/plays", async (req, res) => {
                     data.videos.forEach(videoObject => {
                         db.Videos.create({
                             video: videoObject.video,
-                            playId: play.id
+                            playId: play.id,
+                            featured: false
                         });
                     });
                 }
@@ -441,7 +496,7 @@ app.get("/api/press/author", async (req, res) => {
     }
 })
 
-app.post("/api/press", async (req, res) => {
+app.post("/api/press", ensureAuthenticated, async (req, res) => {
     const data = req.body;
     try {
         const press = await db.Press.create(data);
@@ -462,7 +517,7 @@ app.get('/api/contactpage', async (req, res) => {
 });
 
 // Post method for contact page
-app.post('/api/contactpage', async (req, res) => {
+app.post('/api/contactpage', ensureAuthenticated, async (req, res) => {
     const data = req.body;
     try {
         const contactpage = await db.Contactpage.create(data);
@@ -471,7 +526,6 @@ app.post('/api/contactpage', async (req, res) => {
         res.send(err);
     }
 });
-
 
 //For contactPage email
 const validateEmail = (req, res, next) => {
@@ -512,7 +566,165 @@ app.post(
                 res.status(200).send('Email sent successfully');
             }
         });
-    });
+});
+
+app.get('/api/video/featured/film', async (req, res) => {
+    const search = req.query;
+    const title = Object.values(search).join();
+
+    try {
+        if (title) {
+            const film = await db.Films.findOne({where: {title: title}});
+            const video = await db.Videos.findOne({
+                where: {
+                    [Op.and]: [
+                        {filmId: film.id},
+                        {featured: true}
+                    ]
+                }
+            });
+            res.send(video);
+        }
+    } catch (err) {
+        res.send(err);
+    }
+})
+
+app.post('/api/film/homeSet', ensureAuthenticated, async (req, res,) => {
+    const title = req.body.title;
+    const url = req.body.url;
+
+    try {
+        await db.Films.update({homeId: 1}, {where: {title: title}});
+        const film = await db.Films.findOne({where: {title: title}, attributes: ['id', 'title']});
+        await db.Videos.update({ featured: false }, {where: {[Op.and]: [{featured: true}, {filmId: film.id}]}} )
+        videoUpdated = await db.Videos.update({featured: true}, {where: {[Op.and]: [{video: url}, {filmId: film.id}]}})
+        res.send(videoUpdated);
+    } catch (err) {
+        res.send(err);
+    }
+})
+
+app.get('/api/feature/delete/film', ensureAuthenticated, async (req, res) => {
+    const search = req.query;
+    const id = Object.values(search).join();
+
+    try {
+        if (id) {
+            const removedFeature = await db.Films.update({homeId: null}, {where: {id: id}});
+            await db.Videos.update({ featured: false }, 
+                { where: {
+                    [Op.and]: [
+                        {filmId: id},
+                        {featured: true}
+                    ]
+                }
+            });
+            res.send(removedFeature);
+        }
+    } catch (err) {
+        res.send(err);
+    }
+})
+
+app.post('/api/film/create/video', ensureAuthenticated, async (req, res) => {
+    const vidAdd = req.body;
+
+    try {
+        const film = await db.Films.findOne({where: {title: vidAdd.title}, attributes: ['id', 'title']})
+        await db.Videos.update({ featured: false }, {where: {[Op.and]: [{featured: true}, {filmId: film.id}]}} )
+        const video = await db.Videos.create({
+            video: vidAdd.videoUrl, 
+            filmId: film.id,
+            featured: true
+        })
+        .then(db.Films.update({homeId: 1}, {where: {id: film.id}}))
+        res.send(video);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+// Uploads video(s) to s3 bucket and saves the url in database
+app.post('/api/films/upload/videos', upload.array('files', 5), ensureAuthenticated, (req, res) => {
+    const uploadedPhotos = req.files;
+    const urls = [];
+
+    for (let i = 0; i < uploadedPhotos.length; i++) {
+        const url = `https://s3-${s3.config.region}.amazonaws.com/${uploadedPhotos[i].bucket}/${uploadedPhotos[i].key}`;
+        urls.push(url);
+    }
+
+    console.log(urls);
+    res.send(urls);
+});
+
+// Passport authentication strategy
+passport.use(new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
+    try {
+      const admin = await db.Admin.findOne({ where: { email } });
+      if (!admin) {
+        return done(null, false, { message: 'Incorrect email.' });
+      }
+      const passwordMatches = await bcrypt.compare(password, admin.password);
+      if (!passwordMatches) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, admin);
+    } catch (err) {
+      return done(err);
+    }
+}));
+
+// Serialization and deserialization functions for passport
+passport.serializeUser((admin, done) => {
+    done(null, admin.id);
+});
+  
+passport.deserializeUser(async (id, done) => {
+    try {
+      const admin = await db.Admin.findByPk(id);
+      done(null, admin);
+    } catch (err) {
+      done(err);
+    }
+});
+
+app.use(flash());
+
+app.post('/login', (req, res, next) => {
+    passport.authenticate('local', (err, admin, info) => {
+      if (err) { return next(err); }
+      if (!admin) { 
+        return res.status(401).json({ message: 'Invalid username or password.' });
+      }
+      req.logIn(admin, (err) => {
+        if (err) { return next(err); }
+        return res.json({ message: 'Successfully authenticated.' });
+      });
+    })(req, res, next);
+});
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('An error occurred.');
+});
+
+app.get('/check_auth', (req, res) => {
+    if (req.isAuthenticated()) {
+        res.json({ authenticated: true });
+    } else {
+        res.json({ authenticated: false });
+    }
+});
+
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return next();
+    }
+    res.redirect('/login');
+};
+  
 
 // updates password if the user exists in database
 app.put("/api/admin/:id/password", async (req, res) => {

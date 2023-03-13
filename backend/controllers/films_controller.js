@@ -1,5 +1,6 @@
 const db = require("../models");
 const Films = db.Films;
+const Videos = db.Videos;
 const Op = db.Sequelize.Op;
 
 exports.getByID = (req, res) => {
@@ -26,7 +27,7 @@ exports.getByTitle = (req, res) => {
     const title = req.query.title;
     var condition = title ? {title: { [Op.like]: `%${title}%` } } : null;
 
-    Films.findAll({ where: condition })
+    Films.findAll({ where: condition, include: [{ model: db.Videos, as: "videos" }]})
     .then(data => {
         res.send(data);
     })

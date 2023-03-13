@@ -2,47 +2,64 @@
 import React, {useState} from "react"
 import '../styles/Admin.css'
 
-const Admin =()=>{
+export default function Admin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    fetch('http://localhost:3000/api/admin', {
-      method: 'POST',
-      body: JSON.stringify({email, password})
-    })
-    .then(res => {
-      if(!res.ok){
-        throw new Error('Error');
-      }
-      console.log(res); 
-      return res.json();
-    })
-    .then(data => {
-      console.log(data);
-    })
-    .catch(error => { 
-    console.error(error);
-    setError(error.response.data.error);
-  });
-  }
-    return (
-        <section className='admin'>
-            <div className="admin__content">
-                <h3 className="admin__title">Admin Login</h3>
-                <form className="admin__form" onSubmit={handleSubmit}>
-                    <input className="admin__input admin__input--email" placeholder="Username or Email Address" type="email" value={email} onChange={(event) => setEmail(event.target.value)}/>
-                    <input className="admin__input admin__input--password" placeholder="Password" type = "password" value={password} onChange={(event) => setPassword(event.target.value)} />
-                    <div className="admin__form-actions">
-                    <button className="btn btn-submit" type="submit" >Login</button>
-                    <a href='/forgot password'>Forgot password</a>
-                    </div>
-                </form>
-            </div>
-        </section>
-    )
-}
+    const emailAddress = email.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
 
-export default Admin
+    fetch("http://localhost:3000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: emailAddress[0],
+        password: password
+      })
+    })
+    .then(function(response) {
+      if (response.status === 401) {
+        window.location.replace("http://localhost:3000/#/admin_login");
+        response.json().then(data => {
+          setErrorMessage(data.message);
+        });
+      } else if (response.ok) {
+        window.location.replace("http://localhost:3000/#/");
+      } else {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    })
+    .catch(function(error) {
+      console.error(error);
+    });
+  }
+
+  return (
+      <section className='admin'>
+          <div className="admin__content">
+              <h3 className="admin__title">Admin Login</h3>
+              <form className="admin__form" onSubmit={handleSubmit}>
+                  {errorMessage && <div>{errorMessage}</div>}
+                  <input className="admin__input admin__input--email" placeholder="Username or Email Address" type="email" value={email} onChange={handleEmailChange}/>
+                  <input className="admin__input admin__input--password" placeholder="Password" type="password" value={password} onChange={handlePasswordChange} />
+                  <div className="admin__form-actions">
+                    <button className="btn btn-submit" type="submit">Login</button>
+                    <a href='/forgot password'>Forgot password</a>
+                  </div>
+              </form>
+          </div>
+      </section>
+  )
+}

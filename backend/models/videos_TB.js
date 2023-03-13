@@ -6,9 +6,11 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true
         },
         video: {
-            type: DataTypes.STRING,
-            unique: true
+            type: DataTypes.STRING
         },
+        featured: {
+            type: DataTypes.BOOLEAN
+        }
     }, {
         tableName: "Videos",
         timestamps: false

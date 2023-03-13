@@ -1,23 +1,74 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../styles/Project.css'
 import blank from '../assets/blank.jpg'
 import play from '../assets/pbutton3.png'
+import Authenticate from './Authenticate.js';
 
 function Project(props) {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
-    function popupBtn(){
-        props.setButtonPopup(true)
-         
-        props.setUrl(props.videos[0].video)
-    }
+  function popupBtn() {
+      props.setButtonPopup(true);
+
+      fetch(`http://localhost:3000/api/video/featured/film?title=${props.title}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        props.setUrl(data.video);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
+  const handleDelete = () => {
+    fetch(`http://localhost:3000/api/feature/delete/film?id=${props.id}`)
+      .then(response => response.json())
+      .catch(error => {
+        console.error(error);
+        return alert('Error: Could not delete feature!');
+      });
+    window.location.reload();
+  };
+
+  const handleConfirm = () => {
+    setShowConfirm(false);
+    handleDelete();
+  };
+
+  const handleCancel = () => {
+    setShowConfirm(false);
+  };
 
   return (
-    <div className = "imgContainer">
-    <button className = "playButton"  onClick  = {() =>popupBtn() }></button>
-      <img className = 'blank' src = {props.photo}/>
-      <span className = 'caption'>{props.title.toUpperCase()}</span>
-      </div>
+    <><Authenticate setAuthen={setAuthenticated}/>
+    <div className="imgContainer">
+        <button className="playButton" onClick={() => popupBtn()}></button>
+        <img className='blank' src={props.photo} />
+        <span className='caption'>{props.title.toUpperCase()}</span>
+        {authenticated ? (
+          <div>
+            <button className="delete-feature" onClick={() => setShowConfirm(true)}>Delete</button>
+            {showConfirm && (
+              <div className = "popup">
+                <div className = "popup-inner-upcomingAdd">
+                  <div className="popup-header">
+                    <h2>Are you sure you want to delete this feature?</h2>
+                  </div>
+                  <div className="popup-content">
+                    <div className="popup-deleteFeature">
+                      <button className="confirm-buttons" onClick={handleConfirm}>Yes</button>
+                      <button className="confirm-buttons" onClick={handleCancel}>No</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (null)}
+    </div></>
   )
 }
 
-export default Project
+export default Project;

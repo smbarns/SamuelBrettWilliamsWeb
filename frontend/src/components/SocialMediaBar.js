@@ -27,7 +27,6 @@ function SocialMediaBar() {
                     <FontAwesomeIcon icon = {faYoutube}/>
                     </a>
             </div>
-
         </div>
     )
 }

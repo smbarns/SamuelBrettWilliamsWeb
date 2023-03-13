@@ -7,7 +7,6 @@
     position: relative;
     justify-content: center;
     align-items: center;
-    z-index: 0;
 }
 
 .blank{
@@ -17,10 +16,34 @@
     object-position: top;
 
 }
+
+.blank-add{
+    height:380px;
+    width: 450px;
+    border: 2px solid rgb(131, 127, 127);
+    margin-bottom: 85px;
+}
+
 .caption{
     font-size: 25px;
     padding-top: 15px;
     font-family: Abel;
+}
+
+.addButton{
+    position: relative;
+    background-color: transparent;
+    top:40%;
+    background-size: 100px;
+    width: 100px;
+    height: 83px;
+    border: 0;
+    cursor: pointer;
+    left: 164px;
+}
+
+.addButton img{
+    width:100px;
 }
 
 .playButton{
@@ -54,4 +77,44 @@
     font-family: var(--secondfont);
 	margin-top: 0;
 	margin-bottom: -12px
+}
+
+.delete-feature {
+    color: white;
+    background-color: black;
+    width: 100px;
+    border-color: #fff;
+    border-radius: 5px;
+    font-family: Abel;
+    font-size: 15px;
+    align-self: flex-end;
+    transition: all .3s;
+}
+
+.delete-feature:hover {
+    background-color: #494848;
+    cursor: pointer;
+}
+
+.popup-deleteFeature {
+    display: flex;
+}
+
+.confirm-buttons {
+    background-color: initial;
+    border-color: #fff;
+    border-radius: 5px;
+    color: #fff;
+    float: right;
+    font-family: sans-serif;
+    font-size: 18px;
+    padding: 10px 20px;
+    transition: all .3s;
+    width: 150px;
+    margin: 10px;
+}
+
+.confirm-buttons:hover{
+    background-color: #584646;
+    cursor: pointer;
 }

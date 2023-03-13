@@ -24,7 +24,7 @@ function App() {
         <Route path = "films" element =  {<Films/>}/>
         <Route path = "press" element =  {<Press/>}/>
         <Route path = "contact" element =  {<Contact/>}/>
-        <Route path = "admin" element = {<Admin/>}/>
+        <Route path = "admin_login" element = {<Admin/>}/>
         <Route path = "filmdetails/:type" element = {<FilmDetails/>}/>
         <Route path = "playdetails/:type" element = {<PlayDetails/>}/>
       </Routes>

@@ -5,14 +5,12 @@ import play from '../assets/pbutton3.png'
 import ReactPlayer from 'react-player'
 function Video(props) {
     
-    function popupBtn(){
-        props.setButtonPopup(true
-          )
-         
-        props.setUrl(props.url)
-    }
+  function popupBtn(){
+      props.setButtonPopup(true)
+        
+      props.setUrl(props.url)
+  }
 
-console.log(props.url)
   return (
     <div className = "video">
     <div className = "imgContainer">

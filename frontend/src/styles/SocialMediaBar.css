@@ -1,7 +1,7 @@
 .socialBar{
     display: flex;
     flex-direction: row;
-    background-color: rgb(51, 20, 20, .65);
+    background-color: rgb(51, 20, 20, 65%);
     height: 60px;
     width: 100%;
 }

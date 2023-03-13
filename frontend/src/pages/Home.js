@@ -8,11 +8,15 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {useRef} from 'react'
 import Popup from '../components/Popup'
 import ReactPlayer from 'react-player'
+import Authenticate from '../components/Authenticate.js';
+import PlusIcon from '../assets/add-icon.png';
+import UpcomingAddPopup from '../components/UpcomingAddPopup'
 
 function Home() {
-  const [buttonPopup,setButtonPopup] = useState(false
-    );
-  const [popupUrl,setPopupUrl] =useState('')
+  const [buttonPopup,setButtonPopup] = useState(false);
+  const [popupUrl,setPopupUrl] =useState('');
+  const [upcomingAdd, setUpcomingAdd] = useState(false);
+  const [filmSelect, setFilmSelect] = useState(false);
 
   const [data,setData] = useState(null);
   const [pic,setPic] = useState();
@@ -20,6 +24,7 @@ function Home() {
   const [projs,setProjects] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [authenticated, setAuthenticated] = useState()
 
 
   const scrollElement = useRef(null)
@@ -34,8 +39,11 @@ function Home() {
     scrollElement.current.scrollLeft - 1700
   }
 
- 
- 
+  function upcomingPopup(){
+    setUpcomingAdd(true);
+    setFilmSelect(true);
+  }
+
 useEffect(() => {
   fetch('http://localhost:3000/api/homepage')
     .then(response => {
@@ -48,7 +56,7 @@ useEffect(() => {
       setData(data);
       setPic(data[0].client_photo);
       setDesc(data[0].about_des);
-      setProjects(data[0].films)
+      setProjects(data[0].films.reverse());
     })
     .catch(error => {
       console.error("Error fetching data: ", error);
@@ -63,8 +71,6 @@ useEffect(() => {
  
 if (loading) return <div className="page">Loading...</div>;
 if (error) return <div className="page">Error!</div>;
-console.log(data)
-console.log(projs)
 
 const projectReel = projs.map(item => {   // later data will be equal to the state variable that accepted the api data from the fetch request
   return(
@@ -76,7 +82,6 @@ const projectReel = projs.map(item => {   // later data will be equal to the sta
     />
   )
 })
-console.log(data.Films)
 
   return (
     
@@ -110,20 +115,33 @@ console.log(data.Films)
       </div>
       <div className = 'upcomingProjects'>
         <div className = 'topReel'>
-          <div className = 'reelText'>UPCOMING PROJECTS
+          <div className = 'reelText'>FEATURED PROJECTS
            </div>
            <div className = 'arrows'>
            <ArrowBackIosIcon onClick = {scrollLeft} ></ArrowBackIosIcon>
            <ArrowForwardIosIcon onClick = {scrollRight}></ArrowForwardIosIcon>
            </div>
        
-          </div>
+        </div>
         <div className = 'reel' ref = {scrollElement}>
+          <Authenticate setAuthen={setAuthenticated}/>
+          {authenticated ? (
+              <div className="imgContainer">
+                <div className="blank-add">
+                  <button className="addButton" onClick={() => upcomingPopup()}>
+                    <img src = {PlusIcon}></img></button>
+                </div>
+              </div>
+            ) : (null)}
           {projectReel}
-         
-          </div>
-       
-          <Popup url = {popupUrl} trigger = {buttonPopup}  setTrigger = {setButtonPopup} ></Popup>
+        </div>
+
+        {authenticated ? (
+          <UpcomingAddPopup trigger={upcomingAdd}  setTrigger={setUpcomingAdd} filmSelect={filmSelect} setFilmSelect={setFilmSelect}></UpcomingAddPopup>
+        ) : (null)}
+
+        <Popup url={popupUrl} trigger={buttonPopup}  setTrigger={setButtonPopup} ></Popup>
+        {console.log(popupUrl)}
        
       </div>
       <div>

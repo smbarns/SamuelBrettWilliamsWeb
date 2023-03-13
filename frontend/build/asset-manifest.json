@@ -1,18 +1,32 @@
 {
   "files": {
-    "main.css": "/static/css/main.90db78ba.css",
-    "main.js": "/static/js/main.85be5192.js",
+    "main.css": "/static/css/main.34f7a271.css",
+    "main.js": "/static/js/main.33045427.js",
     "static/js/787.1a543813.chunk.js": "/static/js/787.1a543813.chunk.js",
+    "static/media/ituneslogo.png": "/static/media/ituneslogo.0a8250f7c0cf5829adda.png",
+    "static/media/films_background.png": "/static/media/films_background.588bc69716225ae698ad.png",
+    "static/media/press-bg.jpg": "/static/media/press-bg.fdc2df4f80cbbea8ae8c.jpg",
+    "static/media/coverplaceholder.jpg": "/static/media/coverplaceholder.d187e637100754544b3a.jpg",
+    "static/media/plays_background.png": "/static/media/plays_background.2963dac2357ded739675.png",
+    "static/media/close.jpg": "/static/media/close.349d44df909bc1fce313.jpg",
+    "static/media/contact_background.jpg": "/static/media/contact_background.fb921e68d58ebbe1f57b.jpg",
     "static/media/biography_background.jpeg": "/static/media/biography_background.aeb006c8057835f51c12.jpeg",
     "static/media/blank.jpg": "/static/media/blank.3852aa0e7097debb6630.jpg",
+    "static/media/therevival.jpg": "/static/media/therevival.622619ec3cb7f0b1b05e.jpg",
+    "static/media/camera.jpg": "/static/media/camera.0204e0bd4b4eeacc26ce.jpg",
+    "static/media/amazonlogo.png": "/static/media/amazonlogo.f8b9162b0514f9979412.png",
     "static/media/sam.jpg": "/static/media/sam.9ccc1771384bac1f9786.jpg",
+    "static/media/add-icon.png": "/static/media/add-icon.75d4c6ff18ca40bcbea1.png",
+    "static/media/twitter-svgrepo-com.svg": "/static/media/twitter-svgrepo-com.f49815cbba7ba28feff2.svg",
+    "static/media/instagram-svgrepo-com.svg": "/static/media/instagram-svgrepo-com.bcb6109384efc1278e79.svg",
+    "static/media/facebook-svgrepo-com.svg": "/static/media/facebook-svgrepo-com.4ceadf7e8f88b0e7bdad.svg",
     "index.html": "/index.html",
-    "main.90db78ba.css.map": "/static/css/main.90db78ba.css.map",
-    "main.85be5192.js.map": "/static/js/main.85be5192.js.map",
+    "main.34f7a271.css.map": "/static/css/main.34f7a271.css.map",
+    "main.33045427.js.map": "/static/js/main.33045427.js.map",
     "787.1a543813.chunk.js.map": "/static/js/787.1a543813.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.90db78ba.css",
-    "static/js/main.85be5192.js"
+    "static/css/main.34f7a271.css",
+    "static/js/main.33045427.js"
   ]
 }
