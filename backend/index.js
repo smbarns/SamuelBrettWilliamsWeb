@@ -724,6 +724,33 @@ function ensureAuthenticated(req, res, next) {
     }
     res.redirect('/login');
 };
+
+//delete films from data and associated dependencies 
+app.delete('/api/films/:id', ensureAuthenticated,(req, res) => {
+    const filmId = req.params.id;
+    // Delete any associated reviews first
+    db.Videos.destroy({ where: { filmId : filmId } })
+        .then(() => {
+            // Delete any associated videos
+            return db.Still_photos.destroy({ where: { filmId: filmId } });
+        })
+        .then(() => {
+            // Delete any associated cast members
+            return db.Buy_links.destroy({ where: { filmId: filmId } });
+        })
+        .then(() => {
+            // Once all associated records have been deleted, delete the film itself
+            return db.Films.destroy({ where: { id: filmId } });
+        })
+        .then(() => {
+            res.status(204).send(); // Return a 204 No Content response if the delete was successful
+        })
+        .catch(error => {
+            console.error("Error deleting film: ", error);
+            res.status(500).json({ error: "Failed to delete film" }); // Return a 500 Internal Server Error response if there was an error
+        });
+});
+
   
 
 // updates password if the user exists in database

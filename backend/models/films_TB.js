@@ -38,19 +38,23 @@ module.exports = (sequelize, DataTypes) => {
     Films.associate = models => {
         Films.belongsTo(models.Homepage, {
             as: 'homepage',
-            foreignKey: 'homeId'
+            foreignKey: 'homeId',
+            onDelete: 'CASCADE'
         });
         Films.hasMany(models.Buy_links, {
             as: 'buy_links',
-            foreignKey: 'filmId'
+            foreignKey: 'filmId',
+            onDelete: 'CASCADE'
         });
         Films.hasMany(models.Still_photos, {
             as: 'still_photos',
-            foreignKey: 'filmId'
+            foreignKey: 'filmId',
+            onDelete: 'CASCADE'
         });
         Films.hasMany(models.Videos, {
             as: 'videos',
-            foreignKey: 'filmId'
+            foreignKey: 'filmId',
+            onDelete: 'CASCADE'
         });
     };
     return Films;
