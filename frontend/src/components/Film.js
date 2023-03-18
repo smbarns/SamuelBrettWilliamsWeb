@@ -34,14 +34,14 @@ function Film(props) {
 
     <div className="film">
       <Link to={`/filmdetails/${props.title}`} state={{
-        cover: props.cover,
+        cover: props.film_photo,
         title: props.title,
         director: props.director,
-        writer: props.writer,
+        writer: props.screenplay,
         stars: props.stars,
         status: props.status,
         available: props.available,
-        synopsis: props.synopsis,
+        synopsis: props.description,
         photos: props.photos,
         videos: props.videos
       }} ><img className="filmImg" src={placeholder} /></Link>

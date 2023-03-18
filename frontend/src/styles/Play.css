@@ -6,20 +6,22 @@
    
 }
 .playImg{
-    padding-top: 5px;
+    margin-top: -40px;
     height: 250px;
     width: 285px;
+    padding-bottom: 65px;
+    
 }
 .playTitle{
     font-weight: lighter;
     font-size: medium;
-    margin-top: -50px;
+    margin-top: -65px;
 }
 
 .playDuration{
     font-weight: lighter;
     font-size: x-small;
-    margin-top: -48px;
+    margin-top: 3px
 }
 .openDetails{
     background-color: transparent;

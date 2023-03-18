@@ -35,17 +35,17 @@ function Play(props) {
     <div className="play">
       <Link to={`/playdetails/${props.title}`} state={{
         title: props.title,
-        cover: props.cover,
+        cover: props.play_photo,
         photos: props.photos,
-        duration: props.duration,
-        synopsis: props.synopsis,
-        production: props.production,
+        duration: props.type_play,
+        synopsis: props.description,
+        production: props.productions,
         development: props.development,
         info: props.info,
         videos: props.videos,
       }} ><img className="playImg" src={placeholder} /></Link>
       <span className="playTitle"> {props.title} </span>
-      <span className="playDuration"> {props.duration} </span>
+      <span className="playDuration"> {props.type_play} </span>
     </div>
 
   )
