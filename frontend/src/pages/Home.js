@@ -20,13 +20,44 @@ function Home() {
 
   const [data,setData] = useState(null);
   const [pic,setPic] = useState();
-  const [desc,setDesc] = useState();
+  const [des, setDes] = useState();
   const [projs,setProjects] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [editDes, setEditDes] = useState(false);
+  const [editPic, setEditPic] = useState(false);
+  const [newDes, setNewDes] = useState('');
+  const [newPic, setNewPic] = useState('');
   const [authenticated, setAuthenticated] = useState()
 
 
+  const handleEditDes = () => {
+    setEditDes(true);
+    setNewDes(des);
+  };
+  
+  const handleEditPic = () => {
+    setEditPic(true);
+    setNewPic(pic);
+  };
+  
+  
+  const handleSave = () => {
+    fetch('http://localhost:3000/api/homepage', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ about_des: newDes, client_photo: newPic }),
+    })
+      .then(() => {
+        setDes(newDes);
+        setPic(newPic);
+        setEditDes(false);
+        setEditPic(false);
+      })
+      .catch((error) => {
+        console.error('Error updating bio_des/client_photo: ', error);
+      });
+  };
   const scrollElement = useRef(null)
 
   const scrollRight = () =>{
@@ -55,7 +86,7 @@ useEffect(() => {
     .then(data => {
       setData(data);
       setPic(data[0].client_photo);
-      setDesc(data[0].about_des);
+      setDes(data[0].about_des);
       setProjects(data[0].films.reverse());
     })
     .catch(error => {
@@ -103,10 +134,31 @@ const projectReel = projs.map(item => {   // later data will be equal to the sta
         </div>
       <div className = "about">  
           <div className = "aboutBody">
+          {editPic && (
+              <div>
+                <label htmlFor="pic">Client Photo URL:</label>
+                <input
+                  type="text"
+                  id="pic"
+                  value={newPic}
+                  onChange={(e) => setNewPic(e.target.value)}
+                />
+              </div>
+            )}
+                {editDes && (
+              <div>
+                <label htmlFor="des">Bio Description:</label>
+                <textarea
+                  id="des"
+                  value={newDes}
+                  onChange={(e) => setNewDes(e.target.value)}
+                ></textarea>
+              </div>
+            )}
             <div>
             <h1>ABOUT</h1>
             <h2 className = "clientDesc">
-              {desc}
+            {des}
             </h2>
             </div>
      
@@ -144,8 +196,8 @@ const projectReel = projs.map(item => {   // later data will be equal to the sta
         {console.log(popupUrl)}
        
       </div>
-      <div>
-      </div>
+      <button onClick={handleEditPic}>Edit Client Photo</button>
+      <button onClick={handleEditDes}>Edit About Description</button>
     </div>
  </div>
   )

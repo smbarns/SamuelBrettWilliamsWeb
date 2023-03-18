@@ -9,6 +9,7 @@ function Play(props) {
   const [pic, setPic] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const title = encodeURIComponent(props.title);
 
@@ -26,6 +27,25 @@ function Play(props) {
         setLoading(false);
       })
   }, [])
+
+  const handleDelete = () => {
+    fetch(`http://localhost:3000/api/feature/delete/play?id=${props.id}`)
+      .then(response => response.json())
+      .catch(error => {
+        console.error(error);
+        return alert('Error: Could not delete feature!');
+      });
+    window.location.reload();
+  };
+
+  const handleConfirm = () => {
+    setShowConfirm(false);
+    handleDelete();
+  };
+
+  const handleCancel = () => {
+    setShowConfirm(false);
+  };
 
   if (loading) return <div className="page">Loading...</div>;
   if (error) return <div className="page">Error!</div>;
@@ -46,6 +66,24 @@ function Play(props) {
       }} ><img className="playImg" src={placeholder} /></Link>
       <span className="playTitle"> {props.title} </span>
       <span className="playDuration"> {props.type_play} </span>
+      <div>
+            <button className="delete-feature" onClick={() => setShowConfirm(true)}>Delete</button>
+            {showConfirm && (
+              <div className = "popup">
+                <div className = "popup-inner-playsAdd">
+                  <div className="popup-header">
+                    <h2>Are you sure you want to delete this feature?</h2>
+                  </div>
+                  <div className="popup-content">
+                    <div className="popup-deleteFeature">
+                      <button className="confirm-buttons" onClick={handleConfirm}>Yes</button>
+                      <button className="confirm-buttons" onClick={handleCancel}>No</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
     </div>
 
   )
