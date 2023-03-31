@@ -1,26 +1,20 @@
 .play{
     display: flex;
     flex-direction: column;
-    padding-top: 20px;
     align-items: center;
    
 }
 .playImg{
-    margin-top: -40px;
-    height: 250px;
-    width: 285px;
-    padding-bottom: 65px;
-    
+    height: 300px;
+    width: 375px;
 }
 .playTitle{
     font-weight: lighter;
-    font-size: medium;
-    margin-top: -65px;
 }
 
 .playDuration{
     font-weight: lighter;
-    font-size: x-small;
+    font-size: small;
     margin-top: 3px
 }
 .openDetails{

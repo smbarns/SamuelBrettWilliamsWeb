@@ -3,6 +3,7 @@ import placeholder from '../assets/placeholder.png'
 import '../styles/Play.css'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+
 function Play(props) {
 
   const [data, setData] = useState(null);
@@ -33,17 +34,20 @@ function Play(props) {
   return (
 
     <div className="play">
-      <Link to={`/playdetails/${props.title}`} state={{
-        title: props.title,
-        cover: props.play_photo,
-        photos: props.photos,
-        duration: props.type_play,
-        synopsis: props.description,
-        production: props.productions,
-        development: props.development,
-        info: props.info,
-        videos: props.videos,
-      }} ><img className="playImg" src={placeholder} /></Link>
+      <div>
+        <Link to={`/playdetails/${props.title}`} state={{
+          title: props.title,
+          cover: props.photo,
+          writer: props.writer,
+          photos: props.still_photos,
+          duration: props.type_play,
+          synopsis: props.description,
+          production: props.productions,
+          development: props.development,
+          videos: props.videos,
+          buy_links: props.buy_links,
+        }} ><img className="playImg" src={placeholder} /> </Link>
+      </div>
       <span className="playTitle"> {props.title} </span>
       <span className="playDuration"> {props.type_play} </span>
     </div>

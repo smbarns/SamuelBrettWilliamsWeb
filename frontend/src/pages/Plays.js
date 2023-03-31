@@ -47,7 +47,7 @@ export default function Plays() {
          throw response;
        })
        .then(data => {
-         setData(data);
+         setData(data.reverse());
          setFilteredData(data);
        })
        .catch(error => {

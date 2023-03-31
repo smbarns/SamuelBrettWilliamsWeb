@@ -59,43 +59,36 @@ const upload = multer({
 });
 
 // Handle file upload and then delete (for testing purposes)
-app.post('/upload', (req, res) => {
-    upload(req, res, function (err) {
+app.post('/upload', upload.array('files', 5), (req, res) => {
+    const uploadedPhotos = req.files;
+    const urls = [];
+
+    for (let i = 0; i < uploadedPhotos.length; i++) {
+        const url = `https://s3-${s3.config.region}.amazonaws.com/${uploadedPhotos[i].bucket}/${uploadedPhotos[i].key}`;
+        urls.push(url);
+    }
+
+    console.log(urls);
+
+    const uploadedFileKeys = req.files.map(file => file.key);
+
+    const params = {
+        Bucket: 'samuel-brett-williams',
+        Delete: {
+            Objects: uploadedFileKeys.map(key => ({ Key: key })),
+            Quiet: false
+        }
+    };
+
+    s3.deleteObjects(params, function (err, data) {
         if (err) {
-            console.log(err);
-            return res.status(500).json({ error: err })
+            console.log('Error deleting files:', err);
+        } else {
+            console.log('Files deleted successfully:', data);
         }
-
-        const uploadedPhotos = req.files;
-        const urls = [];
-
-        for (let i = 0; i < uploadedPhotos.length; i++) {
-            const url = `https://s3-${s3.config.region}.amazonaws.com/${uploadedPhotos[i].bucket}/${uploadedPhotos[i].key}`;
-            urls.push(url);
-        }
-
-        console.log(urls);
-
-        const uploadedFileKeys = req.files.map(file => file.key);
-
-        const params = {
-            Bucket: 'samuel-brett-williams',
-            Delete: {
-                Objects: uploadedFileKeys.map(key => ({ Key: key })),
-                Quiet: false
-            }
-        };
-
-        s3.deleteObjects(params, function (err, data) {
-            if (err) {
-                console.log('Error deleting files:', err);
-            } else {
-                console.log('Files deleted successfully:', data);
-            }
-        });
-
-        return res.status(200).json({ message: 'Files uploaded and deleted successfully' });
     });
+
+    return res.status(200).json({ message: 'Files uploaded and deleted successfully' });
 });
 
 // Delete file at specific key

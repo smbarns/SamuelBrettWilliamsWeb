@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import '../styles/UpcomingAdd.css';
 
 function UpcomingAddPopup(props) {
@@ -199,7 +200,7 @@ function UpcomingAddPopup(props) {
                 {props.filmSelect && (
                   <div className = "popup">
                     <div className = "popup-inner-upcomingAdd">
-                        <button className = "close-btn" onClick ={() => toggleTrigger()} ><CloseIcon></CloseIcon> </button>
+                        <button className = "close-btn" onClick ={() => toggleTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
                         <div className="popup-header">
                             <h2>SELECT A FILM TO FEATURE</h2>
                         </div>
@@ -223,7 +224,7 @@ function UpcomingAddPopup(props) {
                     {secondTrigger && (
                     <div className = "popup">
                         <div className = "popup-inner-upcomingAdd">
-                            <button className = "close-btn" onClick ={() => toggleSecondTrigger()} ><CloseIcon></CloseIcon> </button>
+                            <button className = "close-btn" onClick ={() => toggleSecondTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
                             <div className="popup-header">
                                 <h2>SELECT AN EXISTING VIDEO</h2>
                             </div>

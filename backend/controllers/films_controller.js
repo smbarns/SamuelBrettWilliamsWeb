@@ -27,7 +27,7 @@ exports.getByTitle = (req, res) => {
     const title = req.query.title;
     var condition = title ? {title: { [Op.like]: `%${title}%` } } : null;
 
-    Films.findAll({ where: condition, include: [{ model: db.Videos, as: "videos" }]})
+    Films.findAll({ where: condition, include: [{ model: db.Buy_links, as: "buy_links" }, { model: db.Videos, as: "videos" }, { model: db.Still_photos, as: "still_photos" }]}) 
     .then(data => {
         res.send(data);
     })

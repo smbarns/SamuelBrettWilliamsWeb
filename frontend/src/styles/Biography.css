@@ -5,8 +5,9 @@
     margin-left: -121px;
     padding-top: 100px;
 }
-span{
+.bio-span{
     font-size: 20px;
+    font-weight: lighter;
 }
 .bioBody{
     /*display: flex;

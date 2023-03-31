@@ -1,10 +1,9 @@
 import React from 'react'
 import '../styles/Home.css'
 import {useEffect, useState} from 'react'
-import dataSP from '../sampleprojects.js'
 import Project from '../components/Project'
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import {useRef} from 'react'
 import Popup from '../components/Popup'
 import ReactPlayer from 'react-player'
@@ -56,7 +55,7 @@ useEffect(() => {
       setData(data);
       setPic(data[0].client_photo);
       setDesc(data[0].about_des);
-      setProjects(data[0].films.reverse());
+      setProjects(data[0].films);
     })
     .catch(error => {
       console.error("Error fetching data: ", error);
@@ -97,20 +96,17 @@ const projectReel = projs.map(item => {   // later data will be equal to the sta
             playing= {true}
             controls = {false}
             muted = {true}
-            
-
           />
         </div>
       <div className = "about">  
           <div className = "aboutBody">
             <div>
-            <h1>ABOUT</h1>
-            <h2 className = "clientDesc">
-              {desc}
-            </h2>
+              <h1>ABOUT</h1>
+              <h2 className = "clientDesc">
+                {desc}
+              </h2>
             </div>
-     
-        <img className = 'samImg' src = {pic} />
+            <img className = 'samImg' src = {pic} />
         </div>
       </div>
       <div className = 'upcomingProjects'>
@@ -118,8 +114,8 @@ const projectReel = projs.map(item => {   // later data will be equal to the sta
           <div className = 'reelText'>FEATURED PROJECTS
            </div>
            <div className = 'arrows'>
-           <ArrowBackIosIcon onClick = {scrollLeft} ></ArrowBackIosIcon>
-           <ArrowForwardIosIcon onClick = {scrollRight}></ArrowForwardIosIcon>
+            <FontAwesomeIcon icon={faAngleLeft} size="lg" style={{ marginRight: '18px' }} onClick = {scrollLeft}/>
+            <FontAwesomeIcon icon={faAngleRight} size="lg" onClick = {scrollRight}/>
            </div>
        
         </div>

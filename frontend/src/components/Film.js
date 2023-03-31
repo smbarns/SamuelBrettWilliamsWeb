@@ -33,20 +33,22 @@ function Film(props) {
   return (
 
     <div className="film">
-      <Link to={`/filmdetails/${props.title}`} state={{
-        cover: props.film_photo,
-        title: props.title,
-        director: props.director,
-        writer: props.screenplay,
-        stars: props.stars,
-        status: props.status,
-        available: props.available,
-        synopsis: props.description,
-        photos: props.photos,
-        videos: props.videos
-      }} ><img className="filmImg" src={placeholder} /></Link>
+      <div>
+        <Link to={`/filmdetails/${props.title}`} state={{
+          cover: props.photo,
+          title: props.title,
+          director: props.director,
+          writer: props.screenplay,
+          stars: props.stars,
+          status: props.status,
+          buy_links: props.buy_links,
+          synopsis: props.description,
+          photos: props.still_photos,
+          videos: props.videos
+        }} ><img className="filmImg" src={placeholder} /></Link>
+      </div>
       <span className="filmTitle"> {props.title} </span>
-      <span className="filmType">  FILM </span>
+      <span className="filmType"> {props.type_film} </span>
     </div>
 
   )

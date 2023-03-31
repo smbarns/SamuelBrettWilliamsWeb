@@ -2,20 +2,17 @@
     display: flex;
     flex-direction: row;
     font-family: Abel;
-    margin-top: 60px;
-    margin-left: 150px;
-    margin-right: 150px;
     gap: 100px;
     justify-content: center;
 }
 .left{
     display: flex;
-    flex-direction: column;
 }
 
 .playCoverImg{
-    width: 600px;
+    width: 700px;
     height: auto;
+    display: flex;
 }
 .playsTitle{
     display: flex;
@@ -27,29 +24,19 @@
     height: auto;
     white-space: nowrap;
     margin-top: -80px;
+    padding-bottom: 10px;
 }
 .playSynopsis{
-    font-size: 20px;
-    margin-top: -10px;
+    font-size: 24px;
+    margin-top: 50px;
 }
 .production{
-    display: flex;
-    flex-direction: column;
     font-size: 24px;
-}
-.productionList{
-    margin-top: -40px;
-    font-size: 18px;
+    margin-top: 15px;
 }
 .development{
-    margin-top: -10px;
-    display: flex;
-    flex-direction: column;
+    margin-top: 15px;
     font-size: 24px;
-}
-.developmentList{
-    margin-top: -40px;
-    font-size: 18px;
 }
 
 .detailPageVideos{
@@ -61,4 +48,57 @@
 }
 .detailPageVideos .arrows{
     padding-left:160px;
+}
+
+.play-writer {
+    font-size: 24px;
+}
+
+.play_avaliable {
+    margin-top: 50px;
+    margin-bottom: 15px;
+}
+
+.play_links {
+    display: flex;
+    gap: 30px;
+    max-height: 110px;
+}
+
+.playlink {
+    display: flex;
+}
+
+.playlink a img {
+    object-fit: contain;
+    height: 100%;
+    max-height: 70px;
+    max-width: 150px;
+}
+
+.playReel{
+    display:flex;
+    flex-direction: column;
+    margin-top:150px;
+    justify-content:center
+}
+
+.playReel .playTopReel{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content:center;
+    margin-bottom: 20px;
+}
+
+.playReel .playVideoReelText{
+    padding-right:1450px;
+    font-size: 40px;
+    font-family: Abel;
+}
+
+.playReel .playPhotoReelText{
+    padding-right:1440px;
+    font-size: 40px;
+    font-family: Abel;
 }

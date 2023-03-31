@@ -4,7 +4,6 @@
     display: grid;
     grid-template-columns: 0fr 0fr 0fr 0fr;
     align-items: center;
-    justify-content: center;
     gap:40px;
 }
 

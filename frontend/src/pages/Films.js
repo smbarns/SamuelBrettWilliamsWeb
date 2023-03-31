@@ -46,7 +46,7 @@ export default function Films() {
          throw response;
        })
        .then(data => {
-         setData(data);
+         setData(data.reverse());
          setFilteredData(data);
        })
        .catch(error => {

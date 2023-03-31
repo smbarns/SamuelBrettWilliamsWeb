@@ -97,7 +97,7 @@ export default function Biography() {
         ) : (
           <div className="bioBody">
             <img className="bioImg" src={pic} />
-            <span>{des}</span>
+            <span className='bio-span'>{des}</span>
             <div>
               <button onClick={handleEditPic}>Edit Client Photo</button>
               <button onClick={handleEditDes}>Edit Bio Description</button>

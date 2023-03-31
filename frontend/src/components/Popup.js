@@ -1,6 +1,7 @@
 import React from 'react'
 import '../styles/Popup.css'
-import CloseIcon from '@mui/icons-material/Close';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import ReactPlayer from 'react-player'
 
 
@@ -14,7 +15,7 @@ function Popup(props) {
   return (props.trigger) ? (
     <div className = "popup">
         <div className = "popup-inner">
-            <button className = "close-btn"onClick ={() => toggleTrigger()} ><CloseIcon></CloseIcon> </button>
+            <button className = "close-btn"onClick ={() => toggleTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
             <div className='popup-wrapper'>
           <ReactPlayer
             className='popup-player'
@@ -25,7 +26,7 @@ function Popup(props) {
             controls = {true}
             muted = {true}
             origin ='http://localhost:3000'
-            
+            disableDeferredLoading = {true}
           />
         </div>
         </div>
