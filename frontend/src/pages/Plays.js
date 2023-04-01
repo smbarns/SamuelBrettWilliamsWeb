@@ -8,6 +8,9 @@ import ButtonGroup from '../components/ButtonGroup'
 import Play from '../components/Play.js'
 import playData from '../samples/samplePlays'
 import banner_img from '../assets/plays_background.png'
+import Authenticate from '../components/Authenticate.js';
+import PlusIcon from '../assets/add-icon.png';
+import PlayAddPopup from '../components/PlayAddPopup.js';
 import '../styles/Banner.css'
 
 
@@ -17,6 +20,10 @@ export default function Plays() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [active, setActive] = useState("All");
+
+  const [playAdd, setPlayAdd] = useState(false);
+  const [playAddPop, setPlayAddPop] = useState(false);
+  const [authenticated, setAuthenticated] = useState();
 
 
   const plays = filteredData && filteredData.map(item => {
@@ -29,13 +36,13 @@ export default function Plays() {
 
 
   const setPlays = plays => {
-     setFilteredData(plays);
-   }
+    setFilteredData(plays);
+  }
 
 
-   const setActiveProp = (tabname) => {
-     setActive(tabname);
-   }
+  const setActiveProp = (tabname) => {
+    setActive(tabname);
+  }
 
 
    useEffect(() => {
@@ -86,7 +93,12 @@ export default function Plays() {
      {
        type: "Ten Minute",
        event: showType
-     }];
+    }];
+
+    function playAddPopup(){
+      setPlayAdd(true);
+      setPlayAddPop(true);
+    }
 
 
   return (
@@ -101,11 +113,24 @@ export default function Plays() {
 
 
         <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
+        <Authenticate setAuthen={setAuthenticated}/>
         {
         <div className="plays">
+          {authenticated ? (
+            <div className="imgContainer">
+              <div className="blank-add-plays">
+                <button className="addButton" onClick={() => playAddPopup()}>
+                  <img src = {PlusIcon}></img></button>
+              </div>
+            </div>
+          ) : (null)}
           {plays}
         </div>
         }
+
+        {authenticated ? (
+          <PlayAddPopup trigger={playAdd}  setTrigger={setPlayAdd} playAddPop={playAddPop} setPlayAddPop={setPlayAddPop} data={data}></PlayAddPopup>
+        ) : (null)}
         
       </div></>
   );

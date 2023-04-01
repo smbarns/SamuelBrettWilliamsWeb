@@ -17,3 +17,13 @@
     object-fit: cover;
     object-position: 0px 40%;
 }
+
+.blank-add-plays {
+    width: 375px;
+    height: 300px;
+    border: 2px solid rgb(131, 127, 127);
+    margin-bottom: 103px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

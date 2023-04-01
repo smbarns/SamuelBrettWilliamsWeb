@@ -14,14 +14,16 @@
     width: 450px;
     object-fit: cover;
     object-position: top;
-
 }
 
 .blank-add{
-    height:380px;
+    height: 380px;
     width: 450px;
     border: 2px solid rgb(131, 127, 127);
     margin-bottom: 85px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .caption{
@@ -31,15 +33,12 @@
 }
 
 .addButton{
-    position: relative;
     background-color: transparent;
-    top:40%;
     background-size: 100px;
     width: 100px;
     height: 83px;
     border: 0;
     cursor: pointer;
-    left: 164px;
 }
 
 .addButton img{

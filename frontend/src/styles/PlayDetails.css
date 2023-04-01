@@ -3,7 +3,6 @@
     flex-direction: row;
     font-family: Abel;
     gap: 100px;
-    justify-content: center;
 }
 .left{
     display: flex;
@@ -13,6 +12,7 @@
     width: 700px;
     height: auto;
     display: flex;
+    object-fit: contain;
 }
 .playsTitle{
     display: flex;

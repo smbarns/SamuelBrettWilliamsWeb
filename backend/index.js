@@ -531,11 +531,7 @@ const validateEmail = (req, res, next) => {
 };
 
 // contact page send email *UNFINISHED*
-app.post(
-    "http://localhost:3000/api/sendEmail",
-    cors(),
-    validateEmail,
-    async (req, res) => {
+app.post('/api/sendEmail', cors(), validateEmail, async (req, res) => {
         const { firstName, lastName, email, message } = req.body;
         const transporter = nodemailer.createTransport({
             service: "gmail",
@@ -620,7 +616,7 @@ app.get('/api/feature/delete/film', ensureAuthenticated, async (req, res) => {
     }
 })
 
-app.post('/api/film/create/video', ensureAuthenticated, async (req, res) => {
+app.post('/api/homepage/film/create/video', ensureAuthenticated, async (req, res) => {
     const vidAdd = req.body;
 
     try {
@@ -639,17 +635,38 @@ app.post('/api/film/create/video', ensureAuthenticated, async (req, res) => {
 });
 
 // Uploads video(s) to s3 bucket and saves the url in database
-app.post('/api/films/upload/videos', upload.array('files', 5), ensureAuthenticated, (req, res) => {
-    const uploadedPhotos = req.files;
+app.post('/api/upload/files', upload.array('files', 5), ensureAuthenticated, (req, res) => {
+    const uploadedFiles = req.files;
     const urls = [];
 
-    for (let i = 0; i < uploadedPhotos.length; i++) {
-        const url = `https://s3-${s3.config.region}.amazonaws.com/${uploadedPhotos[i].bucket}/${uploadedPhotos[i].key}`;
+    for (let i = 0; i < uploadedFiles.length; i++) {
+        const url = `https://s3-${s3.config.region}.amazonaws.com/${uploadedFiles[i].bucket}/${uploadedFiles[i].key}`;
         urls.push(url);
     }
 
     console.log(urls);
     res.send(urls);
+});
+
+app.put('/api/plays/photo', ensureAuthenticated, async (req, res) => {
+    const photo = req.body.photo;
+    const playTitle = req.body.title;
+
+    try {
+        const play = await db.Plays.findOne({where: {title: playTitle}}); 
+        if (!play) {
+          return res.status(404).send('Play not found');
+        }
+    
+        // Update photo
+        play.photo = photo;
+        await play.save();
+    
+        return res.status(200).json(play); 
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
 });
 
 // Passport authentication strategy

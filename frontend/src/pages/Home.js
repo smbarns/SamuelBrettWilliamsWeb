@@ -19,7 +19,7 @@ function Home() {
 
   const [data,setData] = useState(null);
   const [pic,setPic] = useState();
-  const [des, setDes] = useState();
+  const [desc, setDesc] = useState();
   const [projs,setProjects] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -32,7 +32,7 @@ function Home() {
 
   const handleEditDes = () => {
     setEditDes(true);
-    setNewDes(des);
+    setNewDes(desc);
   };
   
   const handleEditPic = () => {
@@ -48,7 +48,7 @@ function Home() {
       body: JSON.stringify({ about_des: newDes, client_photo: newPic }),
     })
       .then(() => {
-        setDes(newDes);
+        setDesc(newDes);
         setPic(newPic);
         setEditDes(false);
         setEditPic(false);

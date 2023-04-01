@@ -21,7 +21,10 @@
     position:relative;
     width: 100%;
     margin: 500px 500px 500px 500px;
-    background-color: #331414
+    background-color: #331414;
+    overflow: auto;
+    max-height: 800px;
+
 }
 
 .popup-inner-upcomingAdd .close-btn{

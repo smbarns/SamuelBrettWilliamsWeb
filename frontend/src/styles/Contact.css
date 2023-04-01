@@ -119,6 +119,7 @@
     box-sizing: border-box;
     border-radius: 5px;
     transition: all 0.3s;
+    resize: vertical;
   }
   
   input:focus,
