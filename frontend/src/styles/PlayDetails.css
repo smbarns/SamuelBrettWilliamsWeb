@@ -2,20 +2,25 @@
     display: flex;
     flex-direction: row;
     font-family: Abel;
-    margin-top: 60px;
-    margin-left: 150px;
-    margin-right: 150px;
     gap: 100px;
-    justify-content: center;
 }
-.left{
+
+.editContent {
     display: flex;
     flex-direction: column;
 }
+.left{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
 
 .playCoverImg{
-    width: 600px;
+    width: 700px;
     height: auto;
+    display: flex;
+    object-fit: contain;
 }
 .playsTitle{
     display: flex;
@@ -26,30 +31,20 @@
     width: 200px;
     height: auto;
     white-space: nowrap;
-    margin-top: -80px;
+    margin-top: 0px;
+    padding-bottom: 10px;
 }
 .playSynopsis{
-    font-size: 20px;
-    margin-top: -10px;
+    font-size: 24px;
+    margin-top: 50px;
 }
 .production{
-    display: flex;
-    flex-direction: column;
     font-size: 24px;
-}
-.productionList{
-    margin-top: -40px;
-    font-size: 18px;
+    margin-top: 15px;
 }
 .development{
-    margin-top: -10px;
-    display: flex;
-    flex-direction: column;
+    margin-top: 15px;
     font-size: 24px;
-}
-.developmentList{
-    margin-top: -40px;
-    font-size: 18px;
 }
 
 .detailPageVideos{
@@ -61,4 +56,252 @@
 }
 .detailPageVideos .arrows{
     padding-left:160px;
+}
+
+.play-writer {
+    font-size: 24px;
+}
+
+.play_avaliable {
+    margin-top: 50px;
+    margin-bottom: 15px;
+}
+
+.play_links {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.playlink {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.playlink a img {
+    object-fit: contain;
+    height: 100%;
+    max-height: 70px;
+    max-width: 150px;
+}
+
+.playReel{
+    display:flex;
+    flex-direction: column;
+    margin-top:150px;
+    justify-content:center
+}
+
+.playReel .playTopReel{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content:center;
+    margin-bottom: 20px;
+}
+
+.playReel .playVideoReelText{
+    padding-right:1450px;
+    font-size: 40px;
+    font-family: Abel;
+}
+
+.playReel .playPhotoReelText{
+    padding-right:1440px;
+    font-size: 40px;
+    font-family: Abel;
+}
+
+.titleEdit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titleEdit .buttonTitle {
+    float: right;
+    width: 150px;
+    background-color: #240f0e;
+    color: #e6d8d9;
+    border-color: #716161;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-family: sans-serif;
+    border-radius: 5px;
+    transition: all 0.3s;
+    margin-bottom: 50px;
+}
+
+.buttonTitle:hover, .buttonDetailsEdit:hover {
+    background-color: #655b5b;
+    cursor: pointer;
+}
+
+.buttonDetailsEdit {
+    float: right;
+    background-color: #240f0e;
+    color: #e6d8d9;
+    border-color: #716161;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-family: sans-serif;
+    border-radius: 5px;
+    transition: all 0.3s;
+    align-self: flex-end;
+}
+
+.buttonPosterEdit {
+    float: right;
+    background-color: #240f0e;
+    color: #e6d8d9;
+    border-color: #716161;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-family: sans-serif;
+    border-radius: 5px;
+    transition: all 0.3s;
+    width: 170px;
+    align-self: center;
+}
+
+.titleUpdate {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 50px;
+}
+
+.buttonTitleUpdate {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.buttonDetailsUpdate {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.buttonTitleUpdate button, .buttonDetailsUpdate button {
+    float: right;
+    width: 150px;
+    background-color: #240f0e;
+    color: #e6d8d9;
+    border-color: #716161;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-family: sans-serif;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.buttonTitleUpdate button:hover, .buttonDetailsUpdate button:hover, .buttonPosterEdit button:hover {
+    background-color: #655b5b;
+    cursor: pointer;
+}
+
+.titleUpdate input {
+    border: none;
+    background-color: #f2f2f2;
+    padding: 10px;
+    font-size: 55px;
+    font-family: Abel;
+    width: 600px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    transition: all 0.3s;
+    resize: vertical;
+}
+  
+.titleUpdate input:focus {
+    outline: none;
+    box-shadow: 0 0 5px #a0a0a0;
+}
+
+.textarea-container {
+    display: flex;
+    margin-top: 20px;
+}
+
+.textarea-container textarea {
+    background-color: #f2f2f2;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-family: Abel;
+    font-size: 18px;
+    padding: 10px;
+    resize: vertical;
+    transition: all .3s;
+    width: 550px;
+    margin-left: 10px;
+}
+
+.playSynopsis textarea {
+    background-color: #f2f2f2;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-family: Abel;
+    font-size: 18px;
+    padding: 10px;
+    resize: vertical;
+    transition: all .3s;
+    width: 750px;
+    height: 150px;
+}
+
+.play-writer input {
+    background-color: #f2f2f2;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-family: Abel;
+    font-size: 18px;
+    padding: 10px;
+    transition: all .3s;
+    width: 600px;
+    margin-left: 10px;
+}
+
+.blank-add-buyLink {
+    display: flex;
+    border: 2px solid rgb(131, 127, 127);
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+}
+
+.blank-add-buyLink button {
+    background-color: initial;
+    background-size: 100px;
+    border: 0;
+    cursor: pointer;
+    height: 83px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.blank-add-buyLink img {
+    width: 50px;
+}
+
+.delete-buyLink {
+    color: #e6d8d9;
+    background-color: #240f0e;
+    width: 100px;
+    border-color: #716161;
+    border-radius: 5px;
+    font-family: Abel;
+    font-size: 15px;
+    align-self: flex-end;
+    transition: all .3s;
+}
+
+.delete-buyLink:hover {
+    background-color: #655b5b;
+    cursor: pointer;
 }

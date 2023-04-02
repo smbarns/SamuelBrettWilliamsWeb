@@ -1,24 +1,20 @@
 .film{
     display: flex;
     flex-direction: column;
-    padding-top: 20px;
     align-items: center;
 }
 .filmImg{
-    padding-top: 5px;
-    height: 250px;
-    width: 285px;
+    height: 300px;
+    width: 375px;
 }
 .filmTitle{
     font-weight: lighter;
-    font-size: medium;
-    margin-top: -50px;
 }
 
 .filmType{
     font-weight: lighter;
-    font-size: x-small;
-    margin-top: -48px;
+    font-size: small;
+    margin-top: 3px;
 }
 .openDetails{
     background-color: transparent;

@@ -8,6 +8,8 @@ import SearchBar from '../components/SearchBar'
 import ButtonGroup from '../components/ButtonGroup'
 import filmData from '../samples/sampleFilms'
 import banner_img from '../assets/films_background.png'
+import PlusIcon from '../assets/add-icon.png';
+import AddFilmsPopup from '../components/AddFilmsPopup'
 import '../styles/Banner.css'
 
 export default function Films() {
@@ -17,8 +19,9 @@ export default function Films() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [active, setActive] = useState("All");
+  const [addFilmsPopup, addFilmsPopupOpen] = useState(false);
 
-  const films = filmData.map(item => {
+  const films = filteredData && filteredData.map(item => {
     return(
       <Film key = {item.id}
       {...item}
@@ -43,7 +46,7 @@ export default function Films() {
          throw response;
        })
        .then(data => {
-         setData(data);
+         setData(data.reverse());
          setFilteredData(data);
        })
        .catch(error => {
@@ -85,19 +88,22 @@ export default function Films() {
         </div>
     </div>
     <div className='page'>
-       <SearchBar setContent={setFilms} showAll={showAll} setActiveProp={setActiveProp} name={"films"}/>
+       <SearchBar setContent={setFilms} showAll={showAll} setActiveProp={setActiveProp} name={"films"} className = 'search'/>
 
-      <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active}/>
+      <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
         {
-          filteredData && filteredData.map((data) => (
-            <div className="filmIcons" key={data.id}>
-              Place film icons here
+          <div className = "films">
+            {films}
+            <div className = "addFilms">
+              <button className = "addButton" onClick={() => addFilmsPopup(true)}>
+                <img src = {PlusIcon}></img>
+              </button> 
+              
             </div>
-          ))
+
+          </div>
         }
-      <div className = "films">
-        {films}
-      </div>
+      
     </div></>
 
     

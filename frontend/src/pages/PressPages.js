@@ -35,22 +35,6 @@ export default function PressPages() {
       })
   }, [])
 
-  /*useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get('/api/press');
-        setData(response.data);
-        setFilteredData(response.data);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchData();
-  }, []);*/
-
   
   if (loading) return <div className="page">Loading...</div>;
   if (error) return <div className="page">Error!</div>;

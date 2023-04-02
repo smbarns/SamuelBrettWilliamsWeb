@@ -1,10 +1,9 @@
 import React from 'react'
 import '../styles/Home.css'
 import {useEffect, useState} from 'react'
-import dataSP from '../sampleprojects.js'
 import Project from '../components/Project'
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import {useRef} from 'react'
 import Popup from '../components/Popup'
 import ReactPlayer from 'react-player'
@@ -20,13 +19,44 @@ function Home() {
 
   const [data,setData] = useState(null);
   const [pic,setPic] = useState();
-  const [desc,setDesc] = useState();
+  const [desc, setDesc] = useState();
   const [projs,setProjects] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [authenticated, setAuthenticated] = useState()
+  const [editDes, setEditDes] = useState(false);
+  const [editPic, setEditPic] = useState(false);
+  const [newDes, setNewDes] = useState('');
+  const [newPic, setNewPic] = useState('');
+  const [authenticated, setAuthenticated] = useState();
 
 
+  const handleEditDes = () => {
+    setEditDes(true);
+    setNewDes(desc);
+  };
+  
+  const handleEditPic = () => {
+    setEditPic(true);
+    setNewPic(pic);
+  };
+  
+  
+  const handleSave = () => {
+    fetch('http://localhost:3000/api/homepage', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ about_des: newDes, client_photo: newPic }),
+    })
+      .then(() => {
+        setDesc(newDes);
+        setPic(newPic);
+        setEditDes(false);
+        setEditPic(false);
+      })
+      .catch((error) => {
+        console.error('Error updating bio_des/client_photo: ', error);
+      });
+  };
   const scrollElement = useRef(null)
 
   const scrollRight = () =>{
@@ -56,7 +86,7 @@ useEffect(() => {
       setData(data);
       setPic(data[0].client_photo);
       setDesc(data[0].about_des);
-      setProjects(data[0].films.reverse());
+      setProjects(data[0].films);
     })
     .catch(error => {
       console.error("Error fetching data: ", error);
@@ -97,20 +127,38 @@ const projectReel = projs.map(item => {   // later data will be equal to the sta
             playing= {true}
             controls = {false}
             muted = {true}
-            
-
           />
         </div>
       <div className = "about">  
           <div className = "aboutBody">
+          {editPic && (
+              <div>
+                <label htmlFor="pic">Client Photo URL:</label>
+                <input
+                  type="text"
+                  id="pic"
+                  value={newPic}
+                  onChange={(e) => setNewPic(e.target.value)}
+                />
+              </div>
+            )}
+                {editDes && (
+              <div>
+                <label htmlFor="des">Bio Description:</label>
+                <textarea
+                  id="des"
+                  value={newDes}
+                  onChange={(e) => setNewDes(e.target.value)}
+                ></textarea>
+              </div>
+            )}
             <div>
-            <h1>ABOUT</h1>
-            <h2 className = "clientDesc">
-              {desc}
-            </h2>
+              <h1>ABOUT</h1>
+              <h2 className = "clientDesc">
+                {desc}
+              </h2>
             </div>
-     
-        <img className = 'samImg' src = {pic} />
+            <img className = 'samImg' src = {pic} />
         </div>
       </div>
       <div className = 'upcomingProjects'>
@@ -118,8 +166,8 @@ const projectReel = projs.map(item => {   // later data will be equal to the sta
           <div className = 'reelText'>FEATURED PROJECTS
            </div>
            <div className = 'arrows'>
-           <ArrowBackIosIcon onClick = {scrollLeft} ></ArrowBackIosIcon>
-           <ArrowForwardIosIcon onClick = {scrollRight}></ArrowForwardIosIcon>
+            <FontAwesomeIcon icon={faAngleLeft} size="lg" style={{ marginRight: '18px' }} onClick = {scrollLeft}/>
+            <FontAwesomeIcon icon={faAngleRight} size="lg" onClick = {scrollRight}/>
            </div>
        
         </div>
@@ -144,8 +192,8 @@ const projectReel = projs.map(item => {   // later data will be equal to the sta
         {console.log(popupUrl)}
        
       </div>
-      <div>
-      </div>
+      <button onClick={handleEditPic}>Edit Client Photo</button>
+      <button onClick={handleEditDes}>Edit About Description</button>
     </div>
  </div>
   )

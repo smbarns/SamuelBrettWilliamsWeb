@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import '../styles/UpcomingAdd.css';
 
 function UpcomingAddPopup(props) {
@@ -103,7 +104,7 @@ function UpcomingAddPopup(props) {
       }
     }
 
-    fetch('http://localhost:3000/api/film/create/video', {
+    fetch('http://localhost:3000/api/homepage/film/create/video', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -148,14 +149,14 @@ function UpcomingAddPopup(props) {
     abortControllerRef.current = abortController;
 
     setLoading(true);
-    fetch('http://localhost:3000/api/films/upload/videos', {
+    fetch('http://localhost:3000/api/upload/files', {
         method: 'POST',
         body: formData,
         signal: abortController.signal
     })
     .then(response => response.json())
     .then(data => {
-      fetch('http://localhost:3000/api/film/create/video', {
+      fetch('http://localhost:3000/api/homepage/film/create/video', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -193,97 +194,97 @@ function UpcomingAddPopup(props) {
   };
 
   return (
-        <div>
-            {props.trigger ? (
-              <div>
-                {props.filmSelect && (
-                  <div className = "popup">
+    <div>
+        {props.trigger ? (
+          <div>
+            {props.filmSelect && (
+              <div className = "popup">
+                <div className = "popup-inner-upcomingAdd">
+                    <button className = "close-btn" onClick ={() => toggleTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
+                    <div className="popup-header">
+                        <h2>SELECT A FILM TO FEATURE</h2>
+                    </div>
+                    <div className="popup-content">
+                        <label htmlFor="film-select">Existing films:</label>
+                        <select id="film-select" value={selectedFilm} onChange={handleFilmSelect}>
+                            <option value="">--Please choose a film--</option>
+                            {
+                                filmTitles.map((data) => (
+                                    <option value={data.title}>{data.title}</option>
+                                ))
+                            }
+                        </select>
+                    </div>
+                  </div>
+              </div>
+            )}
+          </div>
+        ) : (
+            <div>
+                {secondTrigger && (
+                <div className = "popup">
                     <div className = "popup-inner-upcomingAdd">
-                        <button className = "close-btn" onClick ={() => toggleTrigger()} ><CloseIcon></CloseIcon> </button>
+                        <button className = "close-btn" onClick ={() => toggleSecondTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
                         <div className="popup-header">
-                            <h2>SELECT A FILM TO FEATURE</h2>
+                            <h2>SELECT AN EXISTING VIDEO</h2>
                         </div>
                         <div className="popup-content">
-                            <label htmlFor="film-select">Existing films:</label>
-                            <select id="film-select" value={selectedFilm} onChange={handleFilmSelect}>
-                                <option value="">--Please choose a film--</option>
-                                {
-                                    filmTitles.map((data) => (
-                                        <option value={data.title}>{data.title}</option>
-                                    ))
-                                }
-                            </select>
-                        </div>
-                      </div>
-                  </div>
-                )}
-              </div>
-            ) : (
-                <div>
-                    {secondTrigger && (
-                    <div className = "popup">
-                        <div className = "popup-inner-upcomingAdd">
-                            <button className = "close-btn" onClick ={() => toggleSecondTrigger()} ><CloseIcon></CloseIcon> </button>
-                            <div className="popup-header">
-                                <h2>SELECT AN EXISTING VIDEO</h2>
-                            </div>
-                            <div className="popup-content">
-                                <label htmlFor="link-select">Avaliable video links:</label>
-                                <form onSubmit={handleLinkSubmit}>
-                                  <select id="link-select" disabled={loading} onChange={handleLinkSelect}>
-                                      <option value="">--Choose a link--</option>
-                                      {
-                                          filmData.map((film) => (
-                                              film.videos.map((vid) => (
-                                                  <option value={vid.video}>{vid.video} </option>
-                                              ))
+                            <label htmlFor="link-select">Avaliable video links:</label>
+                            <form onSubmit={handleLinkSubmit}>
+                              <select id="link-select" disabled={loading} onChange={handleLinkSelect}>
+                                  <option value="">--Choose a link--</option>
+                                  {
+                                      filmData.map((film) => (
+                                          film.videos.map((vid) => (
+                                              <option value={vid.video}>{vid.video} </option>
                                           ))
+                                      ))
 
-                                      }
-                                  </select>
-                                  <button className="button-submitUpcoming" type="submit" disabled={loading}>Submit</button>
-                                </form>
-                            </div>
-                            <div className="popup-header">
-                                <h2>OR ENTER VIDEO URL</h2>
-                            </div>
-                            <div className="popup-content">
-                                <label htmlFor="video-url">Enter video URL:</label>
-                                <form onSubmit={handleUrlSubmit}>
-                                    <input type="text" id="video-url" name="video-url" value={videoUrl} placeholder="Enter the URL of a video" onChange={handleVideoUrlChange} />
-                                    <button className="button-submitUpcoming" type="submit" disabled={loading}>Submit</button>
-                                </form>
-                            </div>
-                            <div className="popup-header">
-                                <h2>OR UPLOAD A VIDEO FILE</h2>
-                            </div>
-                            <div className="popup-content">
-                            <label htmlFor="files">Select a video file to upload:</label>
-                            <form onSubmit={handleFileSubmit}>
-                                <input className="upload-content" type="file" id="files" onChange={handleFileSelect} />
-                                <button className="button-submitUpcoming" type="submit" disabled={loading}>Upload</button>
-                                {loading && 
-                                  <div className = "popup">
-                                    <div className = "popup-inner-upcomingAdd">
-                                      <div className="popup-header">
-                                        <h2>Uploading video...</h2>
-                                      </div>
-                                      <label>This may take a while</label>
-                                      <div className="popup-content">
-                                        <div className="loader"></div>
-                                      </div>
-                                      <button className="cancel-upload" onClick={handleCancelUpload}>Cancel</button>
-                                    </div>
-                                  </div>
-                                }
+                                  }
+                              </select>
+                              <button className="button-submitUpcoming" type="submit" disabled={loading}>Submit</button>
                             </form>
-                            </div>
+                        </div>
+                        <div className="popup-header">
+                            <h2>OR ENTER VIDEO URL</h2>
+                        </div>
+                        <div className="popup-content">
+                            <label htmlFor="video-url">Enter video URL:</label>
+                            <form onSubmit={handleUrlSubmit}>
+                                <input type="text" id="video-url" name="video-url" value={videoUrl} placeholder="Enter the URL of a video" onChange={handleVideoUrlChange} />
+                                <button className="button-submitUpcoming" type="submit" disabled={loading}>Submit</button>
+                            </form>
+                        </div>
+                        <div className="popup-header">
+                            <h2>OR UPLOAD A VIDEO FILE</h2>
+                        </div>
+                        <div className="popup-content">
+                        <label htmlFor="files">Select a video file to upload:</label>
+                        <form onSubmit={handleFileSubmit}>
+                            <input className="upload-content" type="file" id="files" onChange={handleFileSelect} />
+                            <button className="button-submitUpcoming" type="submit" disabled={loading}>Upload</button>
+                            {loading && 
+                              <div className = "popup">
+                                <div className = "popup-inner-upcomingAdd">
+                                  <div className="popup-header">
+                                    <h2>Uploading video...</h2>
+                                  </div>
+                                  <label>This may take a while</label>
+                                  <div className="popup-content">
+                                    <div className="loader"></div>
+                                  </div>
+                                  <button className="cancel-upload" onClick={handleCancelUpload}>Cancel</button>
+                                </div>
+                              </div>
+                            }
+                        </form>
                         </div>
                     </div>
-                    )}
                 </div>
-            )}
-        </div>
+                )}
+            </div>
+        )}
+    </div>
   );
 }
 

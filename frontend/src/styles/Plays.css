@@ -4,9 +4,7 @@
     display: grid;
     grid-template-columns: 0fr 0fr 0fr 0fr;
     align-items: center;
-    justify-content: center;
     gap:40px;
-    margin-left: -75px;
 }
 
 .playIcons {
@@ -18,4 +16,14 @@
     height: 18em;
     object-fit: cover;
     object-position: 0px 40%;
+}
+
+.blank-add-plays {
+    width: 375px;
+    height: 300px;
+    border: 2px solid rgb(131, 127, 127);
+    margin-bottom: 103px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

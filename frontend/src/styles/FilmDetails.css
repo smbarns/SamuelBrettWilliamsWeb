@@ -7,30 +7,26 @@
     display: flex;
     flex-direction: row;
     font-family: Abel;
-    justify-content: center;
-    margin-left: 350px;
-    margin-right: 350px;
     gap: 100px;
-    margin-top: -40px;
-    
 }
 
 .right{
     display: flex;
     flex-direction: column;
-    margin-top: 80px;
-    
 }
 
 .left{
     display: flex;
+    justify-content: center;
     flex-direction: column;
+    gap: 20px;
 }
 
 .filmCoverImg{
     display: flex;
     height: auto;
-    width: 490px;
+    width: 700px;
+    object-fit: contain;
 }
 
 .filmsTitle{
@@ -42,62 +38,124 @@
     width: 200px;
     height: auto;
     white-space: nowrap;
-    margin-top: -80px;
+    margin-top: 0px;
+    padding-bottom: 10px;
 }
 
 .director{
-    display: flex;
-    margin-top: -55px;
-    font-size: 22px;
-}
-.writer{
-    display: flex;
-    margin-top: -30px;
-    font-size: 22px;
-}
-.stars{
-    display: flex;
-    margin-top: -30px;
-    font-size: 22px;
-    overflow-wrap: normal;
-    
-}
-.status{
-    display: flex;
-    margin-top: -15px;
-    font-size: 22px;
-}
-.platforms{
-    display: flex;
-    flex-direction: column;
-    margin-top: 15px;
-    font-size: 22px;
-}
-.logos{
-    display: flex;
-    flex-direction: row;
-    margin-top: 15px;
-    margin-left: 30px;
-    margin-bottom: 40px;
-}
-.logo{
-    height: 40px;
-    width: auto;
-    margin-inline-end: 20px;
-    
-}
-.filmSynopsis{
-    font-size: 22px;
-    
+    font-size: 24px;
 }
 
-.detailPageVideos{
+.writer{
+    font-size: 24px;
+    margin-top: 15px;
+}
+
+.stars{
+    font-size: 24px;
+    overflow-wrap: normal;
+    margin-top: 15px;
+}
+
+.status{
+    font-size: 24px;
+    margin-top: 70px;
+}
+
+.film_avaliable {
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.film_links {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.filmlink {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filmlink a img {
+    object-fit: contain;
+    height: 100%;
+    max-height: 70px;
+    max-width: 150px;
+}
+
+.filmSynopsis{
+    font-size: 24px;
+    margin-top: 70px;
+}
+
+.filmSynopsis textarea {
+    background-color: #f2f2f2;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-family: Abel;
+    font-size: 18px;
+    padding: 10px;
+    resize: vertical;
+    transition: all .3s;
+    width: 750px;
+    height: 150px;
+}
+
+.writer input, .director input, .status input {
+    background-color: #f2f2f2;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-family: Abel;
+    font-size: 18px;
+    padding: 10px;
+    transition: all .3s;
+    width: 600px;
+    margin-left: 10px;
+}
+
+.filmReel{
     display:flex;
     flex-direction: column;
-    margin-bottom:100px;
-    align-items:center;
+    margin-top:150px;
     justify-content:center
 }
-.detailPageVideos .arrows{
-    padding-left:160px;
+
+.filmReel .filmTopReel{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content:center;
+    margin-bottom: 20px;
+}
+
+.filmReel .filmVideoReelText{
+    padding-right:1450px;
+    font-size: 40px;
+    font-family: Abel;
+}
+
+.filmReel .filmPhotoReelText{
+    padding-right:1440px;
+    font-size: 40px;
+    font-family: Abel;
+}
+
+.vidReel {
+    display: flex;
+    gap: 50px;
+    overflow: hidden;
+    scroll-behavior: smooth;
+}
+
+.photoReel {
+    display: flex;
+    gap: 50px;
+    overflow: hidden;
+    scroll-behavior: smooth;
 }

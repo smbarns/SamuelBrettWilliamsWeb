@@ -8,7 +8,11 @@ import ButtonGroup from '../components/ButtonGroup'
 import Play from '../components/Play.js'
 import playData from '../samples/samplePlays'
 import banner_img from '../assets/plays_background.png'
+import Authenticate from '../components/Authenticate.js';
+import PlusIcon from '../assets/add-icon.png';
+import PlayAddPopup from '../components/PlayAddPopup.js';
 import '../styles/Banner.css'
+
 
 export default function Plays() {
   const [data, setData] = useState(null);
@@ -17,7 +21,11 @@ export default function Plays() {
   const [error, setError] = useState(null);
   const [active, setActive] = useState("All");
 
-  const plays = playData.map(item => {
+  const [playAdd, setPlayAdd] = useState(false);
+  const [playAddPop, setPlayAddPop] = useState(false);
+  const [authenticated, setAuthenticated] = useState();
+
+  const plays = filteredData && filteredData.map(item => {
     return(
       <Play key = {item.id}
       {...item}
@@ -26,12 +34,12 @@ export default function Plays() {
   })
 
   const setPlays = plays => {
-     setFilteredData(plays);
-   }
+    setFilteredData(plays);
+  }
 
-   const setActiveProp = (tabname) => {
-     setActive(tabname);
-   }
+  const setActiveProp = (tabname) => {
+    setActive(tabname);
+  }
 
    useEffect(() => {
      fetch('http://localhost:3000/api/plays')
@@ -42,7 +50,7 @@ export default function Plays() {
          throw response;
        })
        .then(data => {
-         setData(data);
+         setData(data.reverse());
          setFilteredData(data);
        })
        .catch(error => {
@@ -60,7 +68,7 @@ export default function Plays() {
    const showAll = event => {
      setFilteredData(data);
    }
-  
+ 
    const showType = (event, type) => {
      var filtered_data = data.filter(data => data.type_play === type);
      setFilteredData(filtered_data);
@@ -78,7 +86,12 @@ export default function Plays() {
      {
        type: "Ten Minute",
        event: showType
-     }];
+    }];
+
+    function playAddPopup(){
+      setPlayAdd(true);
+      setPlayAddPop(true);
+    }
 
   return (
     <><div>
@@ -90,15 +103,27 @@ export default function Plays() {
     <div className="page">
         <SearchBar setContent={setPlays} showAll={showAll} setActiveProp={setActiveProp} name={"plays"} />
 
+
         <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
-        {filteredData && filteredData.map((data) => (
-          <div className="playIcons" key={data.id}>
-            Place play icons here
-          </div>
-        ))}
+        <Authenticate setAuthen={setAuthenticated}/>
+        {
         <div className="plays">
+          {authenticated ? (
+            <div className="imgContainer">
+              <div className="blank-add-plays">
+                <button className="addButton" onClick={() => playAddPopup()}>
+                  <img src = {PlusIcon}></img></button>
+              </div>
+            </div>
+          ) : (null)}
           {plays}
         </div>
+        }
+
+        {authenticated ? (
+          <PlayAddPopup trigger={playAdd}  setTrigger={setPlayAdd} playAddPop={playAddPop} setPlayAddPop={setPlayAddPop} data={data}></PlayAddPopup>
+        ) : (null)}
+        
       </div></>
   );
 }

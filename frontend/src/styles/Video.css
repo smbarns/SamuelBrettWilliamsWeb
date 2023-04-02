@@ -1,16 +1,15 @@
 .imgContainer-video{
     display: flex;
     flex-direction: column;
-    
     position: relative;
     justify-content: center;
     align-items: center;
-    z-index: 0;
+    width: 510px;
 }
 
 .video .blank {
     height:380px;
-    width: 380px;
+    width: 510px;
 }
 .caption{
     text-align: 10px;
@@ -19,4 +18,3 @@
 .video .playButton img {
     width:60px;
 }
-

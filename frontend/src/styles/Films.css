@@ -4,7 +4,6 @@
     display: grid;
     grid-template-columns: 0fr 0fr 0fr 0fr;
     align-items: center;
-    justify-content: center;
     gap:40px;
 }
 
@@ -17,4 +16,8 @@
     height: 18em;
     object-fit: cover;
     object-position: 0% 70%;
+}
+
+.search{
+    margin-bottom: 50px;
 }

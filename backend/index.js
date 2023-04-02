@@ -66,43 +66,36 @@ const upload = multer({
 });
 
 // Handle file upload and then delete (for testing purposes)
-app.post('/upload', (req, res) => {
-    upload(req, res, function (err) {
+app.post('/upload', upload.array('files', 5), (req, res) => {
+    const uploadedPhotos = req.files;
+    const urls = [];
+
+    for (let i = 0; i < uploadedPhotos.length; i++) {
+        const url = `https://s3-${s3.config.region}.amazonaws.com/${uploadedPhotos[i].bucket}/${uploadedPhotos[i].key}`;
+        urls.push(url);
+    }
+
+    console.log(urls);
+
+    const uploadedFileKeys = req.files.map(file => file.key);
+
+    const params = {
+        Bucket: 'samuel-brett-williams',
+        Delete: {
+            Objects: uploadedFileKeys.map(key => ({ Key: key })),
+            Quiet: false
+        }
+    };
+
+    s3.deleteObjects(params, function (err, data) {
         if (err) {
-            console.log(err);
-            return res.status(500).json({ error: err })
+            console.log('Error deleting files:', err);
+        } else {
+            console.log('Files deleted successfully:', data);
         }
-
-        const uploadedPhotos = req.files;
-        const urls = [];
-
-        for (let i = 0; i < uploadedPhotos.length; i++) {
-            const url = `https://s3-${s3.config.region}.amazonaws.com/${uploadedPhotos[i].bucket}/${uploadedPhotos[i].key}`;
-            urls.push(url);
-        }
-
-        console.log(urls);
-
-        const uploadedFileKeys = req.files.map(file => file.key);
-
-        const params = {
-            Bucket: 'samuel-brett-williams',
-            Delete: {
-                Objects: uploadedFileKeys.map(key => ({ Key: key })),
-                Quiet: false
-            }
-        };
-
-        s3.deleteObjects(params, function (err, data) {
-            if (err) {
-                console.log('Error deleting files:', err);
-            } else {
-                console.log('Files deleted successfully:', data);
-            }
-        });
-
-        return res.status(200).json({ message: 'Files uploaded and deleted successfully' });
     });
+
+    return res.status(200).json({ message: 'Files uploaded and deleted successfully' });
 });
 
 // Delete file at specific key
@@ -545,11 +538,7 @@ const validateEmail = (req, res, next) => {
 };
 
 // contact page send email *UNFINISHED*
-app.post(
-    "http://localhost:3000/api/sendEmail",
-    cors(),
-    validateEmail,
-    async (req, res) => {
+app.post('/api/sendEmail', cors(), validateEmail, async (req, res) => {
         const { firstName, lastName, email, message } = req.body;
         const transporter = nodemailer.createTransport({
             service: "gmail",
@@ -634,7 +623,7 @@ app.get('/api/feature/delete/film', ensureAuthenticated, async (req, res) => {
     }
 })
 
-app.post('/api/film/create/video', ensureAuthenticated, async (req, res) => {
+app.post('/api/homepage/film/create/video', ensureAuthenticated, async (req, res) => {
     const vidAdd = req.body;
 
     try {
@@ -653,17 +642,220 @@ app.post('/api/film/create/video', ensureAuthenticated, async (req, res) => {
 });
 
 // Uploads video(s) to s3 bucket and saves the url in database
-app.post('/api/films/upload/videos', upload.array('files', 5), ensureAuthenticated, (req, res) => {
-    const uploadedPhotos = req.files;
+app.post('/api/upload/files', upload.array('files', 5), ensureAuthenticated, (req, res) => {
+    const uploadedFiles = req.files;
     const urls = [];
 
-    for (let i = 0; i < uploadedPhotos.length; i++) {
-        const url = `https://s3-${s3.config.region}.amazonaws.com/${uploadedPhotos[i].bucket}/${uploadedPhotos[i].key}`;
+    for (let i = 0; i < uploadedFiles.length; i++) {
+        const url = `https://s3-${s3.config.region}.amazonaws.com/${uploadedFiles[i].bucket}/${uploadedFiles[i].key}`;
         urls.push(url);
     }
 
     console.log(urls);
     res.send(urls);
+});
+
+app.put('/api/films/photo', ensureAuthenticated, async (req, res) => {
+    const photo = req.body.photo;
+    const filmTitle = req.body.title;
+
+    try {
+        const film = await db.Films.findOne({where: {title: filmTitle}}); 
+        if (!film) {
+          return res.status(404).send('Film not found');
+        }
+    
+        // Update photo
+        film.photo = photo;
+        await film.save();
+    
+        return res.status(200).json(film); 
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+});
+
+app.put('/api/films/edit/title', ensureAuthenticated, async (req, res) => {
+    const filmTitle = req.body.title;
+    const newTitle = req.body.newTitle;
+
+    try {
+        const film = await db.Films.findOne({where: {title: filmTitle}});
+        if (!film) {
+            return res.status(404).send('Film not found');
+        }
+
+        film.title = newTitle;
+        await film.save();
+
+        return res.status(200).json(film);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+});
+
+app.put('/api/films/edit/details', ensureAuthenticated, async (req, res) => {
+    const filmTitle = req.body.title;
+    const newDirector = req.body.newDirector;
+    const newWriter = req.body.newWriter;
+    const newStars = req.body.newStars;
+    const newStatus = req.body.newStatus;
+    const newDesc = req.body.newDesc;
+
+    try {
+        const film = await db.Films.findOne({where: {title: filmTitle}});
+        if (!film) {
+            return res.status(404).send('Film not found');
+        }
+
+        film.director = newDirector;
+        film.screenplay = newWriter;
+        film.stars = newStars;
+        film.status = newStatus;
+        film.description = newDesc;
+        await film.save();
+
+        return res.status(200).json(film);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+});
+
+app.put('/api/films/add/buy_link', ensureAuthenticated, async (req, res) => {
+    const filmTitle = req.body.title;
+    const newBuyLink = req.body.newBuyLink;
+    const newBuyLinkImg = req.body.newBuyLinkImg;
+
+    try {
+        const film = await db.Films.findOne({where: {title: filmTitle}});
+        if (!film) {
+            return res.status(404).send('Film not found');
+        }
+
+        const buy_link = db.Buy_links.create({
+            link: newBuyLink, 
+            link_photo: newBuyLinkImg,
+            filmId: film.id
+        });
+
+        return res.status(200).json(buy_link);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+});
+
+app.put('/api/plays/photo', ensureAuthenticated, async (req, res) => {
+    const photo = req.body.photo;
+    const playTitle = req.body.title;
+
+    try {
+        const play = await db.Plays.findOne({where: {title: playTitle}}); 
+        if (!play) {
+          return res.status(404).send('Play not found');
+        }
+    
+        // Update photo
+        play.photo = photo;
+        await play.save();
+    
+        return res.status(200).json(play); 
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+});
+
+app.put('/api/plays/edit/title', ensureAuthenticated, async (req, res) => {
+    const playTitle = req.body.title;
+    const newTitle = req.body.newTitle;
+
+    try {
+        const play = await db.Plays.findOne({where: {title: playTitle}});
+        if (!play) {
+            return res.status(404).send('Play not found');
+        }
+
+        play.title = newTitle;
+        await play.save();
+
+        return res.status(200).json(play);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+});
+
+app.put('/api/plays/edit/details', ensureAuthenticated, async (req, res) => {
+    const playTitle = req.body.title;
+    const newWriter = req.body.newWriter;
+    const newProduction = req.body.newProduction;
+    const newDev = req.body.newDev;
+    const newDesc = req.body.newDesc;
+
+    try {
+        const play = await db.Plays.findOne({where: {title: playTitle}});
+        if (!play) {
+            return res.status(404).send('Play not found');
+        }
+
+        play.writer = newWriter;
+        play.productions = newProduction;
+        play.development = newDev;
+        play.description = newDesc;
+        await play.save();
+
+        return res.status(200).json(play);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+});
+
+app.put('/api/plays/add/buy_link', ensureAuthenticated, async (req, res) => {
+    const playTitle = req.body.title;
+    const newBuyLink = req.body.newBuyLink;
+    const newBuyLinkImg = req.body.newBuyLinkImg;
+
+    try {
+        const play = await db.Plays.findOne({where: {title: playTitle}});
+        if (!play) {
+            return res.status(404).send('Play not found');
+        }
+
+        const buy_link = db.Buy_links.create({
+            link: newBuyLink, 
+            link_photo: newBuyLinkImg,
+            playId: play.id
+        });
+
+        return res.status(200).json(buy_link);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+});
+
+app.get('/api/delete/buyLink', ensureAuthenticated, async (req, res) => {
+    const search = req.query;
+    const id = Object.values(search).join();
+
+    try {
+        if (id) {
+            const buy_link = await db.Buy_links.findOne({where: {id: id}});
+            if (!buy_link) {
+                return res.status(404).json({ error: 'Buy link not found' });
+            }
+
+            await buy_link.destroy(); 
+            res.json({ message: 'Buy link deleted successfully' });
+        }
+    } catch (err) {
+        res.send(err);
+    }
 });
 
 // Passport authentication strategy
