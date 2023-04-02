@@ -1,0 +1,4 @@
+.photoReel{
+    display:flex;
+    flex-direction: row;
+}
