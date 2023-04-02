@@ -79,10 +79,10 @@
 }
 
 .delete-feature {
-    color: white;
-    background-color: black;
+    color: #e6d8d9;
+    background-color: #240f0e;
     width: 100px;
-    border-color: #fff;
+    border-color: #716161;
     border-radius: 5px;
     font-family: Abel;
     font-size: 15px;
@@ -91,7 +91,7 @@
 }
 
 .delete-feature:hover {
-    background-color: #494848;
+    background-color: #655b5b;
     cursor: pointer;
 }
 

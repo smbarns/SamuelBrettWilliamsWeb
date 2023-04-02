@@ -27,7 +27,7 @@ function Home() {
   const [editPic, setEditPic] = useState(false);
   const [newDes, setNewDes] = useState('');
   const [newPic, setNewPic] = useState('');
-  const [authenticated, setAuthenticated] = useState()
+  const [authenticated, setAuthenticated] = useState();
 
 
   const handleEditDes = () => {

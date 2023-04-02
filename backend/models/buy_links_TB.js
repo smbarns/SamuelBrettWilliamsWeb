@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         link: {
             type: DataTypes.STRING,
-            unique: true
         },
         link_photo: {
             type: DataTypes.TEXT

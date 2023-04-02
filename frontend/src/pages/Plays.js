@@ -25,7 +25,6 @@ export default function Plays() {
   const [playAddPop, setPlayAddPop] = useState(false);
   const [authenticated, setAuthenticated] = useState();
 
-
   const plays = filteredData && filteredData.map(item => {
     return(
       <Play key = {item.id}
@@ -34,16 +33,13 @@ export default function Plays() {
     )
   })
 
-
   const setPlays = plays => {
     setFilteredData(plays);
   }
 
-
   const setActiveProp = (tabname) => {
     setActive(tabname);
   }
-
 
    useEffect(() => {
      fetch('http://localhost:3000/api/plays')
@@ -66,10 +62,8 @@ export default function Plays() {
        })
    }, [])
 
-
    if (loading) return <div className="page">Loading...</div>;
    if (error) return <div className="page">Error!</div>;
-
 
    const showAll = event => {
      setFilteredData(data);
@@ -79,7 +73,6 @@ export default function Plays() {
      var filtered_data = data.filter(data => data.type_play === type);
      setFilteredData(filtered_data);
    }
-
 
    const types = [
      {
@@ -99,7 +92,6 @@ export default function Plays() {
       setPlayAdd(true);
       setPlayAddPop(true);
     }
-
 
   return (
     <><div>

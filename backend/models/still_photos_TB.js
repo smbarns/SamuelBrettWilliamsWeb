@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         photo: {
             type: DataTypes.STRING,
-            unique: true
         },
     }, {
         tableName: "Still_photos",
