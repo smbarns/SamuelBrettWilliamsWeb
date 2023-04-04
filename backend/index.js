@@ -851,6 +851,59 @@ app.get('/api/delete/buyLink', ensureAuthenticated, async (req, res) => {
     }
 });
 
+app.get('/api/delete/video', ensureAuthenticated, async (req, res) => {
+    const search = req.query;
+    const id = Object.values(search).join();
+
+    try {
+        if (id) {
+            const video = await db.Videos.findOne({where: {id: id}});
+            if (!video) {
+                return res.status(404).json({ error: 'Video not found' });
+            }
+
+            await video.destroy(); 
+            res.json({ message: 'Video deleted successfully' });
+        }
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+app.post('/api/play/create/video', ensureAuthenticated, async (req, res) => {
+    const vidAdd = req.body;
+
+    try {
+        const play = await db.Plays.findOne({where: {title: vidAdd.title}, attributes: ['id', 'title']})
+        const video = await db.Videos.create({
+            video: vidAdd.videoUrl, 
+            playId: play.id,
+            featured: false
+        })
+
+        res.send(video);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+app.post('/api/film/create/video', ensureAuthenticated, async (req, res) => {
+    const vidAdd = req.body;
+
+    try {
+        const film = await db.Films.findOne({where: {title: vidAdd.title}, attributes: ['id', 'title']})
+        const video = await db.Videos.create({
+            video: vidAdd.videoUrl, 
+            filmId: film.id,
+            featured: false
+        })
+
+        res.send(video);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
 // Passport authentication strategy
 passport.use(new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
     try {

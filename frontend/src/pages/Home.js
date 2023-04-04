@@ -86,7 +86,7 @@ useEffect(() => {
       setData(data);
       setPic(data[0].client_photo);
       setDesc(data[0].about_des);
-      setProjects(data[0].films);
+      setProjects(data[0].films.reverse());
     })
     .catch(error => {
       console.error("Error fetching data: ", error);

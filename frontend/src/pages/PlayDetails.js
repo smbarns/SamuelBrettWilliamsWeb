@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft, faAngleRight, faXmark } from '@fortawesome/free-solid-svg-icons'
 import PlusIcon from '../assets/add-icon.png';
 import Authenticate from '../components/Authenticate.js';
+import VideoAddPopup from '../components/VideoAddPopup.js';
 
 function PlayDetails() {
   const stateParamVal = useLocation().state;
@@ -18,6 +19,7 @@ function PlayDetails() {
   const [isEditingDetails, setIsEditingDetails] = useState(false);
   const [addLinkTrigger, setAddLinkTrigger] = useState(false);
   const [updateCoverTrigger, setUpdateCoverTrigger] = useState(false);
+  const [addVideoTrigger, setAddVideoTrigger] = useState(false);
   const [cover, setCover] = useState(stateParamVal.cover);
   const [newTitle, setNewTitle] = useState('');
   const [writer, setWriter] = useState(stateParamVal.writer);
@@ -26,7 +28,7 @@ function PlayDetails() {
   const [desc, setDesc] = useState(stateParamVal.synopsis);
   const [buyLink, setBuyLink] = useState('');
   const [buyLinkImg, setBuyLinkImg] = useState('');
-  const [showConfirm, setShowConfirm] = useState(false);
+  const [showConfirmBuyLink, setShowConfirmBuyLink] = useState(false);
   const [posterUrl, setPosterUrl] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -56,12 +58,12 @@ function PlayDetails() {
     reelRef.current.scrollLeft - 1290
   }
 
-  function handleConfirm(buyLinkId) {
-    setShowConfirm(false);
-    handleDelete(buyLinkId);
+  function handleBuyLinkConfirm(buyLinkId) {
+    setShowConfirmBuyLink(false);
+    handleBuyLinkDelete(buyLinkId);
   };
 
-  function handleDelete(buyLinkId) {
+  function handleBuyLinkDelete(buyLinkId) {
     fetch(`http://localhost:3000/api/delete/buyLink?id=${buyLinkId}`)
       .then(response => response.json())
       .then(data => {
@@ -74,8 +76,7 @@ function PlayDetails() {
       });
   };
 
-  const reversedPhotos = stateParamVal.photos.reverse();
-  const photoReel = reversedPhotos.map(item => {
+  const photoReel = stateParamVal.photos.reverse().map(item => {
     return(
       <Photo
         photo = {item}
@@ -83,13 +84,14 @@ function PlayDetails() {
     )
   })
 
-  const reversedVids = stateParamVal.videos.reverse();
-  const videoReel = reversedVids.map(item => {   // later data will be equal to the state variable that accepted the api data from the fetch request
+  const videoReel = stateParamVal.videos.reverse().map(item => {   // later data will be equal to the state variable that accepted the api data from the fetch request
     return(
       <Video
           setButtonPopup = {setButtonPopup}
           setUrl = {setPopupUrl}
           url = {item.video}
+          id = {item.id}
+          type = {'play'}
       />
     )
   })
@@ -102,8 +104,8 @@ function PlayDetails() {
         </a>
         {authenticated ? (
           <div>
-            <button className="delete-buyLink" onClick={() => setShowConfirm(true)}>Delete</button>
-            {showConfirm && (
+            <button className="delete-buyLink" onClick={() => setShowConfirmBuyLink(true)}>Delete</button>
+            {showConfirmBuyLink && (
               <div className = "popup">
                 <div className = "popup-inner-upcomingAdd">
                   <div className="popup-header">
@@ -111,8 +113,8 @@ function PlayDetails() {
                   </div>
                   <div className="popup-content">
                     <div className="popup-deleteFeature">
-                      <button className="confirm-buttons" onClick={() => handleConfirm(item.id)}>Yes</button>
-                      <button className="confirm-buttons" onClick={() => setShowConfirm(false)}>No</button>
+                      <button className="confirm-buttons" onClick={() => handleBuyLinkConfirm(item.id)}>Yes</button>
+                      <button className="confirm-buttons" onClick={() => setShowConfirmBuyLink(false)}>No</button>
                     </div>
                   </div>
                 </div>
@@ -155,6 +157,7 @@ function PlayDetails() {
         setIsEditingTitle(false);
         console.log('Success:', data);
         window.location.replace("http://localhost:3000/#/plays");
+        return alert('Play title updated successfully. This change is now viewable on the plays page and on the details page for the specific play.');
     })
     .catch(error => {
         console.error('Error:', error);
@@ -197,7 +200,7 @@ function PlayDetails() {
     setIsEditingDetails(false);
   }
 
-  const handleLinkSubmit = (event) => {
+  const handleBuyLinkSubmit = (event) => {
     event.preventDefault();
 
     if (buyLink === "") {
@@ -230,7 +233,7 @@ function PlayDetails() {
     });
   }
 
-  const handleUrlSubmit = (event) => {
+  const handlePosterUrlSubmit = (event) => {
     event.preventDefault();
 
     if (posterUrl === "") {
@@ -261,7 +264,7 @@ function PlayDetails() {
     });
   }
 
-  const handleFileSubmit = async (event) => {
+  const handlePosterFileSubmit = async (event) => {
     event.preventDefault();
     if (!selectedFile) {
       return alert('Please upload a video.');
@@ -297,6 +300,7 @@ function PlayDetails() {
         setLoading(false);
         setCover(data.photo);
         setUpdateCoverTrigger(!updateCoverTrigger);
+        setSelectedFile(null);
         console.log('Success:', data);
         return alert('Poster uploaded and updated successfully!');
       })
@@ -338,7 +342,7 @@ function PlayDetails() {
                         </div>
                         <div className="popup-content">
                             <label htmlFor="poster-url">Enter poster URL:</label>
-                            <form onSubmit={handleUrlSubmit}>
+                            <form onSubmit={handlePosterUrlSubmit}>
                                 <input type="text" id="poster-url" name="poster-url" value={posterUrl} placeholder="Enter the URL of the play's poster" onChange={(e) => setPosterUrl(e.target.value)} />
                                 <button className="button-submitUpcoming" type="submit" disabled={loading}>Submit</button>
                             </form>
@@ -348,7 +352,7 @@ function PlayDetails() {
                         </div>
                         <div className="popup-content">
                             <label htmlFor="files">Select a file to upload:</label>
-                            <form onSubmit={handleFileSubmit}>
+                            <form onSubmit={handlePosterFileSubmit}>
                                 <input className="upload-content" type="file" id="files" onChange={(e) => setSelectedFile(e.target.files[0])} />
                                 <button className="button-submitUpcoming" type="submit" disabled={loading}>Upload</button>
                                 {loading && 
@@ -440,7 +444,7 @@ function PlayDetails() {
                                 <h2>CREATE A NEW BUY LINK</h2>
                             </div>
                             <div className="popup-content">
-                                <form onSubmit={handleLinkSubmit}>
+                                <form onSubmit={handleBuyLinkSubmit}>
                                     <label htmlFor="buy-link">Enter the play's buy link:</label>
                                     <input type="text" id="buy-link" name="buy-link" value={buyLink} placeholder="Enter the link where you can buy the play" onChange={(e) => setBuyLink(e.target.value)} />
                                     
@@ -517,9 +521,21 @@ function PlayDetails() {
           </div>
         </div>
         <div className = 'vidReel' ref = {scrollElementVid}>
+          {authenticated ? (
+            <div className="imgContainer-videos">
+              <div className="blank-add-video">
+                <button onClick={(e) => setAddVideoTrigger(!addVideoTrigger)}>
+                <img src = {PlusIcon}></img></button>
+              </div>
+            </div>
+          ) : (null)}
           {videoReel}
         </div>
       </div>
+
+      {authenticated ? (
+        <VideoAddPopup addVideoTrigger={addVideoTrigger}  setAddVideoTrigger={setAddVideoTrigger} stateParamValVideos={stateParamVal.videos.reverse()} stateParamValTitle={stateParamVal.title} type={'play'}></VideoAddPopup>
+      ) : (null)}
       <Popup url = {popupUrl} trigger = {buttonPopup}  setTrigger = {setButtonPopup} ></Popup>
 
       <div className = 'playReel'>
