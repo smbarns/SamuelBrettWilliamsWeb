@@ -6,6 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -27,9 +28,11 @@
     "multer-s3": "^2.10.0",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.9.1",
+    "nodemon": "^2.0.22",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "sequelize": "^6.25.3",
-    "sequelize-cli": "^6.5.2"
+    "sequelize-cli": "^6.5.2",
+    "uuid": "^9.0.0"
   }
 }

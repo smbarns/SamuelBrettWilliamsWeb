@@ -1,6 +1,7 @@
 
 import React, {useState} from "react"
 import '../styles/Admin.css'
+import {NavLink} from 'react-router-dom'
 
 export default function Admin() {
   const [email, setEmail] = useState("");
@@ -56,7 +57,7 @@ export default function Admin() {
                   <input className="admin__input admin__input--password" placeholder="Password" type="password" value={password} onChange={handlePasswordChange} />
                   <div className="admin__form-actions">
                     <button className="btn btn-submit" type="submit">Login</button>
-                    <a href='/forgot password'>Forgot password</a>
+                    <NavLink to='/forgot_password'>Forgot password</NavLink>
                   </div>
               </form>
           </div>

@@ -13,6 +13,9 @@ import Admin from './pages/Admin';
 import FilmDetails from './pages/FilmDetails'
 import PlayDetails from './pages/PlayDetails'
 
+import ForgotPassword from './components/ForgetPassword';
+import PasswordReset from './components/PasswordReset';
+
 function App() {
   return (
     <div className="App">
@@ -26,6 +29,8 @@ function App() {
         <Route path = "press" element =  {<Press/>}/>
         <Route path = "contact" element =  {<Contact/>}/>
         <Route path = "admin_login" element = {<Admin/>}/>
+        <Route path='reset-password' element={<PasswordReset />} />
+       <Route path='forgot_password' element={<ForgotPassword />} /> 
         <Route path = "filmdetails/:type" element = {<FilmDetails/>}/>
         <Route path = "playdetails/:type" element = {<PlayDetails/>}/>
       </Routes>

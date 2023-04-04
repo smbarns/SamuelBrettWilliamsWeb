@@ -4,7 +4,7 @@ const db = require('./models');
 const bcrypt = require("bcrypt");
 const db_filter_films = require('./controllers/films_controller.js');
 const db_filter_plays = require('./controllers/plays_controller.js');
-const cors = require('cors');
+
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const multer = require('multer');
@@ -15,7 +15,13 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const { Op } = require('sequelize');
 const LocalStrategy = require('passport-local').Strategy;
-require('dotenv').config({ path: './config/.env' });
+const cors = require('cors')
+
+// uuid
+const {v4:uuidv4} = require('uuid')
+
+const sendEmail  =require('./utils/sendEmail')
+require('dotenv').config({ path: './config/config.env' });
 
 module.exports = {
     validatePassword,
@@ -26,6 +32,7 @@ const app = express();
 const PORT = 3000;
 const saltRounds = 10;
 
+app.use(cors())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -1055,64 +1062,72 @@ app.post("/api/admin", async (req, res) => {
 })
 
 // Route to handle forget password request
-app.post("/api/forgot-password", async (req, res) => {
-    const { email } = req.body;
+// Route to handle forget password request
+app.post('/api/forgot-password', async (req, res) => {
+	console.log('Forgot Password', req.body.email);
+	const { email } = req.body;
+	try {
+		const user = await db.Admin.findOne({ where: { email } });
+
+		if (!user) {
+			return res.status(404).send('User not found');
+		}
+
+		// Generate password reset token and save to database
+		// const token = bcrypt.hashSync(email + Date.now(), 10);
+		const token = uuidv4();
+		// await db.PasswordReset.create({
+		// 	email,
+		// 	token,
+		// });
+
+		// udpate user token
+		await user.update({ passwordResetToken: token.split('-')[4] });
+
+		// Send password reset email to user
+		const resetLink = `${process.env.FRONTEND_URL}/#/reset-password?token=${token}`;
+
+		const response = await sendEmail({
+			email,
+			subject: 'Resest your password',
+			message: ` <p>You have requested to reset your password. Please click the link below to reset your password:</p>
+			<a href="${resetLink}">${resetLink}</a>`,
+		});
+
+		res.send('Password reset email sent');
+	} catch (err) {
+		console.log('this is error');
+		res.status(500).send(err);
+	}
+});
   
-    try {
-      const user = await db.User.findOne({ where: { email } });
-      if (!user) {
-        return res.status(404).send("User not found");
-      }
-  
-      // Generate password reset token and save to database
-      const token = bcrypt.hashSync(email + Date.now(), 10);
-      await db.PasswordReset.create({
-        email,
-        token,
-      });
-  
-      // Send password reset email to user
-      const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${token}`;
-      await transporter.sendMail({
-        to: email,
-        subject: "Reset your password",
-        html: `
-            <p>You have requested to reset your password. Please click the link below to reset your password:</p>
-            <a href="${resetLink}">${resetLink}</a>
-          `,
-      });
-  
-      res.send("Password reset email sent");
-    } catch (err) {
-      res.status(500).send(err);
-    }
-  });
-  
-  // Route to handle password reset request
-  app.post("/api/reset-password", async (req, res) => {
-    const { token, password } = req.body;
-  
-    try {
-      const passwordReset = await db.PasswordReset.findOne({ where: { token } });
-      if (!passwordReset) {
-        return res.status(404).send("Invalid or expired token");
-      }
-  
-      // Update user password in the database
-      const user = await db.User.findOne({
-        where: { email: passwordReset.email },
-      });
-      const hashedPassword = bcrypt.hashSync(password, 10);
-      await user.update({ password: hashedPassword });
-  
-      // Delete the password reset token from the database
-      await db.PasswordReset.destroy({ where: { token } });
-  
-      res.send("Password updated successfully");
-    } catch (err) {
-      res.status(500).send(err);
-    }
-  });
+// Route to handle password reset request
+app.post('/api/reset-password', async (req, res) => {
+	const { token, password } = req.body;
+
+	try {
+		const user = await db.Admin.findOne({
+			where: { passwordResetToken: token.split('-')[4] },
+		});
+		if (!user) {
+			return res.status(404).send('Invalid or expired token');
+		}
+
+		// Update user password in the database
+		// const user = await db.User.findOne({
+		// 	where: { email: passwordReset.email },
+		// });
+		const hashedPassword = bcrypt.hashSync(password, 10);
+		await user.update({ password: password, passwordResetToken: '' });
+
+		// Delete the password reset token from the database
+		// await db.PasswordReset.destroy({ where: { passwordResetToken:token } });
+
+		res.send('Password updated successfully');
+	} catch (err) {
+		res.status(500).send(err);
+	}
+});
   
 db.sequelize.sync().then(
     (result) => {
