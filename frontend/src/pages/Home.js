@@ -12,12 +12,11 @@ import PlusIcon from '../assets/add-icon.png';
 import UpcomingAddPopup from '../components/UpcomingAddPopup'
 
 function Home() {
+  const [data,setData] = useState(null);
   const [buttonPopup,setButtonPopup] = useState(false);
   const [popupUrl,setPopupUrl] =useState('');
   const [upcomingAdd, setUpcomingAdd] = useState(false);
   const [filmSelect, setFilmSelect] = useState(false);
-
-  const [data,setData] = useState(null);
   const [pic,setPic] = useState();
   const [desc, setDesc] = useState();
   const [projs,setProjects] = useState();
@@ -86,7 +85,7 @@ useEffect(() => {
       setData(data);
       setPic(data[0].client_photo);
       setDesc(data[0].about_des);
-      setProjects(data[0].films);
+      setProjects(data[0].films.reverse());
     })
     .catch(error => {
       console.error("Error fetching data: ", error);
@@ -129,6 +128,7 @@ const projectReel = projs.map(item => {   // later data will be equal to the sta
             muted = {true}
           />
         </div>
+      {editPic || editDes ? (
       <div className = "about">  
           <div className = "aboutBody">
           {editPic && (
@@ -144,7 +144,7 @@ const projectReel = projs.map(item => {   // later data will be equal to the sta
             )}
                 {editDes && (
               <div>
-                <label htmlFor="des">Bio Description:</label>
+                <label htmlFor="des">About Description:</label>
                 <textarea
                   id="des"
                   value={newDes}
@@ -152,15 +152,38 @@ const projectReel = projs.map(item => {   // later data will be equal to the sta
                 ></textarea>
               </div>
             )}
-            <div>
-              <h1>ABOUT</h1>
-              <h2 className = "clientDesc">
-                {desc}
-              </h2>
+        
+              <div className= "save">  <button onClick={handleSave}>Save</button></div>
             </div>
+                
+            </div>
+            ) : (
+           
+              <div className = "about">  
+              <div className = "aboutBody">
+         
+         <div>
+                <h1>ABOUT</h1>
+                <h2 className = "clientDesc">
+                {desc}
+                </h2>
+              <Authenticate setAuthen={setAuthenticated}/>
+              {authenticated ? (
+               
+                <div className = "editButtons">
+                <button onClick={handleEditPic}>Edit Client Photo</button>
+                <button onClick={handleEditDes}>Edit About Description</button>
+                </div>
+                ) : (null)}
+                </div>
+         
             <img className = 'samImg' src = {pic} />
-        </div>
-      </div>
+            </div>
+        
+          </div>
+    
+             )}
+    
       <div className = 'upcomingProjects'>
         <div className = 'topReel'>
           <div className = 'reelText'>FEATURED PROJECTS
@@ -192,8 +215,7 @@ const projectReel = projs.map(item => {   // later data will be equal to the sta
         {console.log(popupUrl)}
        
       </div>
-      <button onClick={handleEditPic}>Edit Client Photo</button>
-      <button onClick={handleEditDes}>Edit About Description</button>
+
     </div>
  </div>
   )

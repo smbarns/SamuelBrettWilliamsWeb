@@ -11,6 +11,8 @@ import banner_img from '../assets/films_background.png'
 import PlusIcon from '../assets/add-icon.png';
 import AddFilmsPopup from '../components/AddFilmsPopup'
 import '../styles/Banner.css'
+import Authenticate from '../components/Authenticate.js';
+import UpcomingAddPopup from '../components/UpcomingAddPopup'
 
 export default function Films() {
     
@@ -19,6 +21,8 @@ export default function Films() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [active, setActive] = useState("All");
+  const [authenticated, setAuthenticated] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [addFilmsPopup, addFilmsPopupOpen] = useState(false);
 
   const films = filteredData && filteredData.map(item => {
@@ -80,6 +84,35 @@ export default function Films() {
        event: showType
      }];
 
+     const handleDelete = (id) => {
+      fetch(`http://localhost:3000/api/films/${id}`, {
+        method: 'DELETE'
+      })
+      .then(res => {
+        if (res.ok) {
+          // Update the data state to remove the deleted film
+          setData(prevData => prevData.filter(film => film.id !== id));
+          // Update the filteredData state to remove the deleted film
+          setFilteredData(prevData => prevData.filter(film => film.id !== id));
+        } else {
+          throw new Error("Failed to delete film");
+        }
+      })
+      .catch(error => {
+        console.error("Error deleting film: ", error);
+        setError(error);
+      });
+    };
+
+    const handleConfirm = () => {
+      setShowConfirm(false);
+      handleDelete();
+    };
+  
+    const handleCancel = () => {
+      setShowConfirm(false);
+    };
+
   return (
     <><div>
         <img className='bannerFilms' src={banner_img} />
@@ -92,15 +125,38 @@ export default function Films() {
 
       <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
         {
-          <div className = "films">
-            {films}
-            <div className = "addFilms">
-              <button className = "addButton" onClick={() => addFilmsPopup(true)}>
-                <img src = {PlusIcon}></img>
-              </button> 
-              
+        <div className = "films">
+          {films}
+          <div className = "addFilms">
+            <button className = "addButton" onClick={() => addFilmsPopup(true)}>
+              <img src = {PlusIcon}></img>
+            </button> 
+          </div>
+          {filteredData && filteredData.map((data) => (
+            <div className="filmIcons" key={data.id}>
+              <Authenticate setAuthen={setAuthenticated}/>
+              {authenticated ? (
+                <div>
+                  <button className="delete-feature" onClick={() => setShowConfirm(true)}>Delete</button>
+                  {showConfirm && (
+                    <div className = "popup">
+                      <div className = "popup-inner-upcomingAdd">
+                        <div className="popup-header">
+                          <h2>Are you sure you want to delete this feature?</h2>
+                        </div>
+                        <div className="popup-content">
+                          <div className="popup-deleteFeature">
+                            <button className="confirm-buttons" onClick={handleConfirm}>Yes</button>
+                            <button className="confirm-buttons" onClick={handleCancel}>No</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (null)}
             </div>
-
+          ))}
           </div>
         }
       
@@ -108,4 +164,4 @@ export default function Films() {
 
     
   );
-}
+}                                                    

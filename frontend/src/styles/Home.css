@@ -13,6 +13,14 @@
     font-family: Abel;
     margin-top: 100px;
 }
+.aboutBody button{
+    width:150px
+}
+.editButtons{
+    display:flex;
+    flex-direction: row;
+    gap:5px;
+}
 
 .samImg{
     margin-left:100px;
@@ -115,4 +123,8 @@ h5 {
 
 .arrows {
     cursor: pointer;
+}
+.aboutBody .save{
+    padding-left: 20px;
+    
 }

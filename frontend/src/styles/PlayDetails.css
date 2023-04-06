@@ -305,3 +305,26 @@
     background-color: #655b5b;
     cursor: pointer;
 }
+
+.blank-add-video {
+    display: flex;
+    border: 2px solid rgb(131, 127, 127);
+    justify-content: center;
+    align-items: center;
+    width: 506px;
+    height: 376px;
+}
+
+.blank-add-video button {
+    background-color: initial;
+    background-size: 100px;
+    border: 0;
+    cursor: pointer;
+    height: 83px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.blank-add-video img {
+    width: 100px;
+}

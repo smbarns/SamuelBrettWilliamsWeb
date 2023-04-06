@@ -21,6 +21,7 @@ const cors = require('cors')
 const {v4:uuidv4} = require('uuid')
 
 const sendEmail  =require('./utils/sendEmail')
+const recieveEmail = require('./utils/recieveEmail')
 require('dotenv').config({ path: './config/config.env' });
 
 module.exports = {
@@ -639,30 +640,20 @@ const validateEmail = (req, res, next) => {
 };
 
 // contact page send email *UNFINISHED*
-app.post('/api/sendEmail', cors(), validateEmail, async (req, res) => {
+app.post('/api/sendEmail', async (req, res) => {
         const { firstName, lastName, email, message } = req.body;
-        const transporter = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-                user: process.env.EMAIL_USERNAME,
-                pass: process.env.EMAIL_PASSWORD,
-            },
-        });
-        const mailOptions = {
-            from: email,
-            to: req.query.to,
-            subject: 'New email from contact form',
-            text: `Name: ${firstName} ${lastName}\nEmail: ${email}\nMessage: ${message}`,
-        };
-        transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log(error);
-                res.status(500).send('Failed to send email2');
-            } else {
-                console.log('Email sent: ' + info.response);
-                res.status(200).send('Email sent successfully');
-            }
-        });
+        try{
+            const response = await recieveEmail({
+                email,
+                firstName,
+                lastName,
+                message,
+            })
+            res.status(200).send('Email sent successfully')
+        }catch (err){
+            console.log('Email sent unsuccessfully.')
+            res.status(500).send(err);
+        }
 });
 
 app.get('/api/video/featured/film', async (req, res) => {
@@ -954,6 +945,112 @@ app.get('/api/delete/buyLink', ensureAuthenticated, async (req, res) => {
             await buy_link.destroy(); 
             res.json({ message: 'Buy link deleted successfully' });
         }
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+app.get('/api/delete/video', ensureAuthenticated, async (req, res) => {
+    const search = req.query;
+    const id = Object.values(search).join();
+
+    try {
+        if (id) {
+            const video = await db.Videos.findOne({where: {id: id}});
+            if (!video) {
+                return res.status(404).json({ error: 'Video not found' });
+            }
+
+            await video.destroy(); 
+            res.json({ message: 'Video deleted successfully' });
+        }
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+app.get('/api/delete/photo', ensureAuthenticated, async (req, res) => {
+    const search = req.query;
+    const id = Object.values(search).join();
+
+    try {
+        if (id) {
+            const photo = await db.Still_photos.findOne({where: {id: id}});
+            if (!photo) {
+                return res.status(404).json({ error: 'Photo not found' });
+            }
+
+            await photo.destroy(); 
+            res.json({ message: 'Photo deleted successfully' });
+        }
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+app.post('/api/play/create/video', ensureAuthenticated, async (req, res) => {
+    const vidAdd = req.body;
+
+    try {
+        const play = await db.Plays.findOne({where: {title: vidAdd.title}, attributes: ['id', 'title']})
+        const video = await db.Videos.create({
+            video: vidAdd.videoUrl, 
+            playId: play.id,
+            featured: false
+        })
+
+        res.send(video);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+app.post('/api/play/create/photo', ensureAuthenticated, async (req, res) => {
+    const photoAdd = req.body;
+
+    try {
+        const play = await db.Plays.findOne({where: {title: photoAdd.title}, attributes: ['id', 'title']})
+        const photo = await db.Still_photos.create({
+            photo: photoAdd.photoUrl, 
+            playId: play.id,
+            featured: false
+        })
+
+        res.send(photo);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+app.post('/api/film/create/video', ensureAuthenticated, async (req, res) => {
+    const vidAdd = req.body;
+
+    try {
+        const film = await db.Films.findOne({where: {title: vidAdd.title}, attributes: ['id', 'title']})
+        const video = await db.Videos.create({
+            video: vidAdd.videoUrl, 
+            filmId: film.id,
+            featured: false
+        })
+
+        res.send(video);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+app.post('/api/film/create/photo', ensureAuthenticated, async (req, res) => {
+    const photoAdd = req.body;
+
+    try {
+        const film = await db.Films.findOne({where: {title: photoAdd.title}, attributes: ['id', 'title']})
+        const photo = await db.Still_photos.create({
+            photo: photoAdd.photoUrl, 
+            filmId: film.id,
+            featured: false
+        })
+
+        res.send(photo);
     } catch (err) {
         res.send(err);
     }

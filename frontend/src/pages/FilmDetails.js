@@ -10,6 +10,8 @@ import PlusIcon from '../assets/add-icon.png';
 import Photo from '../components/Photo'
 import {useRef} from 'react'
 import Authenticate from '../components/Authenticate.js';
+import VideoAddPopup from '../components/VideoAddPopup.js';
+import PhotoAddPopup from '../components/PhotoAddPopup.js';
 
 function FilmDetails() {
   const stateParamVal = useLocation().state;
@@ -17,6 +19,8 @@ function FilmDetails() {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingDetails, setIsEditingDetails] = useState(false);
   const [addLinkTrigger, setAddLinkTrigger] = useState(false);
+  const [addVideoTrigger, setAddVideoTrigger] = useState(false);
+  const [addPhotoTrigger, setAddPhotoTrigger] = useState(false);
   const [updateCoverTrigger, setUpdateCoverTrigger] = useState(false);
   const [cover, setCover] = useState(stateParamVal.cover);
   const [newTitle, setNewTitle] = useState('');
@@ -27,7 +31,7 @@ function FilmDetails() {
   const [desc, setDesc] = useState(stateParamVal.synopsis);
   const [buyLink, setBuyLink] = useState('');
   const [buyLinkImg, setBuyLinkImg] = useState('');
-  const [showConfirm, setShowConfirm] = useState(false);
+  const [showConfirmBuyLink, setShowConfirmBuyLink] = useState(false);
   const [posterUrl, setPosterUrl] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -57,12 +61,12 @@ function FilmDetails() {
     reelRef.current.scrollLeft - 1290
   }
 
-  function handleConfirm(buyLinkId) {
-    setShowConfirm(false);
-    handleDelete(buyLinkId);
+  function handleConfirmBuyLink(buyLinkId) {
+    setShowConfirmBuyLink(false);
+    handleDeleteBuyLink(buyLinkId);
   };
 
-  function handleDelete(buyLinkId) {
+  function handleDeleteBuyLink(buyLinkId) {
     fetch(`http://localhost:3000/api/delete/buyLink?id=${buyLinkId}`)
       .then(response => response.json())
       .then(data => {
@@ -91,6 +95,8 @@ function FilmDetails() {
           setButtonPopup = {setButtonPopup}
           setUrl = {setPopupUrl}
           url = {item.video}
+          id = {item.id}
+          type = {'film'}
       />
     )
   })
@@ -103,8 +109,8 @@ function FilmDetails() {
         </a>
         {authenticated ? (
           <div>
-            <button className="delete-buyLink" onClick={() => setShowConfirm(true)}>Delete</button>
-            {showConfirm && (
+            <button className="delete-buyLink" onClick={() => setShowConfirmBuyLink(true)}>Delete</button>
+            {showConfirmBuyLink && (
               <div className = "popup">
                 <div className = "popup-inner-upcomingAdd">
                   <div className="popup-header">
@@ -112,8 +118,8 @@ function FilmDetails() {
                   </div>
                   <div className="popup-content">
                     <div className="popup-deleteFeature">
-                      <button className="confirm-buttons" onClick={() => handleConfirm(item.id)}>Yes</button>
-                      <button className="confirm-buttons" onClick={() => setShowConfirm(false)}>No</button>
+                      <button className="confirm-buttons" onClick={() => handleConfirmBuyLink(item.id)}>Yes</button>
+                      <button className="confirm-buttons" onClick={() => setShowConfirmBuyLink(false)}>No</button>
                     </div>
                   </div>
                 </div>
@@ -156,7 +162,7 @@ function FilmDetails() {
         setIsEditingTitle(false);
         console.log('Success:', data);
         window.location.replace("http://localhost:3000/#/films");
-        return alert('Film title updated successfully.');
+        return alert("Film title updated successfully. This change is now viewable on the films page and on the detail page for the specific film.");
     })
     .catch(error => {
         console.error('Error:', error);
@@ -200,7 +206,7 @@ function FilmDetails() {
     setIsEditingDetails(false);
   }
 
-  const handleLinkSubmit = (event) => {
+  const handleBuyLinkSubmit = (event) => {
     event.preventDefault();
 
     if (buyLink === "") {
@@ -233,7 +239,7 @@ function FilmDetails() {
     });
   }
 
-  const handleUrlSubmit = (event) => {
+  const handlePosterUrlSubmit = (event) => {
     event.preventDefault();
 
     if (posterUrl === "") {
@@ -264,7 +270,7 @@ function FilmDetails() {
     });
   }
 
-  const handleFileSubmit = async (event) => {
+  const handlePosterFileSubmit = async (event) => {
     event.preventDefault();
     if (!selectedFile) {
       return alert('Please upload a video.');
@@ -341,7 +347,7 @@ function FilmDetails() {
                         </div>
                         <div className="popup-content">
                             <label htmlFor="poster-url">Enter poster URL:</label>
-                            <form onSubmit={handleUrlSubmit}>
+                            <form onSubmit={handlePosterUrlSubmit}>
                                 <input type="text" id="poster-url" name="poster-url" value={posterUrl} placeholder="Enter the URL of the film's poster" onChange={(e) => setPosterUrl(e.target.value)} />
                                 <button className="button-submitUpcoming" type="submit" disabled={loading}>Submit</button>
                             </form>
@@ -351,7 +357,7 @@ function FilmDetails() {
                         </div>
                         <div className="popup-content">
                             <label htmlFor="files">Select a file to upload:</label>
-                            <form onSubmit={handleFileSubmit}>
+                            <form onSubmit={handlePosterFileSubmit}>
                                 <input className="upload-content" type="file" id="files" onChange={(e) => setSelectedFile(e.target.files[0])} />
                                 <button className="button-submitUpcoming" type="submit" disabled={loading}>Upload</button>
                                 {loading && 
@@ -448,7 +454,7 @@ function FilmDetails() {
                                   <h2>CREATE A NEW BUY LINK</h2>
                               </div>
                               <div className="popup-content">
-                                  <form onSubmit={handleLinkSubmit}>
+                                  <form onSubmit={handleBuyLinkSubmit}>
                                       <label htmlFor="buy-link">Enter the film's buy link:</label>
                                       <input type="text" id="buy-link" name="buy-link" value={buyLink} placeholder="Enter the link where you can buy the film" onChange={(e) => setBuyLink(e.target.value)} />
                                       
@@ -528,9 +534,22 @@ function FilmDetails() {
           </div>
         </div>
         <div className = 'vidReel' ref = {scrollElementVid}>
+          {authenticated ? (
+            <div className="imgContainer-videos">
+              <div className="blank-add-video">
+                <button onClick={(e) => setAddVideoTrigger(!addVideoTrigger)}>
+                <img src = {PlusIcon}></img></button>
+              </div>
+            </div>
+          ) : (null)}
           {videoReel}
         </div>
       </div>
+
+      {authenticated ? (
+        <VideoAddPopup addVideoTrigger={addVideoTrigger}  setAddVideoTrigger={setAddVideoTrigger} stateParamValVideos={stateParamVal.videos.reverse()} stateParamValTitle={stateParamVal.title} type={'film'}></VideoAddPopup>
+      ) : (null)}
+
       <Popup url = {popupUrl} trigger = {buttonPopup}  setTrigger = {setButtonPopup} ></Popup>
 
       <div className = 'filmReel'>
@@ -542,9 +561,21 @@ function FilmDetails() {
           </div>
         </div>
         <div className = 'photoReel' ref = {scrollElementPhoto}>
+          {authenticated ? (
+            <div className="imgContainer-photos">
+              <div className="blank-add-photo">
+                <button onClick={(e) => setAddPhotoTrigger(!addPhotoTrigger)}>
+                <img src = {PlusIcon}></img></button>
+              </div>
+            </div>
+          ) : (null)}
           {photoReel}
         </div>
       </div> 
+
+      {authenticated ? (
+        <PhotoAddPopup addPhotoTrigger={addPhotoTrigger}  setAddPhotoTrigger={setAddPhotoTrigger} stateParamValPhotos={stateParamVal.photos.reverse()} stateParamValTitle={stateParamVal.title} type={'film'}></PhotoAddPopup>
+      ) : (null)}
     </div>
   )
 }
