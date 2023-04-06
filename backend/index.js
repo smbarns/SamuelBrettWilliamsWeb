@@ -506,6 +506,107 @@ app.post("/api/press", ensureAuthenticated, async (req, res) => {
     }
 });
 
+app.put('/api/press/edit/quote', ensureAuthenticated, async (req, res) => {
+    const pressId = req.body.id;
+    const newQuote = req.body.newQuote;
+
+    try {
+        const press = await db.Press.findOne({where: {id: pressId}});
+        if (!press) {
+            return res.status(404).send('Press not found');
+        }
+
+        press.quote = newQuote;
+        await press.save();
+
+        return res.status(200).json(press);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+});
+
+app.put('/api/press/edit/author', ensureAuthenticated, async (req, res) => {
+    const pressId = req.body.id;
+    const newAuthor = req.body.newAuthor;
+
+    try {
+        const press = await db.Press.findOne({where: {id: pressId}});
+        if (!press) {
+            return res.status(404).send('Press not found');
+        }
+
+        press.author = newAuthor;
+        await press.save();
+
+        return res.status(200).json(press);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+});
+
+app.put('/api/press/edit/image', ensureAuthenticated, async (req, res) => {
+    const pressId = req.body.id;
+    const newImage = req.body.newImage;
+
+    try {
+        const press = await db.Press.findOne({where: {id: pressId}});
+        if (!press) {
+            return res.status(404).send('Press not found');
+        }
+
+        press.press_image = newImage;
+        await press.save();
+
+        return res.status(200).json(press);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+});
+
+app.put('/api/press/edit/link', ensureAuthenticated, async (req, res) => {
+    const pressId = req.body.id;
+    const newLink = req.body.newLink;
+
+    try {
+        const press = await db.Press.findOne({where: {id: pressId}});
+        if (!press) {
+            return res.status(404).send('Press not found');
+        }
+
+        press.press_link = newLink;
+        await press.save();
+
+        return res.status(200).json(press);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+});
+//adding a new press item
+app.put('/api/press/add', ensureAuthenticated, async (req, res) => {
+    const newAuthor = req.body.author;
+    const newQuote = req.body.quote;
+    const newPressImage = req.body.press_image;
+    const newPressLink = req.body.press_link;
+  
+    try {
+      const press = await db.Press.create({
+        author: newAuthor,
+        quote: newQuote,
+        press_image: newPressImage,
+        press_link: newPressLink
+      });
+  
+      return res.status(200).json(press);
+    } catch (err) {
+      console.error(err);
+      return res.status(500).send('Server error');
+    }
+  });
+
 // JSON for contact page
 app.get('/api/contactpage', async (req, res) => {
     try {

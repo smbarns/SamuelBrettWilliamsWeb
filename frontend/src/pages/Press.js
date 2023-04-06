@@ -5,6 +5,9 @@ import PressComp from '../components/Press.js'
 import ButtonGroup from '../components/ButtonGroup'
 import pressData from '../samples/samplePress'
 import banner_img from '../assets/press-bg.jpg'
+import Authenticate from '../components/Authenticate.js';
+import PlusIcon from '../assets/add-icon.png';
+import PressAddPopup from '../components/AddPressPopup.js';
 
 export default function Press() {
     
@@ -63,6 +66,11 @@ export default function Press() {
     setFilteredData(filtered_data);
   }
 
+  function pressAddPopup(){
+    setPressAdd(true);
+    setPressAddPop(true);
+  }
+
   const types = [
     {
       type: "Feature Film",
@@ -74,24 +82,37 @@ export default function Press() {
     }];
 
 
-  return (
-    <><div className='page'>
-      <SearchBar setContent={setPress} showAll={showAll} setActiveProp={setActiveProp} name={"press"} />
-
-      <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
-      {filteredData && filteredData.map((data) => (
-        <div className="pressIcons" key={data.id}>
-          Insert reviews
-        </div>
-      ))}
-      <div className="press">
-        {press}
+    return (
+      <><div>
+          <img className='bannerPlays' src={banner_img} />
+          <div className="banner">
+            PRESS
+          </div>
       </div>
-    </div><div className="press">
-        <div class="test"><img className='bannerImg' src={banner_img} /></div>
-        <div className="pressBanner">
-          PRESS
-        </div>
-      </div></>
-  )
+      <div className="page">
+          <SearchBar setContent={setPress} showAll={showAll} setActiveProp={setActiveProp} name={"press"} />
+  
+  
+          <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
+          <Authenticate setAuthen={setAuthenticated}/>
+          {
+          <div className="press">
+            {authenticated ? (
+              <div className="imgContainer">
+                <div className="blank-add-press">
+                  <button className="addButton" onClick={() => pressAddPopup()}>
+                    <img src = {PlusIcon}></img></button>
+                </div>
+              </div>
+            ) : (null)}
+            {press}
+          </div>
+          }
+  
+          {authenticated ? (
+            <PressAddPopup trigger={pressAdd} setTrigger={setPressAdd} pressAddPop={pressAddPop} setPressAddPop={setPressAddPop} data={data}></PressAddPopup>
+          ) : (null)}
+          
+        </div></>
+    );
 }
