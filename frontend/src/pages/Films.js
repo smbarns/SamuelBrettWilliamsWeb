@@ -112,7 +112,6 @@ export default function Films() {
     const handleCancel = () => {
       setShowConfirm(false);
     };
-    
 
   return (
     <><div>
@@ -135,7 +134,6 @@ export default function Films() {
           </div>
           {filteredData && filteredData.map((data) => (
             <div className="filmIcons" key={data.id}>
-              Place film icons here
               <Authenticate setAuthen={setAuthenticated}/>
               {authenticated ? (
                 <div>
