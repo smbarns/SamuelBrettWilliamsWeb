@@ -868,6 +868,25 @@ app.get('/api/delete/video', ensureAuthenticated, async (req, res) => {
     }
 });
 
+app.get('/api/delete/photo', ensureAuthenticated, async (req, res) => {
+    const search = req.query;
+    const id = Object.values(search).join();
+
+    try {
+        if (id) {
+            const photo = await db.Still_photos.findOne({where: {id: id}});
+            if (!photo) {
+                return res.status(404).json({ error: 'Photo not found' });
+            }
+
+            await photo.destroy(); 
+            res.json({ message: 'Photo deleted successfully' });
+        }
+    } catch (err) {
+        res.send(err);
+    }
+});
+
 app.post('/api/play/create/video', ensureAuthenticated, async (req, res) => {
     const vidAdd = req.body;
 
@@ -885,6 +904,23 @@ app.post('/api/play/create/video', ensureAuthenticated, async (req, res) => {
     }
 });
 
+app.post('/api/play/create/photo', ensureAuthenticated, async (req, res) => {
+    const photoAdd = req.body;
+
+    try {
+        const play = await db.Plays.findOne({where: {title: photoAdd.title}, attributes: ['id', 'title']})
+        const photo = await db.Still_photos.create({
+            photo: photoAdd.photoUrl, 
+            playId: play.id,
+            featured: false
+        })
+
+        res.send(photo);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
 app.post('/api/film/create/video', ensureAuthenticated, async (req, res) => {
     const vidAdd = req.body;
 
@@ -897,6 +933,23 @@ app.post('/api/film/create/video', ensureAuthenticated, async (req, res) => {
         })
 
         res.send(video);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+app.post('/api/film/create/photo', ensureAuthenticated, async (req, res) => {
+    const photoAdd = req.body;
+
+    try {
+        const film = await db.Films.findOne({where: {title: photoAdd.title}, attributes: ['id', 'title']})
+        const photo = await db.Still_photos.create({
+            photo: photoAdd.photoUrl, 
+            filmId: film.id,
+            featured: false
+        })
+
+        res.send(photo);
     } catch (err) {
         res.send(err);
     }
