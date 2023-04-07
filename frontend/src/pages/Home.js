@@ -195,7 +195,6 @@ const projectReel = projs.map(item => {   // later data will be equal to the sta
        
         </div>
         <div className = 'reel' ref = {scrollElement}>
-          <Authenticate setAuthen={setAuthenticated}/>
           {authenticated ? (
               <div className="imgContainer">
                 <div className="blank-add">
