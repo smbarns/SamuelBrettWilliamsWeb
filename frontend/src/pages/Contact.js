@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import contactBackground from '../assets/contact_background.jpg'
 import '../styles/Contact.css'
 import validator from 'email-validator'
-import axios from 'axios'
+// import axios from 'axios'
 
 function Contact() {
 

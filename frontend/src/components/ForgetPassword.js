@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 
 import '../styles/ForgotPassword.css';
 
@@ -11,14 +11,14 @@ export default function ForgotPassword() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		try {
-			setLoading(true);
-			await axios.post('http://localhost:3000/api/forgot-password', { email });
-			setMessage('Password reset email sent');
-			setLoading(false);
-		} catch (err) {
-			setMessage(console.log(err.message));
-		}
+		// try {
+		// 	setLoading(true);
+		// 	await axios.post('http://localhost:3000/api/forgot-password', { email });
+		// 	setMessage('Password reset email sent');
+		// 	setLoading(false);
+		// } catch (err) {
+		// 	setMessage(console.log(err.message));
+		// }
 	};
 
   return (

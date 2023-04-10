@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 
 import '../styles/PasswordReset.css';
 
@@ -27,14 +27,14 @@ const PasswordReset = () => {
 	const submitHandler = async (e) => {
 		e.preventDefault();
 
-		const resopnse = await axios.post(
-			'http://localhost:3000/api/reset-password',
-			{
-				token: searchParams.get('token'),
-				password,
-			}
-		);
-		console.log(resopnse);
+		// const resopnse = await axios.post(
+		// 	'http://localhost:3000/api/reset-password',
+		// 	{
+		// 		token: searchParams.get('token'),
+		// 		password,
+		// 	}
+		// );
+		// console.log(resopnse);
 		setMessage('Password Changed');
 	};
 	return (

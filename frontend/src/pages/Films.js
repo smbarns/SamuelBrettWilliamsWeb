@@ -23,7 +23,8 @@ export default function Films() {
   const [active, setActive] = useState("All");
   const [authenticated, setAuthenticated] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [addFilmsPopup, addFilmsPopupOpen] = useState(false);
+  const [addFilm, setAddFilm] = useState(false);
+  const [addFilmPop, setAddFilmPop] = useState(false);
 
   const films = filteredData && filteredData.map(item => {
     return(
@@ -104,6 +105,11 @@ export default function Films() {
       });
     };
 
+    function addFilmsPopup(){
+      setAddFilm(true);
+      setAddFilmPop(true);
+    }
+
     const handleConfirm = () => {
       setShowConfirm(false);
       handleDelete();
@@ -112,6 +118,7 @@ export default function Films() {
     const handleCancel = () => {
       setShowConfirm(false);
     };
+
 
   return (
     <><div>
@@ -124,18 +131,29 @@ export default function Films() {
        <SearchBar setContent={setFilms} showAll={showAll} setActiveProp={setActiveProp} name={"films"} className = 'search'/>
 
       <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
+      <Authenticate setAuthen={setAuthenticated}/> 
         {
-        <div className = "films">
+        <div className="films">
+          {authenticated ? (  
+            <div className="imgContainer">
+              <div className="blank-add-plays">
+                <button className="addButton" onClick={() => addFilmsPopup()}>
+                  <img src = {PlusIcon}></img></button>
+              </div>
+            </div>
+          ) : (null)}  
           {films}
-          <div className = "addFilms">
-            <button className = "addButton" onClick={() => addFilmsPopup(true)}>
-              <img src = {PlusIcon}></img>
-            </button> 
-          </div>
+        </div>
+        }
+
+        {authenticated ? (  
+        <AddFilmsPopup trigger={addFilm}  setTrigger={setAddFilm} addFilmPop={addFilmPop} setAddFilmPop={setAddFilmPop} data={data}></AddFilmsPopup>
+        ) : (null)}  
+        
           {filteredData && filteredData.map((data) => (
             <div className="filmIcons" key={data.id}>
-              <Authenticate setAuthen={setAuthenticated}/>
-              {authenticated ? (
+              
+              {authenticated ? ( 
                 <div>
                   <button className="delete-feature" onClick={() => setShowConfirm(true)}>Delete</button>
                   {showConfirm && (
@@ -154,14 +172,14 @@ export default function Films() {
                     </div>
                   )}
                 </div>
-              ) : (null)}
+              ) : (null)} 
             </div>
           ))}
-          </div>
-        }
+         
+        
       
     </div></>
 
     
   );
-}                                                    
+}   
