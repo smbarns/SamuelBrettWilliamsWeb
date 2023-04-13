@@ -81,16 +81,13 @@ export default function Films() {
      }];
 
   return (
-    <><div>
-        <img className='bannerFilms' src={banner_img} />
-        <div className="banner">
-          FILMS
-        </div>
-    </div>
     <div className='page'>
-       <SearchBar setContent={setFilms} showAll={showAll} setActiveProp={setActiveProp} name={"films"} className = 'search'/>
+      <img className='bannerFilms' src={banner_img} />
+      <div className="banner">FILMS</div>
+      <div className='page-container'>
+        <SearchBar setContent={setFilms} showAll={showAll} setActiveProp={setActiveProp} name={"films"} className = 'search'/>
 
-      <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
+        <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
         {
           <div className = "films">
             {films}
@@ -98,14 +95,10 @@ export default function Films() {
               <button className = "addButton" onClick={() => addFilmsPopup(true)}>
                 <img src = {PlusIcon}></img>
               </button> 
-              
             </div>
-
           </div>
         }
-      
-    </div></>
-
-    
+      </div>
+    </div>
   );
 }

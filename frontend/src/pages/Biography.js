@@ -63,12 +63,10 @@ export default function Biography() {
   if (error) return <div className="page">Error!</div>;
 
   return (
-    <>
-      <div>
+    <div className="page">
         <img className="bannerImg" src={banner_img} />
         <div className="banner">BIOGRAPHY</div>
-      </div>
-      <div className="page">
+      <div className='page-container'>
         {editPic || editDes ? (
           <div className="bioBody">
             {editPic && (
@@ -105,6 +103,6 @@ export default function Biography() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }

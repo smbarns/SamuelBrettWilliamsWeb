@@ -2,7 +2,7 @@
 
 .films{
     display: grid;
-    grid-template-columns: 0fr 0fr 0fr 0fr;
+    grid-template-columns: 0fr 0fr 0fr 0fr 0fr;
     align-items: center;
     gap:40px;
 }

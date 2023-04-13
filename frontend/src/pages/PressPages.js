@@ -40,16 +40,14 @@ export default function PressPages() {
   if (error) return <div className="page">Error!</div>;
 
   return (
-    <><div>
-        <img className='bannerImg' src={banner_img} />
-        <div className="banner">
-          PRESS
+    <div className='page'>
+      <img className='bannerImg' src={banner_img} />
+      <div className="banner">PRESS</div>
+      <div className='page-container'>
+        <div className='press'>
+          {press}
         </div>
       </div>
-    <div className='page'>
-      <div className='press'>
-        {press}
-      </div>
-    </div></>
+    </div>
   )
 }

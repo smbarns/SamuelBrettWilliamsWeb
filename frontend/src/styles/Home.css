@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Abel%27');
 
-.home{
-    margin-top:-100px
-}
-
 .aboutBody{
     display:flex;
     flex-direction: row;
@@ -56,13 +52,17 @@ h5 {
 
 .player-wrapper {
     position: relative;
-    padding-top:26%
+    height: 650px;
+    width: 100%;
+    display: flex;
+    object-fit: cover;
   }
   
   .react-player {
     position: absolute;
     top: 0;
     left: 0;
+    object-fit: cover;
   }
 
 
@@ -100,7 +100,12 @@ h5 {
 
 .page {
     min-height: 75vh;
-    margin:100px
+    margin:auto;
+    max-width: 2160px;
+}
+
+.page-container {
+    margin: 100px;
 }
 
 

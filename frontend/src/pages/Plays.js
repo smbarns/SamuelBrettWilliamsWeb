@@ -94,13 +94,10 @@ export default function Plays() {
     }
 
   return (
-    <><div>
-        <img className='bannerPlays' src={banner_img} />
-        <div className="banner">
-          PLAYS
-        </div>
-    </div>
     <div className="page">
+      <img className='bannerPlays' src={banner_img} />
+      <div className="banner">PLAYS</div>
+      <div className='page-container'>
         <SearchBar setContent={setPlays} showAll={showAll} setActiveProp={setActiveProp} name={"plays"} />
 
 
@@ -123,7 +120,7 @@ export default function Plays() {
         {authenticated ? (
           <PlayAddPopup trigger={playAdd}  setTrigger={setPlayAdd} playAddPop={playAddPop} setPlayAddPop={setPlayAddPop} data={data}></PlayAddPopup>
         ) : (null)}
-        
-      </div></>
+      </div>  
+    </div>
   );
 }
