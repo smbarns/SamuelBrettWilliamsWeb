@@ -11,6 +11,8 @@ import banner_img from '../assets/films_background.png'
 import PlusIcon from '../assets/add-icon.png';
 import AddFilmsPopup from '../components/AddFilmsPopup'
 import '../styles/Banner.css'
+import Authenticate from '../components/Authenticate.js';
+import UpcomingAddPopup from '../components/UpcomingAddPopup'
 
 export default function Films() {
     
@@ -19,7 +21,10 @@ export default function Films() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [active, setActive] = useState("All");
-  const [addFilmsPopup, addFilmsPopupOpen] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [addFilm, setAddFilm] = useState(false);
+  const [addFilmPop, setAddFilmPop] = useState(false);
 
   const films = filteredData && filteredData.map(item => {
     return(
@@ -80,6 +85,41 @@ export default function Films() {
        event: showType
      }];
 
+     const handleDelete = (id) => {
+      fetch(`http://localhost:3000/api/films/${id}`, {
+        method: 'DELETE'
+      })
+      .then(res => {
+        if (res.ok) {
+          // Update the data state to remove the deleted film
+          setData(prevData => prevData.filter(film => film.id !== id));
+          // Update the filteredData state to remove the deleted film
+          setFilteredData(prevData => prevData.filter(film => film.id !== id));
+        } else {
+          throw new Error("Failed to delete film");
+        }
+      })
+      .catch(error => {
+        console.error("Error deleting film: ", error);
+        setError(error);
+      });
+    };
+
+    function addFilmsPopup(){
+      setAddFilm(true);
+      setAddFilmPop(true);
+    }
+
+    const handleConfirm = () => {
+      setShowConfirm(false);
+      handleDelete();
+    };
+  
+    const handleCancel = () => {
+      setShowConfirm(false);
+    };
+
+
   return (
     <div className='page'>
       <img className='bannerFilms' src={banner_img} />
@@ -87,7 +127,8 @@ export default function Films() {
       <div className='page-container'>
         <SearchBar setContent={setFilms} showAll={showAll} setActiveProp={setActiveProp} name={"films"} className = 'search'/>
 
-        <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
+      <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
+      <Authenticate setAuthen={setAuthenticated}/> 
         {
           <div className = "films">
             {films}
@@ -95,10 +136,14 @@ export default function Films() {
               <button className = "addButton" onClick={() => addFilmsPopup(true)}>
                 <img src = {PlusIcon}></img>
               </button> 
+              
             </div>
+
           </div>
         }
-      </div>
-    </div>
+      
+    </div></>
+
+    
   );
-}
+}   

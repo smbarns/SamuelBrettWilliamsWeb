@@ -13,6 +13,7 @@
     padding: 0;
     font-family: Abel;
     font-weight: normal;
+    margin-top: 25px;
 }
 
 .popup-header button {
@@ -102,4 +103,9 @@
     100% {
         transform: rotate(360deg);
     }
+}
+
+#film-desc{
+    height: 150px;
+
 }

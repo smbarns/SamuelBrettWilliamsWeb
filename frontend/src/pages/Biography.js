@@ -3,9 +3,10 @@ import { useState, useEffect } from 'react'
 import '../styles/Biography.css'
 import banner_img from '../assets/biography_background.jpeg'
 import '../styles/Banner.css'
+import Authenticate from '../components/Authenticate.js';
 
 export default function Biography() {
-
+  const [authenticated, setAuthenticated] = useState();
   const [data, setData] = useState(null);
   const [pic, setPic] = useState();
   const [des, setDes] = useState();
@@ -96,10 +97,13 @@ export default function Biography() {
           <div className="bioBody">
             <img className="bioImg" src={pic} />
             <span className='bio-span'>{des}</span>
+            <Authenticate setAuthen={setAuthenticated}/>
+              {authenticated ? (
             <div>
               <button onClick={handleEditPic}>Edit Client Photo</button>
               <button onClick={handleEditDes}>Edit Bio Description</button>
             </div>
+            ) : (null)}
           </div>
         )}
       </div>

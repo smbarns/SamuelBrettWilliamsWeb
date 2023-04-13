@@ -11,6 +11,7 @@ import Photo from '../components/Photo'
 import {useRef} from 'react'
 import Authenticate from '../components/Authenticate.js';
 import VideoAddPopup from '../components/VideoAddPopup.js';
+import PhotoAddPopup from '../components/PhotoAddPopup.js';
 
 function FilmDetails() {
   const stateParamVal = useLocation().state;
@@ -19,6 +20,7 @@ function FilmDetails() {
   const [isEditingDetails, setIsEditingDetails] = useState(false);
   const [addLinkTrigger, setAddLinkTrigger] = useState(false);
   const [addVideoTrigger, setAddVideoTrigger] = useState(false);
+  const [addPhotoTrigger, setAddPhotoTrigger] = useState(false);
   const [updateCoverTrigger, setUpdateCoverTrigger] = useState(false);
   const [cover, setCover] = useState(stateParamVal.cover);
   const [newTitle, setNewTitle] = useState('');
@@ -559,9 +561,21 @@ function FilmDetails() {
           </div>
         </div>
         <div className = 'photoReel' ref = {scrollElementPhoto}>
+          {authenticated ? (
+            <div className="imgContainer-photos">
+              <div className="blank-add-photo">
+                <button onClick={(e) => setAddPhotoTrigger(!addPhotoTrigger)}>
+                <img src = {PlusIcon}></img></button>
+              </div>
+            </div>
+          ) : (null)}
           {photoReel}
         </div>
       </div> 
+
+      {authenticated ? (
+        <PhotoAddPopup addPhotoTrigger={addPhotoTrigger}  setAddPhotoTrigger={setAddPhotoTrigger} stateParamValPhotos={stateParamVal.photos.reverse()} stateParamValTitle={stateParamVal.title} type={'film'}></PhotoAddPopup>
+      ) : (null)}
     </div>
   )
 }

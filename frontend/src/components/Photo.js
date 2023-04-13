@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import '../styles/Photo.css';
+import Authenticate from '../components/Authenticate.js';
 
 function Photo(props) {
   const [trigger, setTrigger] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
 
   const toggleTrigger = () => {
     setTrigger(!trigger);
@@ -12,6 +15,24 @@ function Photo(props) {
 
   const handleImgClick = () => {
     setTrigger(true);
+  }
+
+  function handleDelete(photoID) {
+    fetch(`http://localhost:3000/api/delete/photo?id=${photoID}`)
+    .then(response => response.json())
+    .then(data => {
+      window.location.replace(`http://localhost:3000/#/${props.type}s`);
+      return alert(`Photo successfully deleted. Change can be viewed on the ${props.type}'s detail page.`)
+    })
+    .catch(error => {
+      console.error(error);
+      return alert('Error: Could not delete photo!');
+    });
+  };
+
+  function handleConfirm(photoID) {
+    setShowConfirm(false);
+    handleDelete(photoID);
   }
 
   return (
@@ -29,6 +50,28 @@ function Photo(props) {
           </div>
         </div>
       ) : ('')}
+
+      <Authenticate setAuthen={setAuthenticated}/>
+      {authenticated ? (
+        <div>
+          <button className="delete-photo" onClick={() => setShowConfirm(true)}>Delete</button>
+          {showConfirm && (
+            <div className = "popup">
+              <div className = "popup-inner-upcomingAdd">
+                <div className="popup-header">
+                  <h2>Are you sure you want to delete this photo?</h2>
+                </div>
+                <div className="popup-content">
+                  <div className="popup-deleteFeature">
+                    <button className="confirm-buttons" onClick={() => handleConfirm(props.id)}>Yes</button>
+                    <button className="confirm-buttons" onClick={() => setShowConfirm(false)}>No</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      ) : (null)}
     </div>
   )
 }

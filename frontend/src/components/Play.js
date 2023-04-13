@@ -3,6 +3,7 @@ import placeholder from '../assets/placeholder.png'
 import '../styles/Play.css'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import Authenticate from '../components/Authenticate.js';
 
 function Play(props) {
 
@@ -11,6 +12,7 @@ function Play(props) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [authenticated, setAuthenticated] = useState();
 
   const title = encodeURIComponent(props.title);
 
@@ -71,7 +73,10 @@ function Play(props) {
       <span className="playTitle"> {props.title} </span>
       <span className="playDuration"> {props.type_play} </span>
       <div>
+      <Authenticate setAuthen={setAuthenticated}/>
+              {authenticated ? (
             <button className="delete-feature" onClick={() => setShowConfirm(true)}>Delete</button>
+            ) : (null)}
             {showConfirm && (
               <div className = "popup">
                 <div className = "popup-inner-playsAdd">

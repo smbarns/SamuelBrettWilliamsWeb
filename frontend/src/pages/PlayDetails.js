@@ -11,6 +11,7 @@ import { faAngleLeft, faAngleRight, faXmark } from '@fortawesome/free-solid-svg-
 import PlusIcon from '../assets/add-icon.png';
 import Authenticate from '../components/Authenticate.js';
 import VideoAddPopup from '../components/VideoAddPopup.js';
+import PhotoAddPopup from '../components/PhotoAddPopup.js';
 
 function PlayDetails() {
   const stateParamVal = useLocation().state;
@@ -20,6 +21,7 @@ function PlayDetails() {
   const [addLinkTrigger, setAddLinkTrigger] = useState(false);
   const [updateCoverTrigger, setUpdateCoverTrigger] = useState(false);
   const [addVideoTrigger, setAddVideoTrigger] = useState(false);
+  const [addPhotoTrigger, setAddPhotoTrigger] = useState(false);
   const [cover, setCover] = useState(stateParamVal.cover);
   const [newTitle, setNewTitle] = useState('');
   const [writer, setWriter] = useState(stateParamVal.writer);
@@ -539,6 +541,14 @@ function PlayDetails() {
       <Popup url = {popupUrl} trigger = {buttonPopup}  setTrigger = {setButtonPopup} ></Popup>
 
       <div className = 'playReel'>
+        {authenticated ? (
+          <div className="imgContainer-photos">
+            <div className="blank-add-photo">
+              <button onClick={(e) => setAddPhotoTrigger(!addPhotoTrigger)}>
+              <img src = {PlusIcon}></img></button>
+            </div>
+          </div>
+        ) : (null)}
         <div className = 'playTopReel'>
           <div className = 'playPhotoReelText'>PHOTOS</div>
           <div className = 'arrows'>
@@ -550,6 +560,11 @@ function PlayDetails() {
           {photoReel}
         </div>
       </div> 
+
+      {authenticated ? (
+        <PhotoAddPopup addPhotoTrigger={addPhotoTrigger}  setAddPhotoTrigger={setAddPhotoTrigger} stateParamValPhotos={stateParamVal.photos.reverse()} stateParamValTitle={stateParamVal.title} type={'play'}></PhotoAddPopup>
+      ) : (null)}
+      <Popup url = {popupUrl} trigger = {buttonPopup}  setTrigger = {setButtonPopup} ></Popup>
     </div>
   )
 }
