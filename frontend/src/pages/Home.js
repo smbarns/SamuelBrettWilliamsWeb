@@ -123,87 +123,138 @@ const config = {
 };
 
   return (
-    
-    <div className = "page" >
-    <div className = "home">
-    <div className='player-wrapper'>
-          <ReactPlayer
-            className='react-player'
-            url='https://vimeo.com/730047025'
-            fluid = { false }
-            width=  '100%'
-            height= '100%'
-            playing= {true}
-            controls = {false}
-            muted = {true}
-          />
-        </div>
-      <div className = "about">  
-          <div className = "aboutBody">
-          {editPic && (
-              <div>
-                <label htmlFor="pic">Client Photo URL:</label>
-                <input
-                  type="text"
-                  id="pic"
-                  value={newPic}
-                  onChange={(e) => setNewPic(e.target.value)}
-                />
-              </div>
-            )}
-                {editDes && (
-              <div>
-                <label htmlFor="des">Bio Description:</label>
-                <textarea
-                  id="des"
-                  value={newDes}
-                  onChange={(e) => setNewDes(e.target.value)}
-                ></textarea>
-              </div>
-            )}
-            <div>
-              <h1>ABOUT</h1>
-              <h2 className = "clientDesc">
-                {desc}
-              </h2>
-            </div>
-            <img className = 'samImg' src = {pic} />
-        </div>
+    <div className="home">
+      <div className='player-wrapper'>
+        <ReactPlayer
+          className='react-player'
+          url='https://youtu.be/sNzW_3cM68A'
+          fluid={false}
+          width='100%'
+          height='100%'
+          playing={true}
+          controls={false}
+          muted={true} 
+          loop={true} 
+          config={config}
+          style={{ pointerEvents: 'none' }}/>
       </div>
-      <div className = 'upcomingProjects'>
-        <div className = 'topReel'>
-          <div className = 'reelText'>FEATURED PROJECTS
-           </div>
-           <div className = 'arrows'>
-            <FontAwesomeIcon icon={faAngleLeft} size="lg" style={{ marginRight: '18px' }} onClick = {scrollLeft}/>
-            <FontAwesomeIcon icon={faAngleRight} size="lg" onClick = {scrollRight}/>
-           </div>
-       
-        </div>
-        <div className = 'reel' ref = {scrollElement}>
-          <Authenticate setAuthen={setAuthenticated}/>
-          {authenticated ? (
-              <div className="imgContainer">
-                <div className="blank-add">
-                  <button className="addButton" onClick={() => upcomingPopup()}>
+      <div className="page">
+        <div className='page-container'>
+          {editPic || editDes ? (
+            <div className = "about">  
+              <div className = "aboutBody">
+                {editPic && (
+                  <div>
+                    <label htmlFor="pic">Client Photo URL:</label>
+                    <input
+                      type="text"
+                      id="pic"
+                      value={newPic}
+                      onChange={(e) => setNewPic(e.target.value)}
+                    />
+                  </div>
+                )}
+                {editDes && (
+                  <div>
+                    <label htmlFor="des">About Description:</label>
+                    <textarea
+                      id="des"
+                      value={newDes}
+                      onChange={(e) => setNewDes(e.target.value)}
+                    ></textarea>
+                  </div>
+                )}
+                <div className= "save">  <button onClick={handleSave}>Save</button></div>
+              </div> 
+            </div>
+          ) : (
+            <div className = "about">  
+              <div className = "aboutBody">
+                <div>
+                  <h1>ABOUT</h1>
+                  <h2 className = "clientDesc">
+                    {desc}
+                  </h2>
+                  <Authenticate setAuthen={setAuthenticated}/>
+                  {authenticated ? (
+                    <div className = "editButtons">
+                      <button onClick={handleEditPic}>Edit Client Photo</button>
+                      <button onClick={handleEditDes}>Edit About Description</button>
+                    </div>
+                  ) : (null)}
+                </div>
+                <img className = 'samImg' src = {pic} />
+              </div>
+            </div>
+          )}
+          <div className = 'upcomingProjects'>
+            <div className = 'topReel'>
+              <div className = 'reelText'>FEATURED PROJECTS</div>
+              <div className = 'arrows'>
+                <FontAwesomeIcon icon={faAngleLeft} size="lg" style={{ marginRight: '18px' }} onClick = {scrollLeft}/>
+                <FontAwesomeIcon icon={faAngleRight} size="lg" onClick = {scrollRight}/>
+              </div>
+            </div>
+            <div className = 'reel' ref = {scrollElement}>
+              {authenticated ? (
+                <div className="imgContainer">
+                  <div className="blank-add">
+                    <button className="addButton" onClick={() => upcomingPopup()}>
                     <img src = {PlusIcon}></img></button>
+                  </div>
+                </div>
+              ) : (null)}
+              {editDes && (
+                <div>
+                  <label htmlFor="des">Bio Description:</label>
+                  <textarea
+                    id="des"
+                    value={newDes}
+                    onChange={(e) => setNewDes(e.target.value)}
+                  ></textarea>
+                </div>
+              )}
+              <div>
+                <h1>ABOUT</h1>
+                <h2 className="clientDesc">
+                  {desc}
+                </h2>
+              </div>
+              <img className='samImg' src={pic} />
+            </div>
+          </div>
+          <div className='upcomingProjects'>
+            <div className='topReel'>
+              <div className='reelText'>FEATURED PROJECTS</div>
+              <div className='arrows'>
+                <FontAwesomeIcon icon={faAngleLeft} size="lg" style={{ marginRight: '18px' }} onClick={scrollLeft} />
+                <FontAwesomeIcon icon={faAngleRight} size="lg" onClick={scrollRight} />
+              </div>
+            </div>
+            <div className='reel' ref={scrollElement}>
+              <Authenticate setAuthen={setAuthenticated} />
+              {authenticated ? (
+                <div className="imgContainer">
+                  <div className="blank-add">
+                    <button className="addButton" onClick={() => upcomingPopup()}>
+                      <img src={PlusIcon}></img></button>
+                  </div>
                 </div>
               ) : (null)}
               {projectReel}
             </div>
-
             {authenticated ? (
               <UpcomingAddPopup trigger={upcomingAdd} setTrigger={setUpcomingAdd} filmSelect={filmSelect} setFilmSelect={setFilmSelect}></UpcomingAddPopup>
             ) : (null)}
 
-        <Popup url={popupUrl} trigger={buttonPopup}  setTrigger={setButtonPopup} ></Popup>
-        {console.log(popupUrl)}
-       
+            <Popup url={popupUrl} trigger={buttonPopup} setTrigger={setButtonPopup}></Popup>
+            {console.log(popupUrl)}
+          </div>
+          <button onClick={handleEditPic}>Edit Client Photo</button>
+          <button onClick={handleEditDes}>Edit About Description</button>
+        </div>
       </div>
-      <button onClick={handleEditPic}>Edit Client Photo</button>
-      <button onClick={handleEditDes}>Edit About Description</button>
     </div>
- </div>
   )
 }
  

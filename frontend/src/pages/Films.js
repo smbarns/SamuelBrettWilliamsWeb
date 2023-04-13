@@ -127,23 +127,21 @@ export default function Films() {
       <div className='page-container'>
         <SearchBar setContent={setFilms} showAll={showAll} setActiveProp={setActiveProp} name={"films"} className = 'search'/>
 
-      <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
-      <Authenticate setAuthen={setAuthenticated}/> 
-        {
-          <div className = "films">
-            {films}
-            <div className = "addFilms">
-              <button className = "addButton" onClick={() => addFilmsPopup(true)}>
-                <img src = {PlusIcon}></img>
-              </button> 
-              
+        <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
+        <Authenticate setAuthen={setAuthenticated}/> 
+          {
+            <div className = "films">
+              {films}
+              <div className = "addFilms">
+                <button className = "addButton" onClick={() => addFilmsPopup(true)}>
+                  <img src = {PlusIcon}></img>
+                </button> 
+                
+              </div>
+
             </div>
-
-          </div>
-        }
-      
-    </div></>
-
-    
+          }
+      </div>
+    </div>
   );
 }   
