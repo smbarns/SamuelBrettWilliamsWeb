@@ -91,25 +91,22 @@
     display:flex;
     flex-direction: column;
     margin-top:150px;
-    justify-content:center
 }
 
 .playReel .playTopReel{
     display: flex;
     flex-direction: row;
     align-items:center;
-    justify-content:center;
+    justify-content: space-between;
     margin-bottom: 20px;
 }
 
 .playReel .playVideoReelText{
-    padding-right:1450px;
     font-size: 40px;
     font-family: Abel;
 }
 
 .playReel .playPhotoReelText{
-    padding-right:1440px;
     font-size: 40px;
     font-family: Abel;
 }

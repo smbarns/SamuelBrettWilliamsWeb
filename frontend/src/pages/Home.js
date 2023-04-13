@@ -187,42 +187,6 @@ const config = {
               </div>
             </div>
           )}
-          <div className = 'upcomingProjects'>
-            <div className = 'topReel'>
-              <div className = 'reelText'>FEATURED PROJECTS</div>
-              <div className = 'arrows'>
-                <FontAwesomeIcon icon={faAngleLeft} size="lg" style={{ marginRight: '18px' }} onClick = {scrollLeft}/>
-                <FontAwesomeIcon icon={faAngleRight} size="lg" onClick = {scrollRight}/>
-              </div>
-            </div>
-            <div className = 'reel' ref = {scrollElement}>
-              {authenticated ? (
-                <div className="imgContainer">
-                  <div className="blank-add">
-                    <button className="addButton" onClick={() => upcomingPopup()}>
-                    <img src = {PlusIcon}></img></button>
-                  </div>
-                </div>
-              ) : (null)}
-              {editDes && (
-                <div>
-                  <label htmlFor="des">Bio Description:</label>
-                  <textarea
-                    id="des"
-                    value={newDes}
-                    onChange={(e) => setNewDes(e.target.value)}
-                  ></textarea>
-                </div>
-              )}
-              <div>
-                <h1>ABOUT</h1>
-                <h2 className="clientDesc">
-                  {desc}
-                </h2>
-              </div>
-              <img className='samImg' src={pic} />
-            </div>
-          </div>
           <div className='upcomingProjects'>
             <div className='topReel'>
               <div className='reelText'>FEATURED PROJECTS</div>
@@ -250,8 +214,6 @@ const config = {
             <Popup url={popupUrl} trigger={buttonPopup} setTrigger={setButtonPopup}></Popup>
             {console.log(popupUrl)}
           </div>
-          <button onClick={handleEditPic}>Edit Client Photo</button>
-          <button onClick={handleEditDes}>Edit About Description</button>
         </div>
       </div>
     </div>

@@ -123,25 +123,22 @@
     display:flex;
     flex-direction: column;
     margin-top:150px;
-    justify-content:center
 }
 
 .filmReel .filmTopReel{
     display: flex;
     flex-direction: row;
     align-items:center;
-    justify-content:center;
+    justify-content:space-between;
     margin-bottom: 20px;
 }
 
 .filmReel .filmVideoReelText{
-    padding-right:1450px;
     font-size: 40px;
     font-family: Abel;
 }
 
 .filmReel .filmPhotoReelText{
-    padding-right:1440px;
     font-size: 40px;
     font-family: Abel;
 }

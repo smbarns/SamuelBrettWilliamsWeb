@@ -326,139 +326,75 @@ function PlayDetails() {
 
   return (
     <div className = 'page'>
-      <div className = 'playDetails'>
-        <Authenticate setAuthen={setAuthenticated}/>
-        <div className = 'left'>
-          <img src={cover} className = 'playCoverImg' /> 
-          {authenticated ? (
-            <div>
-              <div className='editContent'>
-                <button className='buttonPosterEdit' onClick={() => toggleUpdateCoverTrigger()}>EDIT POSTER</button>
-              </div>
-              {updateCoverTrigger && (
-                  <div className = "popup">
-                    <div className = "popup-inner-upcomingAdd">
-                        <button className = "close-btn" onClick ={() => toggleUpdateCoverTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
-                        <div className="popup-header">
-                            <h2>ENTER THE PLAY'S POSTER URL</h2>
-                        </div>
-                        <div className="popup-content">
-                            <label htmlFor="poster-url">Enter poster URL:</label>
-                            <form onSubmit={handlePosterUrlSubmit}>
-                                <input type="text" id="poster-url" name="poster-url" value={posterUrl} placeholder="Enter the URL of the play's poster" onChange={(e) => setPosterUrl(e.target.value)} />
-                                <button className="button-submitUpcoming" type="submit" disabled={loading}>Submit</button>
-                            </form>
-                        </div>
-                        <div className="popup-header">
-                            <h2>OR UPLOAD A POSTER</h2>
-                        </div>
-                        <div className="popup-content">
-                            <label htmlFor="files">Select a file to upload:</label>
-                            <form onSubmit={handlePosterFileSubmit}>
-                                <input className="upload-content" type="file" id="files" onChange={(e) => setSelectedFile(e.target.files[0])} />
-                                <button className="button-submitUpcoming" type="submit" disabled={loading}>Upload</button>
-                                {loading && 
-                                    <div className = "popup">
-                                        <div className = "popup-inner-upcomingAdd">
-                                            <div className="popup-header">
-                                                <h2>Uploading file...</h2>
-                                            </div>
-                                            <label>This may take a while</label>
-                                            <div className="popup-content">
-                                                <div className="loader"></div>
-                                            </div>
-                                            <button className="cancel-upload" onClick={handleCancelUpload}>Cancel</button>
-                                        </div>
-                                    </div>
-                                }
-                            </form>
-                        </div>
-                    </div>
+      <div className='page-container'>
+        <div className = 'playDetails'>
+          <Authenticate setAuthen={setAuthenticated}/>
+          <div className = 'left'>
+            <img src={cover} className = 'playCoverImg' /> 
+            {authenticated ? (
+              <div>
+                <div className='editContent'>
+                  <button className='buttonPosterEdit' onClick={() => toggleUpdateCoverTrigger()}>EDIT POSTER</button>
                 </div>
-              )}
-            </div>
-          ) : (null)}
-        </div>
-
-        <div className = 'right'> 
-          {authenticated ? (
-            <div>
-              {isEditingTitle || isEditingDetails || addLinkTrigger ? (
-                <div>
-                  {isEditingTitle && (
-                    <div className='editContent'>
-                      <div className='titleUpdate'>
-                        <input type="text" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
-                        <div className='buttonTitleUpdate'>
-                          <button onClick={handleTitleSave}>SAVE</button>
-                          <button onClick={handleTitleCancel}>CANCEL</button>
-                        </div>
+                {updateCoverTrigger && (
+                    <div className = "popup">
+                      <div className = "popup-inner-upcomingAdd">
+                          <button className = "close-btn" onClick ={() => toggleUpdateCoverTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
+                          <div className="popup-header">
+                              <h2>ENTER THE PLAY'S POSTER URL</h2>
+                          </div>
+                          <div className="popup-content">
+                              <label htmlFor="poster-url">Enter poster URL:</label>
+                              <form onSubmit={handlePosterUrlSubmit}>
+                                  <input type="text" id="poster-url" name="poster-url" value={posterUrl} placeholder="Enter the URL of the play's poster" onChange={(e) => setPosterUrl(e.target.value)} />
+                                  <button className="button-submitUpcoming" type="submit" disabled={loading}>Submit</button>
+                              </form>
+                          </div>
+                          <div className="popup-header">
+                              <h2>OR UPLOAD A POSTER</h2>
+                          </div>
+                          <div className="popup-content">
+                              <label htmlFor="files">Select a file to upload:</label>
+                              <form onSubmit={handlePosterFileSubmit}>
+                                  <input className="upload-content" type="file" id="files" onChange={(e) => setSelectedFile(e.target.files[0])} />
+                                  <button className="button-submitUpcoming" type="submit" disabled={loading}>Upload</button>
+                                  {loading && 
+                                      <div className = "popup">
+                                          <div className = "popup-inner-upcomingAdd">
+                                              <div className="popup-header">
+                                                  <h2>Uploading file...</h2>
+                                              </div>
+                                              <label>This may take a while</label>
+                                              <div className="popup-content">
+                                                  <div className="loader"></div>
+                                              </div>
+                                              <button className="cancel-upload" onClick={handleCancelUpload}>Cancel</button>
+                                          </div>
+                                      </div>
+                                  }
+                              </form>
+                          </div>
                       </div>
-                      <span className = "play-writer"> Writer: {writer} </span>
-                      <span className = 'production'> Productions: {production} </span>
-                      <span className = 'development'> Development: {dev} </span>
-                      <span className='play_avaliable'>Avaliable On:</span>
-                      <div className='play_links'>
-                        {buy_links}
-                      </div>
-                      <p className = 'playSynopsis'> {desc} </p>
-                    </div>
-                  )}
-                  {isEditingDetails && (
-                    <div className='editContent'>
-                      <h1 className = 'playsTitle'>{stateParamVal.title}</h1>
+                  </div>
+                )}
+              </div>
+            ) : (null)}
+          </div>
 
-                      <span className = "play-writer"> Writer:
-                        <input type="text" value={writer} onChange={(e) => setWriter(e.target.value)} />
-                      </span>
-
-                      <div className='textarea-container'>
-                        <span className = 'play-production'> Productions: </span>
-                        <textarea type="text" value={production} onChange={(e) => setProduction(e.target.value)} />
-                      </div>
-
-                      <div className='textarea-container'>
-                        <span className = 'play-dev'> Development: </span>
-                        <textarea type="text" value={dev} onChange={(e) => setDev(e.target.value)} />
-                      </div>
-
-                      <span className='play_avaliable'>Avaliable On:</span>
-                      <div className='play_links'>
-                        {buy_links}
-                      </div>
-
-                      <p className = 'playSynopsis'>
-                        <textarea type="text" id="play-desc" name="play-desc" value={desc} onChange={(e) => setDesc(e.target.value)} />
-                      </p>
-
-                      <div className='buttonDetailsUpdate'>
-                          <button onClick={handleDetailsSave}>SAVE</button>
-                          <button onClick={handleDetailsCancel}>CANCEL</button>
-                      </div>
-                    </div>
-                  )}
-                  {addLinkTrigger && (
-                    <div>
-                      <div className = "popup">
-                        <div className = "popup-inner-upcomingAdd">
-                            <button className = "close-btn" onClick ={() => toggleLinkTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
-                            <div className="popup-header">
-                                <h2>CREATE A NEW BUY LINK</h2>
-                            </div>
-                            <div className="popup-content">
-                                <form onSubmit={handleBuyLinkSubmit}>
-                                    <label htmlFor="buy-link">Enter the play's buy link:</label>
-                                    <input type="text" id="buy-link" name="buy-link" value={buyLink} placeholder="Enter the link where you can buy the play" onChange={(e) => setBuyLink(e.target.value)} />
-                                    
-                                    <label htmlFor="buy-link-image">Enter the URL of the link's logo:</label>
-                                    <input type="text" id="buy-link-image" name="buy-link-image" value={buyLinkImg} placeholder="Enter the URL of the buy link's logo image" onChange={(e) => setBuyLinkImg(e.target.value)} />
-                                    <button className="button-submitUpcoming" type="submit" >Submit</button>
-                                </form>
-                            </div>
-                        </div>
-                      </div>
+          <div className = 'right'> 
+            {authenticated ? (
+              <div>
+                {isEditingTitle || isEditingDetails || addLinkTrigger ? (
+                  <div>
+                    {isEditingTitle && (
                       <div className='editContent'>
-                        <h1 className = 'playsTitle'>{stateParamVal.title}</h1>
+                        <div className='titleUpdate'>
+                          <input type="text" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
+                          <div className='buttonTitleUpdate'>
+                            <button onClick={handleTitleSave}>SAVE</button>
+                            <button onClick={handleTitleCancel}>CANCEL</button>
+                          </div>
+                        </div>
                         <span className = "play-writer"> Writer: {writer} </span>
                         <span className = 'production'> Productions: {production} </span>
                         <span className = 'development'> Development: {dev} </span>
@@ -468,103 +404,169 @@ function PlayDetails() {
                         </div>
                         <p className = 'playSynopsis'> {desc} </p>
                       </div>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div className='editContent'>
-                  <div className='titleEdit'>
-                    <h1 className = 'playsTitle'>{stateParamVal.title}</h1>
-                    <button className='buttonTitle' onClick={handleEditTitle}>EDIT TITLE</button>
-                  </div>
+                    )}
+                    {isEditingDetails && (
+                      <div className='editContent'>
+                        <h1 className = 'playsTitle'>{stateParamVal.title}</h1>
 
-                  <span className = "play-writer"> Writer: {writer} </span>
-                  <span className = 'production'> Productions: {production} </span>
-                  <span className = 'development'> Development: {dev} </span>
-                  <span className='play_avaliable'>Avaliable On:</span>
-                  <div className='play_links'>
-                    {buy_links}
-                    <div className="imgContainer">
-                      <div className="blank-add-buyLink">
-                        <button onClick={() => toggleLinkTrigger()}>
-                          <img src = {PlusIcon}></img></button>
+                        <span className = "play-writer"> Writer:
+                          <input type="text" value={writer} onChange={(e) => setWriter(e.target.value)} />
+                        </span>
+
+                        <div className='textarea-container'>
+                          <span className = 'play-production'> Productions: </span>
+                          <textarea type="text" value={production} onChange={(e) => setProduction(e.target.value)} />
+                        </div>
+
+                        <div className='textarea-container'>
+                          <span className = 'play-dev'> Development: </span>
+                          <textarea type="text" value={dev} onChange={(e) => setDev(e.target.value)} />
+                        </div>
+
+                        <span className='play_avaliable'>Avaliable On:</span>
+                        <div className='play_links'>
+                          {buy_links}
+                        </div>
+
+                        <p className = 'playSynopsis'>
+                          <textarea type="text" id="play-desc" name="play-desc" value={desc} onChange={(e) => setDesc(e.target.value)} />
+                        </p>
+
+                        <div className='buttonDetailsUpdate'>
+                            <button onClick={handleDetailsSave}>SAVE</button>
+                            <button onClick={handleDetailsCancel}>CANCEL</button>
+                        </div>
+                      </div>
+                    )}
+                    {addLinkTrigger && (
+                      <div>
+                        <div className = "popup">
+                          <div className = "popup-inner-upcomingAdd">
+                              <button className = "close-btn" onClick ={() => toggleLinkTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
+                              <div className="popup-header">
+                                  <h2>CREATE A NEW BUY LINK</h2>
+                              </div>
+                              <div className="popup-content">
+                                  <form onSubmit={handleBuyLinkSubmit}>
+                                      <label htmlFor="buy-link">Enter the play's buy link:</label>
+                                      <input type="text" id="buy-link" name="buy-link" value={buyLink} placeholder="Enter the link where you can buy the play" onChange={(e) => setBuyLink(e.target.value)} />
+                                      
+                                      <label htmlFor="buy-link-image">Enter the URL of the link's logo:</label>
+                                      <input type="text" id="buy-link-image" name="buy-link-image" value={buyLinkImg} placeholder="Enter the URL of the buy link's logo image" onChange={(e) => setBuyLinkImg(e.target.value)} />
+                                      <button className="button-submitUpcoming" type="submit" >Submit</button>
+                                  </form>
+                              </div>
+                          </div>
+                        </div>
+                        <div className='editContent'>
+                          <h1 className = 'playsTitle'>{stateParamVal.title}</h1>
+                          <span className = "play-writer"> Writer: {writer} </span>
+                          <span className = 'production'> Productions: {production} </span>
+                          <span className = 'development'> Development: {dev} </span>
+                          <span className='play_avaliable'>Avaliable On:</span>
+                          <div className='play_links'>
+                            {buy_links}
+                          </div>
+                          <p className = 'playSynopsis'> {desc} </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className='editContent'>
+                    <div className='titleEdit'>
+                      <h1 className = 'playsTitle'>{stateParamVal.title}</h1>
+                      <button className='buttonTitle' onClick={handleEditTitle}>EDIT TITLE</button>
+                    </div>
+
+                    <span className = "play-writer"> Writer: {writer} </span>
+                    <span className = 'production'> Productions: {production} </span>
+                    <span className = 'development'> Development: {dev} </span>
+                    <span className='play_avaliable'>Avaliable On:</span>
+                    <div className='play_links'>
+                      {buy_links}
+                      <div className="imgContainer">
+                        <div className="blank-add-buyLink">
+                          <button onClick={() => toggleLinkTrigger()}>
+                            <img src = {PlusIcon}></img></button>
+                        </div>
                       </div>
                     </div>
+                    <p className = 'playSynopsis'> {desc} </p>
+                    
+                    <button className='buttonDetailsEdit' onClick={handleEditDetails}>EDIT DETAILS</button>
                   </div>
-                  <p className = 'playSynopsis'> {desc} </p>
-                  
-                  <button className='buttonDetailsEdit' onClick={handleEditDetails}>EDIT DETAILS</button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className='editContent'>
-              <h1 className = 'playsTitle'>{stateParamVal.title}</h1>
-              
-              <span className = "play-writer"> Writer:  {stateParamVal.writer} </span>
-              <span className = 'production'> Productions: {stateParamVal.production} </span>
-              <span className = 'development'> Development: {stateParamVal.development} </span>
-              <span className='play_avaliable'>Avaliable On:</span>
-              <div className='play_links'>
-                {buy_links}
+                )}
               </div>
-              <p className = 'playSynopsis'> {stateParamVal.synopsis} </p>
-            </div>
-          )}
-        </div>
-      </div>
-    
-      <div className = 'playReel'>
-        <div className = 'playTopReel'>
-          <div className = 'playVideoReelText'>VIDEOS</div>
-          <div className = 'arrows'>
-            <FontAwesomeIcon icon={faAngleLeft} size="lg" style={{ marginRight: '18px' }} onClick = {() => scrollLeft(scrollElementVid)}/>
-            <FontAwesomeIcon icon={faAngleRight} size="lg" onClick = {() => scrollRight(scrollElementVid)}/>
+            ) : (
+              <div className='editContent'>
+                <h1 className = 'playsTitle'>{stateParamVal.title}</h1>
+                
+                <span className = "play-writer"> Writer:  {stateParamVal.writer} </span>
+                <span className = 'production'> Productions: {stateParamVal.production} </span>
+                <span className = 'development'> Development: {stateParamVal.development} </span>
+                <span className='play_avaliable'>Avaliable On:</span>
+                <div className='play_links'>
+                  {buy_links}
+                </div>
+                <p className = 'playSynopsis'> {stateParamVal.synopsis} </p>
+              </div>
+            )}
           </div>
         </div>
-        <div className = 'vidReel' ref = {scrollElementVid}>
+      
+        <div className = 'playReel'>
+          <div className = 'playTopReel'>
+            <div className = 'playVideoReelText'>VIDEOS</div>
+            <div className = 'arrows'>
+              <FontAwesomeIcon icon={faAngleLeft} size="lg" style={{ marginRight: '18px' }} onClick = {() => scrollLeft(scrollElementVid)}/>
+              <FontAwesomeIcon icon={faAngleRight} size="lg" onClick = {() => scrollRight(scrollElementVid)}/>
+            </div>
+          </div>
+          <div className = 'vidReel' ref = {scrollElementVid}>
+            {authenticated ? (
+              <div className="imgContainer-videos">
+                <div className="blank-add-video">
+                  <button onClick={(e) => setAddVideoTrigger(!addVideoTrigger)}>
+                  <img src = {PlusIcon}></img></button>
+                </div>
+              </div>
+            ) : (null)}
+            {videoReel}
+          </div>
+        </div>
+
+        {authenticated ? (
+          <VideoAddPopup addVideoTrigger={addVideoTrigger}  setAddVideoTrigger={setAddVideoTrigger} stateParamValVideos={stateParamVal.videos.reverse()} stateParamValTitle={stateParamVal.title} type={'play'}></VideoAddPopup>
+        ) : (null)}
+        <Popup url = {popupUrl} trigger = {buttonPopup}  setTrigger = {setButtonPopup} ></Popup>
+
+        <div className = 'playReel'>
           {authenticated ? (
-            <div className="imgContainer-videos">
-              <div className="blank-add-video">
-                <button onClick={(e) => setAddVideoTrigger(!addVideoTrigger)}>
+            <div className="imgContainer-photos">
+              <div className="blank-add-photo">
+                <button onClick={(e) => setAddPhotoTrigger(!addPhotoTrigger)}>
                 <img src = {PlusIcon}></img></button>
               </div>
             </div>
           ) : (null)}
-          {videoReel}
-        </div>
-      </div>
-
-      {authenticated ? (
-        <VideoAddPopup addVideoTrigger={addVideoTrigger}  setAddVideoTrigger={setAddVideoTrigger} stateParamValVideos={stateParamVal.videos.reverse()} stateParamValTitle={stateParamVal.title} type={'play'}></VideoAddPopup>
-      ) : (null)}
-      <Popup url = {popupUrl} trigger = {buttonPopup}  setTrigger = {setButtonPopup} ></Popup>
-
-      <div className = 'playReel'>
-        {authenticated ? (
-          <div className="imgContainer-photos">
-            <div className="blank-add-photo">
-              <button onClick={(e) => setAddPhotoTrigger(!addPhotoTrigger)}>
-              <img src = {PlusIcon}></img></button>
+          <div className = 'playTopReel'>
+            <div className = 'playPhotoReelText'>PHOTOS</div>
+            <div className = 'arrows'>
+              <FontAwesomeIcon icon={faAngleLeft} size="lg" style={{ marginRight: '18px' }} onClick = {() => scrollLeft(scrollElementPhoto)}/>
+              <FontAwesomeIcon icon={faAngleRight} size="lg" onClick = {() => scrollRight(scrollElementPhoto)}/>
             </div>
           </div>
-        ) : (null)}
-        <div className = 'playTopReel'>
-          <div className = 'playPhotoReelText'>PHOTOS</div>
-          <div className = 'arrows'>
-            <FontAwesomeIcon icon={faAngleLeft} size="lg" style={{ marginRight: '18px' }} onClick = {() => scrollLeft(scrollElementPhoto)}/>
-            <FontAwesomeIcon icon={faAngleRight} size="lg" onClick = {() => scrollRight(scrollElementPhoto)}/>
+          <div className = 'photoReel' ref = {scrollElementPhoto}>
+            {photoReel}
           </div>
-        </div>
-        <div className = 'photoReel' ref = {scrollElementPhoto}>
-          {photoReel}
-        </div>
-      </div> 
+        </div> 
 
-      {authenticated ? (
-        <PhotoAddPopup addPhotoTrigger={addPhotoTrigger}  setAddPhotoTrigger={setAddPhotoTrigger} stateParamValPhotos={stateParamVal.photos.reverse()} stateParamValTitle={stateParamVal.title} type={'play'}></PhotoAddPopup>
-      ) : (null)}
-      <Popup url = {popupUrl} trigger = {buttonPopup}  setTrigger = {setButtonPopup} ></Popup>
+        {authenticated ? (
+          <PhotoAddPopup addPhotoTrigger={addPhotoTrigger}  setAddPhotoTrigger={setAddPhotoTrigger} stateParamValPhotos={stateParamVal.photos.reverse()} stateParamValTitle={stateParamVal.title} type={'play'}></PhotoAddPopup>
+        ) : (null)}
+        <Popup url = {popupUrl} trigger = {buttonPopup}  setTrigger = {setButtonPopup} ></Popup>
+      </div>
     </div>
   )
 }
