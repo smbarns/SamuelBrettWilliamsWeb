@@ -48,7 +48,7 @@ function Project(props) {
         <img className='blank' src={props.photo} />
         <span className='caption'>{props.title.toUpperCase()}</span>
         {authenticated ? (
-          <div>
+          <div className='delete-button'>
             <button className="delete-feature" onClick={() => setShowConfirm(true)}>Delete</button>
             {showConfirm && (
               <div className = "popup">

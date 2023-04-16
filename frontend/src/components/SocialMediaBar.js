@@ -13,10 +13,10 @@ import '../styles/SocialMediaBar.css'
 function SocialMediaBar() {
     return (
         <div className='socialBar'>
-            <div className='links'>
-            <a href = "https://www.Twitter.com" className = "icons">
+            <div className='social-links'>
+                <a href = "https://www.Twitter.com" className = "icons">
                     <FontAwesomeIcon icon = {faTwitter}/>
-                    </a>
+                </a>
                 <a href = "https://www.facebook.com/samuel.b.williams.18" className = "icons">
                     <FontAwesomeIcon icon = {faFacebookF}/>
                 </a>
@@ -25,7 +25,10 @@ function SocialMediaBar() {
                 </a>
                 <a href = "https://www.youtube.com" className = "icons">
                     <FontAwesomeIcon icon = {faYoutube}/>
-                    </a>
+                </a>
+            </div>
+            <div className='admin-link'>
+                <Link to ="admin_login">ADMIN</Link>
             </div>
         </div>
     )

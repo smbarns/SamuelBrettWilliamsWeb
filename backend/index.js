@@ -205,20 +205,6 @@ app.get('/api/homepage/client_photo', async (req, res) => {
     }
 });
 
-//Post method for homepage
-app.post("/api/homepage", ensureAuthenticated, async (req, res) => {
-    const data = req.body;
-    try {
-        const homepage = await db.Homepage.create({
-            about_des: data.about_des,
-            client_photo: data.client_photo
-        });
-        res.send(homepage);
-    } catch (err) {
-        res.send(err);
-    }
-});
-
 // JSON for all attributes of Biopage table
 app.get('/api/biopage', async (req, res) => {
     try {
@@ -730,6 +716,42 @@ app.post('/api/homepage/film/create/video', ensureAuthenticated, async (req, res
         res.send(video);
     } catch (err) {
         res.send(err);
+    }
+});
+
+app.put('/api/homepage/photo', ensureAuthenticated, async (req, res) => {
+    const photo = req.body.photo;
+
+    try {
+        const homepage = await db.Homepage.findOne({where: {id: 1}});
+        if (!homepage) {
+            return res.status(404).send('Homepage not found');
+        }
+
+        homepage.client_photo = photo;
+        await homepage.save();
+        return res.status(200).json(homepage);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+});
+
+app.put("/api/homepage/edit/about", ensureAuthenticated, async (req, res) => {
+    const desc = req.body.about_des;
+
+    try {
+        const homepage = await db.Homepage.findOne({where: {id: 1}});
+        if (!homepage) {
+            return res.status(404).send('Homepage not found');
+        }
+
+        homepage.about_des = desc;
+        await homepage.save();
+        return res.status(200).json(homepage);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
     }
 });
 

@@ -22,5 +22,10 @@ body {
   letter-spacing: .1rem;
   color:white;
   font-size:x-large;
-  
+}
+
+@media only screen and (max-width: 900px) {
+  body {
+    letter-spacing: .05rem;
+  }
 }

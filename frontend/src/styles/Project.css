@@ -3,9 +3,7 @@
 .imgContainer{
     display: flex;
     flex-direction: column;
-    
     position: relative;
-    justify-content: center;
     align-items: center;
 }
 
@@ -19,7 +17,7 @@
 .blank-add{
     height: 380px;
     width: 452px;
-    border: 2px solid rgb(131, 127, 127);
+    border: 1px solid rgb(131, 127, 127);
     margin-bottom: 85px;
     display: flex;
     justify-content: center;
@@ -50,7 +48,7 @@
     background-color: transparent;
     top:40%;
     background-image: url('//assets.squarespace.com/universal/images-v6/damask/play-button@2x.png');
-    background-size: 40px;
+    background-size: contain;
     width: 40px;
     height: 40px;
     border: 0;
@@ -117,3 +115,110 @@
     background-color: #584646;
     cursor: pointer;
 }
+
+@media only screen and (max-width: 1600px) {
+    .blank, .blank-add {
+        height: 360px;
+        width: 432px;
+    }
+}
+
+@media only screen and (max-width: 1450px) {
+    .blank, .blank-add {
+        height: 330px;
+        width: 392px;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .blank, .blank-add {
+        height: 290px;
+        width: 352px;
+    }
+    .caption {
+        font-size: 17px;
+    }
+    .playButton {
+        top: 35%
+    }
+}
+
+@media only screen and (max-width: 1105px) {
+    .blank, .blank-add {
+        height: 250px;
+        width: 282px;
+    }
+    .playButton {
+        height: 30px;
+        width: 30px;
+        top: 30%
+    }
+    .addButton, .addButton img {
+        width: 80px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .blank, .blank-add {
+        height: 210px;
+        width: 242px;
+    }
+    .caption {
+        font-size: 13px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .blank, .blank-add {
+        height: 190px;
+        width: 222px;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .blank, .blank-add {
+        height: 150px;
+        width: 182px;
+    }
+    .playButton {
+        width: 20px;
+        height: 20px;
+        top: 30%
+    }
+    .caption {
+        font-size: 11px;
+    }
+    .addButton, .addButton img {
+        width: 50px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .blank, .blank-add {
+        height: 130px;
+        width: 147px;
+    }
+    .caption {
+        font-size: 9px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .blank, .blank-add {
+        height: 100px;
+        width: 117px;
+    }
+    .caption {
+        font-size: 7px;
+        padding-top: 10px;
+    }
+    .playButton {
+        height: 15px;
+        width: 15px;
+        top: 22%
+    }
+    .addButton, .addButton img {
+        width: 30px;
+    }
+}
+

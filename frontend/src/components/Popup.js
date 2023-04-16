@@ -15,7 +15,7 @@ function Popup(props) {
   return (props.trigger) ? (
     <div className = "popup">
         <div className = "popup-inner">
-            <button className = "close-btn"onClick ={() => toggleTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
+            <button className = "close-btn"onClick ={() => toggleTrigger()} >{<FontAwesomeIcon className='x-button' icon={faXmark} size="xl" />} </button>
             <div className='popup-wrapper'>
           <ReactPlayer
             className='popup-player'

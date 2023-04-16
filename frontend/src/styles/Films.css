@@ -61,3 +61,43 @@
     background-color: #584646;
     cursor: pointer;
 }
+
+.delete-button {
+    display: flex;
+    padding-top: 10px;
+}
+
+@media only screen and (max-width: 1300px) {
+    .delete-feature {
+        font-size: 13px;
+        width: 80px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .delete-feature {
+        font-size: 10px;
+        width: 60px;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .delete-feature {
+        font-size: 8px;
+        width: 50px;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .delete-feature {
+        font-size: 8px;
+        width: 50px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .delete-feature {
+        font-size: 5px;
+        width: 30px;
+    }
+}

@@ -17,14 +17,19 @@
     width: 100%;
 }
 
-.popup-inner-upcomingAdd {
+.popup-inner-upcomingAdd, .popup-inner-upcomingAdd .loading {
     position:relative;
-    width: 100%;
-    margin: 500px 500px 500px 500px;
     background-color: #331414;
     overflow: auto;
     max-height: 800px;
+}
 
+.loading {
+    width: 700px;
+}
+
+.close-btn {
+    display: flex;
 }
 
 .popup-inner-upcomingAdd .close-btn{
@@ -62,3 +67,60 @@
     left: 0;
 }
 
+@media only screen and (max-width: 1600px) {
+    .popup-inner-upcomingAdd {
+        max-height: 600px;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .popup-inner-upcomingAdd {
+        max-height: 500px;
+    }
+    .loading {
+        width: 600px;
+    }
+}
+
+@media only screen and (max-width: 1105px) {
+    .popup-inner-upcomingAdd {
+        max-height: 400px;
+    }
+    .loading {
+        width: 500px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .popup-inner-upcomingAdd {
+        max-height: 300px;
+    }
+    .loading {
+        width: 500px;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .popup-inner-upcomingAdd {
+        max-height: 250px;
+    }
+    .loading {
+        width: 350px;
+    }
+    .popup-inner-upcomingAdd .close-btn {
+        top: 5px;
+        right: 5px
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .popup-inner-upcomingAdd {
+        max-height: 200px;
+    }
+    .loading {
+        width: 250px;
+    }
+    .popup-inner-upcomingAdd .close-btn {
+        top: 5px;
+    }
+}

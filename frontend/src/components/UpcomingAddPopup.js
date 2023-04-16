@@ -200,7 +200,7 @@ function UpcomingAddPopup(props) {
             {props.filmSelect && (
               <div className = "popup">
                 <div className = "popup-inner-upcomingAdd">
-                    <button className = "close-btn" onClick ={() => toggleTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
+                    <button className = "close-btn" onClick ={() => toggleTrigger()} >{<FontAwesomeIcon className='x-button' icon={faXmark} />} </button>
                     <div className="popup-header">
                         <h2>SELECT A FILM TO FEATURE</h2>
                     </div>
@@ -224,13 +224,13 @@ function UpcomingAddPopup(props) {
                 {secondTrigger && (
                 <div className = "popup">
                     <div className = "popup-inner-upcomingAdd">
-                        <button className = "close-btn" onClick ={() => toggleSecondTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
+                        <button className = "close-btn" onClick ={() => toggleSecondTrigger()} >{<FontAwesomeIcon className='x-button' icon={faXmark} />} </button>
                         <div className="popup-header">
                             <h2>SELECT AN EXISTING VIDEO</h2>
                         </div>
                         <div className="popup-content">
                             <label htmlFor="link-select">Avaliable video links:</label>
-                            <form onSubmit={handleLinkSubmit}>
+                            <form className='popup-form' onSubmit={handleLinkSubmit}>
                               <select id="link-select" disabled={loading} onChange={handleLinkSelect}>
                                   <option value="">--Choose a link--</option>
                                   {
@@ -250,7 +250,7 @@ function UpcomingAddPopup(props) {
                         </div>
                         <div className="popup-content">
                             <label htmlFor="video-url">Enter video URL:</label>
-                            <form onSubmit={handleUrlSubmit}>
+                            <form className='popup-form' onSubmit={handleUrlSubmit}>
                                 <input type="text" id="video-url" name="video-url" value={videoUrl} placeholder="Enter the URL of a video" onChange={handleVideoUrlChange} />
                                 <button className="button-submitUpcoming" type="submit" disabled={loading}>Submit</button>
                             </form>
@@ -260,20 +260,22 @@ function UpcomingAddPopup(props) {
                         </div>
                         <div className="popup-content">
                         <label htmlFor="files">Select a video file to upload:</label>
-                        <form onSubmit={handleFileSubmit}>
+                        <form className='popup-form' onSubmit={handleFileSubmit}>
                             <input className="upload-content" type="file" id="files" onChange={handleFileSelect} />
                             <button className="button-submitUpcoming" type="submit" disabled={loading}>Upload</button>
                             {loading && 
                               <div className = "popup">
                                 <div className = "popup-inner-upcomingAdd">
-                                  <div className="popup-header">
-                                    <h2>Uploading video...</h2>
+                                  <div className='loading'>
+                                    <div className="popup-header">
+                                      <h2>Uploading video...</h2>
+                                    </div>
+                                    <label>This may take a while</label>
+                                    <div className="popup-content">
+                                      <div className="loader"></div>
+                                    </div>
+                                    <button className="cancel-upload" type="cancel" onClick={handleCancelUpload}>Cancel</button>
                                   </div>
-                                  <label>This may take a while</label>
-                                  <div className="popup-content">
-                                    <div className="loader"></div>
-                                  </div>
-                                  <button className="cancel-upload" onClick={handleCancelUpload}>Cancel</button>
                                 </div>
                               </div>
                             }

@@ -284,7 +284,7 @@ function PlayAddPopup(props) {
                                                     <div className="popup-content">
                                                         <div className="loader"></div>
                                                     </div>
-                                                    <button className="cancel-upload" onClick={handleCancelUpload}>Cancel</button>
+                                                    <button className="cancel-upload" type='cancel' onClick={handleCancelUpload}>Cancel</button>
                                                 </div>
                                             </div>
                                         }

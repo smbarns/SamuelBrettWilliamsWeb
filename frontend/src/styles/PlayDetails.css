@@ -195,7 +195,7 @@
     transition: all 0.3s;
 }
 
-.buttonTitleUpdate button:hover, .buttonDetailsUpdate button:hover, .buttonPosterEdit button:hover {
+.buttonTitleUpdate button:hover, .buttonDetailsUpdate button:hover, .buttonPosterEdit:hover {
     background-color: #655b5b;
     cursor: pointer;
 }
@@ -324,4 +324,58 @@
 
 .blank-add-video img {
     width: 100px;
+}
+
+@media only screen and (max-width: 1500px) {
+    .buttonPosterEdit {
+        width: 150px;
+    }
+    .buttonDetailsUpdate button {
+        font-size: 15px;
+        padding: 8px 18px;
+        width: 130px;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .buttonPosterEdit {
+        width: 120px;
+    }
+    .buttonDetailsUpdate button {
+        font-size: 12px;
+        width: 100px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .buttonPosterEdit {
+        width: 90px;
+    }
+    .buttonDetailsUpdate button {
+        font-size: 9px;
+        width: 80px;
+        padding: 5px 15px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .buttonPosterEdit {
+        width: 80px;
+    }
+    .buttonDetailsUpdate button {
+        font-size: 7px;
+        padding: 4px 10px;
+        width: 70px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .buttonPosterEdit {
+        width: 60px;
+    }
+    .buttonDetailsUpdate button {
+        font-size: 5px;
+        padding: 3px 5px;
+        width: 50px;
+    }
 }
