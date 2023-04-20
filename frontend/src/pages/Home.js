@@ -215,7 +215,7 @@ const config = {
         <div className='home-quote'>
           <h1 className='firstline'>"Call Samuel Brett Williams a</h1>
           <div className='secondline-container'>
-            <h1 className='secondline'>"PLAYWRIGHT ON THE VERGE</h1><h1 className='second-end'>."</h1>
+            <h1 className='secondline'>PLAYWRIGHT ON THE VERGE</h1><h1 className='second-end'>."</h1>
           </div>
           <h1 className='thirdline'>David A. Rosenberg, BACKSTAGE</h1>
         </div>

@@ -48,7 +48,7 @@ function Film(props) {
         }} ><img className="filmImg" src={placeholder} /></Link>
       </div>
       <span className="filmTitle"> {props.title} </span>
-      <span className="filmType"> {props.type_film} </span>
+      <span className="filmDuration"> {props.type_film} </span>
     </div>
 
   )

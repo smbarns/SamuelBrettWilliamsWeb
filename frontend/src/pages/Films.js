@@ -122,8 +122,12 @@ export default function Films() {
 
   return (
     <div className='page'>
-      <img className='bannerFilms' src={banner_img} />
-      <div className="banner">FILMS</div>
+      <div className='banner-container'>
+        <div className='banner-name'>
+          <div className="banner">FILMS</div>
+        </div>
+        <img className='bannerFilms' src={banner_img} />
+      </div>
       <div className='page-container'>
         <SearchBar setContent={setFilms} showAll={showAll} setActiveProp={setActiveProp} name={"films"} className = 'search'/>
 

@@ -8,6 +8,7 @@
     flex-direction: row;
     font-family: Abel;
     gap: 100px;
+    justify-content: center;
 }
 
 .right{

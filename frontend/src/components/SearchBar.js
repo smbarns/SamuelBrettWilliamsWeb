@@ -23,9 +23,9 @@ function SearchBar(props){
                 throw response;
               })
               .then(data => {
-                props.setContent(data);
+                props.setContent(data.reverse());
                 props.setActiveProp(null);
-                setData(data);
+                setData(data.reverse());
               })
               .catch(error => {
                 console.error("Error fetching data: ", error);

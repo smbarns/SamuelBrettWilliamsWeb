@@ -65,8 +65,12 @@ export default function Biography() {
 
   return (
     <div className="page">
+      <div className='banner-container'>
+        <div className='banner-name'>
+          <div className="banner">BIOGRAPHY</div>
+        </div>
         <img className="bannerImg" src={banner_img} />
-        <div className="banner">BIOGRAPHY</div>
+      </div>
       <div className='page-container'>
         {editPic || editDes ? (
           <div className="bioBody">

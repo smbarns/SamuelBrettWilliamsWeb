@@ -44,8 +44,12 @@ function Project(props) {
   return (
     <><Authenticate setAuthen={setAuthenticated}/>
     <div className="imgContainer">
-        <button className="playButton" onClick={() => popupBtn()}></button>
+      <div className='img-container'>
+        <div className='playButton-container'>
+          <button className="playButton" onClick={() => popupBtn()}></button>
+        </div>
         <img className='blank' src={props.photo} />
+      </div>
         <span className='caption'>{props.title.toUpperCase()}</span>
         {authenticated ? (
           <div className='delete-button'>

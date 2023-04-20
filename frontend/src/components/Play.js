@@ -72,27 +72,27 @@ function Play(props) {
       </div>
       <span className="playTitle"> {props.title} </span>
       <span className="playDuration"> {props.type_play} </span>
-      <div>
       <Authenticate setAuthen={setAuthenticated}/>
-              {authenticated ? (
+        {authenticated ? (
+          <div className='delete-button'>
             <button className="delete-feature" onClick={() => setShowConfirm(true)}>Delete</button>
-            ) : (null)}
-            {showConfirm && (
-              <div className = "popup">
-                <div className = "popup-inner-playsAdd">
-                  <div className="popup-header">
-                    <h2>Are you sure you want to delete this feature?</h2>
-                  </div>
-                  <div className="popup-content">
-                    <div className="popup-deleteFeature">
-                      <button className="confirm-buttons" onClick={handleConfirm}>Yes</button>
-                      <button className="confirm-buttons" onClick={handleCancel}>No</button>
-                    </div>
-                  </div>
+          </div>
+        ) : (null)}
+        {showConfirm && (
+          <div className = "popup">
+            <div className = "popup-inner-upcomingAdd">
+              <div className="popup-header">
+                <h2>Are you sure you want to delete this play?</h2>
+              </div>
+              <div className="popup-content">
+                <div className="popup-deleteFeature">
+                  <button className="confirm-buttons" onClick={handleConfirm}>Yes</button>
+                  <button className="confirm-buttons" onClick={handleCancel}>No</button>
                 </div>
               </div>
-            )}
+            </div>
           </div>
+        )}
     </div>
 
   )

@@ -444,7 +444,6 @@ h5 {
     }
     .textarea-container-home textarea {
         font-size: 11px;
-        width: 300px;
         height: 100px;
     }
     .page-container {
@@ -555,6 +554,9 @@ h5 {
     .secondline, .second-end {
         font-size: 11px;
     }
+    .textarea-container-home textarea {
+        width: 160px;
+    }
 }
 
 @media only screen and (max-width: 400px) {
@@ -563,5 +565,8 @@ h5 {
     }
     .thirdline {
         padding-right: 40px;
+    }
+    .textarea-container-home textarea {
+        width: 130px;
     }
 }

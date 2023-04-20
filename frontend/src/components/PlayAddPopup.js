@@ -215,12 +215,12 @@ function PlayAddPopup(props) {
                     {props.playAddPop && (
                         <div className = "popup">
                             <div className = "popup-inner-upcomingAdd">
-                                <button className = "close-btn" onClick ={() => toggleTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
+                                <button className = "close-btn" onClick ={() => toggleTrigger()} >{<FontAwesomeIcon className='x-button' icon={faXmark} />} </button>
                                 <div className="popup-header">
                                     <h2>ENTER PLAY DETAILS</h2>
                                 </div>
                                 <div className="popup-content">
-                                <form onSubmit={handleSubmit}>
+                                <form className='popup-form' onSubmit={handleSubmit}>
                                     <label htmlFor="play-title">Title:</label>
                                     <input type="text" id="play-title" name="play-title" value={playTitle} placeholder="Enter the play's title" onChange={handlePlayTitleChange} />
 
@@ -255,13 +255,13 @@ function PlayAddPopup(props) {
                     {secondTrigger && (
                         <div className = "popup">
                             <div className = "popup-inner-upcomingAdd">
-                                <button className = "close-btn" onClick ={() => toggleSecondTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
+                                <button className = "close-btn" onClick ={() => toggleSecondTrigger()} >{<FontAwesomeIcon className='x-button' icon={faXmark}/>} </button>
                                 <div className="popup-header">
                                     <h2>ENTER THE PLAY'S POSTER URL</h2>
                                 </div>
                                 <div className="popup-content">
                                     <label htmlFor="poster-url">Enter poster URL:</label>
-                                    <form onSubmit={handleUrlSubmit}>
+                                    <form className='popup-form' onSubmit={handleUrlSubmit}>
                                         <input type="text" id="poster-url" name="poster-url" value={posterUrl} placeholder="Enter the URL of the play's poster" onChange={handlePosterUrlChange} />
                                         <button className="button-submitUpcoming" type="submit" disabled={loading}>Submit</button>
                                     </form>
@@ -271,7 +271,7 @@ function PlayAddPopup(props) {
                                 </div>
                                 <div className="popup-content">
                                     <label htmlFor="files">Select a file to upload:</label>
-                                    <form onSubmit={handleFileSubmit}>
+                                    <form className='popup-form' onSubmit={handleFileSubmit}>
                                         <input className="upload-content" type="file" id="files" onChange={handleFileSelect} />
                                         <button className="button-submitUpcoming" type="submit" disabled={loading}>Upload</button>
                                         {loading && 

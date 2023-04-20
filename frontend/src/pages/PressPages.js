@@ -41,8 +41,12 @@ export default function PressPages() {
 
   return (
     <div className='page'>
-      <img className='bannerImg' src={banner_img} />
-      <div className="banner">PRESS</div>
+      <div className='banner-container'>
+        <div className='banner-name'>
+          <div className="banner">PRESS</div>
+        </div>
+        <img className='bannerImg' src={banner_img} />
+      </div>
       <div className='page-container'>
         <div className='press'>
           {press}

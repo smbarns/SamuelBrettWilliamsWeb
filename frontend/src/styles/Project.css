@@ -7,6 +7,12 @@
     align-items: center;
 }
 
+.img-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .blank{
     height:380px;
     width: 452px;
@@ -37,16 +43,20 @@
     height: 83px;
     border: 0;
     cursor: pointer;
+    padding: 2px;
 }
 
 .addButton img{
     width:100px;
 }
 
-.playButton{
+.playButton-container {
+    display: flex;
     position: absolute;
+}
+
+.playButton{
     background-color: transparent;
-    top:40%;
     background-image: url('//assets.squarespace.com/universal/images-v6/damask/play-button@2x.png');
     background-size: contain;
     width: 40px;
@@ -138,9 +148,6 @@
     .caption {
         font-size: 17px;
     }
-    .playButton {
-        top: 35%
-    }
 }
 
 @media only screen and (max-width: 1105px) {
@@ -151,10 +158,9 @@
     .playButton {
         height: 30px;
         width: 30px;
-        top: 30%
     }
     .addButton, .addButton img {
-        width: 80px;
+        width: 60px;
     }
 }
 
@@ -183,7 +189,6 @@
     .playButton {
         width: 20px;
         height: 20px;
-        top: 30%
     }
     .caption {
         font-size: 11px;
@@ -215,7 +220,6 @@
     .playButton {
         height: 15px;
         width: 15px;
-        top: 22%
     }
     .addButton, .addButton img {
         width: 30px;

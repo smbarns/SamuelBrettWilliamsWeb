@@ -42,3 +42,69 @@
     background-color: #242122;
     color: #f75e5e
 }
+
+@media only screen and (max-width: 1600px) {
+    .filterButtons .fbutton {
+        font-size: 17px;
+        width: 150px;
+    }
+}
+
+@media only screen and (max-width: 1500px) {
+    .filterButtons .fbutton {
+        font-size: 15px;
+        width: 130px;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .filterButtons .fbutton {
+        font-size: 13px;
+        width: 120px;
+        height: 35px;
+    }
+}
+
+@media only screen and (max-width: 1105px) {
+    .filterButtons .fbutton {
+        font-size: 11px;
+        width: 100px;
+        height: 30px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .filterButtons .fbutton {
+        font-size: 10px;
+        width: 90px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .filterButtons .fbutton {
+        font-size: 9px;
+        width: 80px;
+        height: 25px;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .filterButtons .fbutton {
+        font-size: 7px;
+        width: 70px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .filterButtons .fbutton {
+        font-size: 6px;
+        width: 50px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .filterButtons .fbutton {
+        font-size: 5px;
+        width: 40px;
+    }
+}

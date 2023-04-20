@@ -64,10 +64,12 @@ function Contact() {
 
    return (
      <div className="page">
-       <div className='bannerContact'><img src = {contactBackground}/></div>
-       <div className = "ContactBanner">
-           <h2>CONTACT US</h2>
-       </div>
+      <div className='banner-container'>
+        <div className='banner-name'>
+          <div className="banner">CONTACT US</div>
+        </div>
+        <img className='bannerImg' src={contactBackground}/>
+      </div>
        <div className="contact-info">
          <h3>Contact Information:</h3>
          <p>123 Main Street</p>

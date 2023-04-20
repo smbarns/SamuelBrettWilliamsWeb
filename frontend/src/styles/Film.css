@@ -11,7 +11,7 @@
     font-weight: lighter;
 }
 
-.filmType{
+.filmDuration{
     font-weight: lighter;
     font-size: small;
     margin-top: 3px;
@@ -20,4 +20,120 @@
     background-color: transparent;
     border: none;
     outline:none;
+}
+
+@media only screen and (max-width: 1900px) {
+    .filmImg {
+        height: 300px;
+        width: 376px;
     }
+}
+
+@media only screen and (max-width: 1600px) {
+    .filmImg {
+        height: 240px;
+        width: 316px;
+    }
+    .filmTitle {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (max-width: 1500px) {
+    .filmImg {
+        height: 224px;
+        width: 280px;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .filmImg {
+        height: 204px;
+        width: 251px;
+    }
+    .filmTitle {
+        font-size: 16px;
+    }
+    .filmDuration {
+        font-size: x-small;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .filmImg {
+        height: 184px;
+        width: 227px;
+    }
+}
+
+@media only screen and (max-width: 1105px) {
+    .filmImg {
+        height: 164px;
+        width: 203px;
+    }
+    .filmTitle {
+        font-size: 14px;
+    }
+    .filmDuration {
+        font-size: xx-small;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .filmImg {
+        height: 134px;
+        width: 165px;   
+    }
+    .filmTitle {
+        font-size: 12px;
+    }
+    .filmDuration {
+        font-size: 8px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .filmImg {
+        height: 114px;
+        width: 148px;   
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .filmImg {
+        height: 104px;
+        width: 141px;   
+    }
+    .filmTitle {
+        font-size: 10px;
+    }
+    .filmDuration {
+        font-size: 6px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .filmImg {
+        height: 84px;
+        width: 100px;   
+    }
+    .filmTitle {
+        font-size: 8px;
+    }
+    .filmDuration {
+        font-size: 5px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .filmImg {
+        height: 64px;
+        width: 80px;   
+    }
+    .filmTitle {
+        font-size: 7px;
+    }
+    .filmDuration {
+        font-size: 4px;
+    }
+}

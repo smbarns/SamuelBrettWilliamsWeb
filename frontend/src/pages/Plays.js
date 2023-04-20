@@ -95,8 +95,12 @@ export default function Plays() {
 
   return (
     <div className="page">
-      <img className='bannerPlays' src={banner_img} />
-      <div className="banner">PLAYS</div>
+      <div className='banner-container'>
+        <div className='banner-name'>
+          <div className="banner">PLAYS</div>
+        </div>
+        <img className='bannerPlays' src={banner_img} />
+      </div>
       <div className='page-container'>
         <SearchBar setContent={setPlays} showAll={showAll} setActiveProp={setActiveProp} name={"plays"} />
 

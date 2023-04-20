@@ -5,7 +5,7 @@
    
 }
 .playImg{
-    height: 280px;
+    height: 290px;
     width: 360px;
 }
 .playTitle{
@@ -21,4 +21,120 @@
     background-color: transparent;
     border: none;
     outline:none;
+}
+
+@media only screen and (max-width: 1900px) {
+    .playImg {
+        height: 300px;
+        width: 376px;
     }
+}
+
+@media only screen and (max-width: 1600px) {
+    .playImg {
+        height: 240px;
+        width: 316px;
+    }
+    .playTitle {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (max-width: 1500px) {
+    .playImg {
+        height: 224px;
+        width: 280px;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .playImg {
+        height: 204px;
+        width: 251px;
+    }
+    .playTitle {
+        font-size: 16px;
+    }
+    .playDuration {
+        font-size: x-small;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .playImg {
+        height: 184px;
+        width: 227px;
+    }
+}
+
+@media only screen and (max-width: 1105px) {
+    .playImg {
+        height: 164px;
+        width: 203px;
+    }
+    .playTitle {
+        font-size: 14px;
+    }
+    .playDuration {
+        font-size: xx-small;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .playImg {
+        height: 134px;
+        width: 165px;   
+    }
+    .playTitle {
+        font-size: 12px;
+    }
+    .playDuration {
+        font-size: 8px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .playImg {
+        height: 114px;
+        width: 148px;   
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .playImg {
+        height: 104px;
+        width: 141px;   
+    }
+    .playTitle {
+        font-size: 10px;
+    }
+    .playDuration {
+        font-size: 6px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .playImg {
+        height: 84px;
+        width: 100px;   
+    }
+    .playTitle {
+        font-size: 8px;
+    }
+    .playDuration {
+        font-size: 5px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .playImg {
+        height: 64px;
+        width: 80px;   
+    }
+    .playTitle {
+        font-size: 7px;
+    }
+    .playDuration {
+        font-size: 4px;
+    }
+}
