@@ -1,42 +1,61 @@
 @import url('https://fonts.googleapis.com/css?family=Abel%27'); 
 
-.test{
-    padding-left:0px !important; 
-    margin-left: -121px;
-    padding-top: 100px;
+.page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.bio-span{
-    font-size: 20px;
-    font-weight: lighter;
-}
-.bioBody{
-    /*display: flex;
-    flex-direction: row;
-    margin-top: 100px;
-    position: relative;*/
-    /* margin: 20px; */
-    /* text-align: center; */
-    margin-left: 5px;
-}
-.bioBody img {
-    width: 500px; /*280px*/
-    height: auto; /*250px*/
-    float: right;
-    margin: 25px;
-    margin-left: 50px;
-    object-fit: contain;
 
-    /*margin-top: 100px;*/
+.bio-span {
+  font-size: 20px;
+  font-weight: lighter;
 }
+
+.bioBody {
+  margin-left: 5px;
+}
+
+.bioBody img {
+  height: auto;
+  margin: 25px;
+  margin-left: 50px;
+}
+
 .p {
-    text-align: justify;
-    font-size: 25px;
-  }
-/*.bioImg {
-    width: 100% !important;
-    height: 100% !important;
-    
-}*/
+  text-align: justify;
+  font-size: 25px;
+}
+
+.bioImg {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
 .container img {
-    width: 100%;
- }
+  max-width: 100%;
+}
+
+/* Mobile styles */
+.container.mobile {
+  width: 100%;
+  padding: 20px;
+}
+
+/* Tablet styles */
+@media only screen and (min-width: 768px) {
+  .container.tablet {
+    width: 80%;
+    padding: 40px;
+  }
+}
+
+/* Desktop styles */
+@media only screen and (min-width: 992px) {
+  .container.desktop {
+    width: 70%;
+    padding: 60px;
+  }
+}
