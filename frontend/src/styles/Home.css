@@ -83,9 +83,9 @@ h5 {
 .upcomingProjects{
     display:flex;
     flex-direction: column;
-    margin-bottom:100px;
-    justify-content:center
-
+    margin-bottom:50px;
+    justify-content:center;
+    width: 100%
 }
 
 .home .reel{
@@ -423,6 +423,9 @@ h5 {
     .textarea-container-home {
         margin-bottom: 8px;
     }
+    .page-container {
+        margin: 50px;
+    }
 }
 
 @media only screen and (max-width: 850px) {
@@ -446,9 +449,6 @@ h5 {
         font-size: 11px;
         height: 100px;
     }
-    .page-container {
-        margin: 50px;
-    }
     .firstline, .thirdline {
         font-size: 11px;
     }
@@ -470,9 +470,6 @@ h5 {
     }
     .arrows {
         font-size: x-small;
-    }
-    .page-container {
-        margin: 50px;
     }
     .textarea-container-home textarea {
         font-size: 9px;
@@ -539,6 +536,9 @@ h5 {
     .secondline, .second-end {
         font-size: 13px;
         margin-top: 9px;
+    }
+    .page-container {
+        margin: 20px;
     }
 }
 

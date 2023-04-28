@@ -105,10 +105,11 @@
         transform: rotate(360deg);
     }
 }
-
+/*
 #film-desc{
     height: 150px;
 }
+*/
 
 .popup-form {
     display: flex;

@@ -44,25 +44,27 @@ function Video(props) {
   return (
     <div className = "video">
       <div className = "imgContainer-video">
-      <div className = 'blank' style={{backgroundColor: '#240f0e',}}/>
-      <ReactPlayer
-            className='react-player'
-            url={props.url}
-            width = '100%'
-            height = '100%'
-            fluid = { false }
-            playing= {false}
-            controls = {false}
-            muted = {true}
-            config = {config}
-            style={{ pointerEvents: 'none' }}
-          />
-        <button className = "playButton"  onClick  = {() =>popupBtn() }></button>
+        <div className='playButton-container'>
+          <button className = "playButton"  onClick  = {() =>popupBtn() }></button>
+        </div>
+        <div className = 'blank' style={{backgroundColor: '#240f0e',}}/>
+          <ReactPlayer
+                className='react-player'
+                url={props.url}
+                width = '100%'
+                height = '100%'
+                fluid = { false }
+                playing= {false}
+                controls = {false}
+                muted = {true}
+                config = {config}
+                style={{ pointerEvents: 'none' }}
+              />
       </div>
 
       <Authenticate setAuthen={setAuthenticated}/>
       {authenticated ? (
-        <div>
+        <div className='video-delete'>
           <button className="delete-video" onClick={() => setShowConfirm(true)}>Delete</button>
           {showConfirm && (
             <div className = "popup">

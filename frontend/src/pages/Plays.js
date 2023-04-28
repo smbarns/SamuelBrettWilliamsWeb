@@ -102,10 +102,11 @@ export default function Plays() {
         <img className='bannerPlays' src={banner_img} />
       </div>
       <div className='page-container'>
-        <SearchBar setContent={setPlays} showAll={showAll} setActiveProp={setActiveProp} name={"plays"} />
+        <div className='filterSearch-container'>
+          <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
+          <SearchBar setContent={setPlays} showAll={showAll} setActiveProp={setActiveProp} name={"plays"} />
+        </div>
 
-
-        <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
         <Authenticate setAuthen={setAuthenticated}/>
         {
         <div className="plays">

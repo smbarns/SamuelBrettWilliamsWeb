@@ -60,7 +60,7 @@
 
 .status{
     font-size: 24px;
-    margin-top: 70px;
+    margin-top: 50px;
 }
 
 .film_avaliable {
@@ -99,7 +99,7 @@
     border-radius: 5px;
     box-sizing: border-box;
     font-family: Abel;
-    font-size: 18px;
+    font-size: 24px;
     padding: 10px;
     resize: vertical;
     transition: all .3s;
@@ -113,11 +113,22 @@
     border-radius: 5px;
     box-sizing: border-box;
     font-family: Abel;
-    font-size: 18px;
+    font-size: 24px;
     padding: 10px;
     transition: all .3s;
-    width: 600px;
     margin-left: 10px;
+}
+
+.writer input {
+    width: 640px;
+}
+
+.director input {
+    width: 670px;
+}
+
+.status input {
+    width: 680px;
 }
 
 .filmReel{
@@ -156,4 +167,428 @@
     gap: 50px;
     overflow: hidden;
     scroll-behavior: smooth;
+}
+
+@media only screen and (max-width: 1900px) {
+    .filmSynopsis textarea {
+        width: 750px;
+    }
+    .writer input {
+        width: 610px;
+    }
+    .director input {
+        width: 640px;
+    }
+    .status input {
+        width: 660;
+    }
+}
+
+@media only screen and (max-width: 1600px) {
+    .filmCoverImg {
+        width: 600px;
+    }
+    .filmsTitle {
+        font-size: 55px;
+    }
+    .writer, .director, .film_avaliable, .stars, .status, .filmSynopsis {
+        font-size: 20px;
+    }
+    .filmSynopsis textarea, .writer input, .director input, .status input, .stars textarea {
+        font-size: 20px;
+    }
+    .writer input {
+        width: 500px;
+    }
+    .director input {
+        width: 510px;
+    }
+    .status input {
+        width: 520px;
+    }
+    .filmSynopsis textarea {
+        width: 640px;
+    }
+}
+
+@media only screen and (max-width: 1500px) {
+    .filmCoverImg {
+        width: 540px;
+    }
+    .filmsTitle {
+        font-size: 50px;
+    }
+    .writer, .director, .stars, .status, .film_avaliable, .filmSynopsis {
+        font-size: 19px;
+    }
+    .filmSynopsis textarea {
+        height: 170px;
+        width: 570px;
+        font-size: 19px;
+    }
+    .filmSynopsis textarea, .writer input, .director input, .status input, .stars textarea {
+        font-size: 19px;
+    }
+    .writer input {
+        width: 460px;
+    }
+    .director input {
+        width: 480px;
+    }
+    .status input {
+        width:  490px;
+    }
+    .filmReel .filmPhotoReelText, .filmReel .filmVideoReelText {
+        font-size: 35px;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .filmCoverImg {
+        width: 490px;
+    }
+    .filmsTitle {
+        font-size: 42px;
+    }
+    .writer, .director, .stars, .status, .film_avaliable, .filmSynopsis {
+        font-size: 17px;
+    }
+    .filmSynopsis, .status {
+        margin-top: 40px;
+    }
+    .filmSynopsis textarea {
+        width: 480px;
+        font-size: 17px;
+    }
+    .filmSynopsis textarea, .writer input, .director input, .status input, .stars textarea {
+        font-size: 17px;
+    }
+    .writer input {
+        width: 380px;
+    }
+    .director input {
+        width: 400px;
+    }
+    .status input {
+        width:  410px;
+    }
+    .filmlink a img {
+        max-height: 65px;
+        max-width: 130px;
+    }
+    .photoReel, .vidReel {
+        gap: 40px;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .filmCoverImg {
+        width: 460px;
+    }
+    .filmsTitle {
+        font-size: 38px;
+        width: 150px;
+    }
+    .writer, .director, .stars, .status, .film_avaliable, .filmSynopsis {
+        font-size: 15px;
+    }
+    .filmSynopsis textarea, .writer input, .director input, .status input, .stars textarea {
+        font-size: 15px;
+    }
+    .writer input {
+        width: 360px;
+    }
+    .director input {
+        width: 380px;
+    }
+    .status input {
+        width:  390px;
+    }
+    .filmSynopsis textarea {
+        font-size: 15px;
+        width: 460px;
+    }
+    .filmReel .filmPhotoReelText, .filmReel .filmVideoReelText {
+        font-size: 30px;
+    }
+}
+
+@media only screen and (max-width: 1105px) {
+    .filmCoverImg {
+        width: 410px;
+    }
+    .filmsTitle {
+        font-size: 34px;
+    }
+    .writer, .stars, .director, .status, .film_avaliable, .filmSynopsis {
+        font-size: 14px;
+    }
+    .filmSynopsis textarea, .writer input, .director input, .status input, .stars textarea {
+        font-size: 14px;
+    }
+    .writer input {
+        width: 340px;
+    }
+    .director input {
+        width: 360px;
+    }
+    .status input {
+        width:  370px;
+    }
+    .filmSynopsis textarea {
+        font-size: 14px;
+        width: 440px;
+    }
+    .filmDetails {
+        gap: 70px;
+    }
+    .film_links {
+        gap: 20px;
+    }
+    .filmlink a img {
+        max-height: 55px;
+        max-width: 120px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .filmCoverImg {
+        width: 360px;
+    }
+    .filmsTitle {
+        font-size: 29px;
+        width: 120px;
+    }
+    .writer, .stars, .status, .director, .film_avaliable, .filmSynopsis {
+        font-size: 12px;
+    }
+    .writer, .stars {
+        margin-top: 10px;
+    }
+    .status, .filmSynopsis {
+        margin-top: 30px;
+    }
+    .film_avaliable {
+        margin-top: 10px;
+    }
+    .filmSynopsis textarea {
+        font-size: 12px;
+        width: 370px;
+    }
+    .filmSynopsis textarea, .writer input, .director input, .status input, .stars textarea {
+        font-size: 12px;
+    }
+    .writer input {
+        width: 290px;
+    }
+    .director input {
+        width: 310px;
+    }
+    .status input {
+        width:  320px;
+    }
+    .filmlink a img {
+        max-height: 45px;
+        max-width: 90px;
+    }
+    .filmReel .filmPhotoReelText, .filmReel .filmVideoReelText {
+        font-size: 25px;
+    }
+    .photoReel, .vidReel {
+        gap: 30px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .filmCoverImg {
+        width: 320px;
+    }
+    .writer input {
+        width: 270px;
+    }
+    .director input {
+        width: 290px;
+    }
+    .status input {
+        width:  300px;
+    }
+    .filmSynopsis textarea {
+        width: 360px;
+    }
+    .filmReel .filmPhotoReelText, .filmReel .filmVideoReelText {
+        font-size: 23px;
+    }
+    .filmReel {
+        margin-top: 100px;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .filmCoverImg {
+        width: 280px;
+    }
+    .filmsTitle {
+        font-size: 26px;
+    }
+    .writer, .stars, .status, .director, .film_avaliable, .filmSynopsis {
+        font-size: 10px;
+    }
+    .filmDetails {
+        gap: 50px;
+    }
+    .writer input, .status input, .director input {
+        padding: 5px;
+    }
+    .filmSynopsis textarea, .writer input, .director input, .status input, .stars textarea {
+        font-size: 10px;
+    }
+    .writer input {
+        width: 220px;
+    }
+    .director input {
+        width: 240px;
+    }
+    .status input {
+        width:  240px;
+    }
+    .filmSynopsis textarea {
+        font-size: 10px;
+        padding: 5px;
+        width: 290px;
+        height: 130px;
+    }
+    .filmSynopsis, .status {
+        margin-top: 20px;
+    }
+    .film_links {
+        gap: 15px;
+    }
+    .filmlink a img {
+        max-height: 35px;
+        max-width: 70px;
+    }
+    .filmReel .filmPhotoReelText, .filmReel .filmVideoReelText {
+        font-size: 20px;
+    }
+    .filmReel .filmTopReel {
+        margin-bottom: 10px;
+    }
+    .photoReel, .vidReel {
+        gap: 20px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .filmCoverImg {
+        width: 220px;
+    }
+    .filmsTitle {
+        font-size: 20px;
+        width: 90px;
+    }
+    .writer, .director, .stars, .status, .film_avaliable, .filmSynopsis {
+        font-size: 8px;
+    }
+    .filmSynopsis textarea, .writer input, .director input, .status input, .stars textarea {
+        font-size: 8px;
+    }
+    .writer input {
+        width: 160px;
+    }
+    .director input {
+        width: 170px;
+    }
+    .status input {
+        width:  170px;
+    }
+    .filmSynopsis textarea {
+        font-size: 8px;
+        width: 220px;
+        height: 100px;
+    }
+    .film_links {
+        gap: 10px;
+    }
+    .filmlink a img {
+        max-height: 27px;
+        max-width: 60px;
+    }
+    .filmReel .filmPhotoReelText, .filmReel .filmVideoReelText {
+        font-size: 16px;
+    }
+    .filmReel {
+        margin-top: 60px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .filmCoverImg {
+        width: 160px;
+    }
+    .filmsTitle {
+        font-size: 15px;
+        width: 70px;
+        padding-bottom: 5px;
+    }
+    .writer, .director, .stars, .status, .film_avaliable, .filmSynopsis {
+        font-size: 6px;
+    }
+    .writer, .stars {
+        margin-top: 5px;
+    }
+    .filmSynopsis, .status {
+        margin-top: 20px;
+    }
+    .filmSynopsis textarea, .writer input, .director input, .status input, .stars textarea {
+        font-size: 6px;
+    }
+    .writer input {
+        width: 150px;
+    }
+    .director input {
+        width: 160px;
+    }
+    .status input {
+        width:  160px;
+    }
+    .filmSynopsis textarea {
+        font-size: 6px;
+        width: 200px;
+        height: 70px;
+    }
+    .filmDetails {
+        gap: 30px;
+    }
+    .film_avaliable {
+        margin-bottom: 10px;
+        margin-top: 5px;
+    }
+    .filmlink a img {
+        max-height: 24px;
+        max-width: 50px;
+    }
+    .filmReel .filmPhotoReelText, .filmReel .filmVideoReelText {
+        font-size: 15px;
+    }
+    .filmReel {
+        margin-top: 50px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .filmSynopsis textarea {
+        width: 130px;
+    }
+    .writer input {
+        width: 80px;
+    }
+    .director input {
+        width: 90px;
+    }
+    .status input {
+        width:  90px;
+    }
+    .filmlink a img {
+        max-width: 40px;
+    }
 }

@@ -5,6 +5,7 @@
     grid-template-columns: 0fr 0fr 0fr 0fr 0fr;
     align-items: center;
     gap:40px;
+    justify-content: center;
 }
 
 .filmIcons {
@@ -165,6 +166,12 @@
     }
     .bannerFilms {
         height: 9em;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .films {
+        grid-template-columns: 0fr 0fr 0fr;
     }
 }
 

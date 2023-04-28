@@ -129,9 +129,11 @@ export default function Films() {
         <img className='bannerFilms' src={banner_img} />
       </div>
       <div className='page-container'>
-        <SearchBar setContent={setFilms} showAll={showAll} setActiveProp={setActiveProp} name={"films"} className = 'search'/>
+        <div className='filterSearch-container'>
+          <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
+          <SearchBar setContent={setFilms} showAll={showAll} setActiveProp={setActiveProp} name={"films"} className = 'search'/>
+        </div>
 
-        <ButtonGroup showAll={showAll} types={types} setActiveProp={setActiveProp} active={active} />
         <Authenticate setAuthen={setAuthenticated}/> 
           {
             <div className = "films">

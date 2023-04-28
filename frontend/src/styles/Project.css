@@ -53,6 +53,7 @@
 .playButton-container {
     display: flex;
     position: absolute;
+    z-index: 1;
 }
 
 .playButton{

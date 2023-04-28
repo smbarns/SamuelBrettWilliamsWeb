@@ -43,17 +43,15 @@ function Photo(props) {
       {trigger ? (
         <div className = "popup">
           <div className = "popup-inner-photo">
-              <button className = "close-btn" onClick ={() => toggleTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
-              <div className='popup-photo'>
-                <img src={props.photo} />
-              </div>
+              <button className = "close-btn" onClick ={() => toggleTrigger()} >{<FontAwesomeIcon className='x-button' icon={faXmark} />} </button>
+              <img src={props.photo} />
           </div>
         </div>
       ) : ('')}
 
       <Authenticate setAuthen={setAuthenticated}/>
       {authenticated ? (
-        <div>
+        <div className='photo-delete'>
           <button className="delete-photo" onClick={() => setShowConfirm(true)}>Delete</button>
           {showConfirm && (
             <div className = "popup">

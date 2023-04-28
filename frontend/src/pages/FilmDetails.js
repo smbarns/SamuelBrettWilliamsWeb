@@ -4,6 +4,7 @@ import {useParams,useLocation} from 'react-router-dom'
 import {useEffect, useState} from 'react'
 import Popup from '../components/Popup'
 import Video from '../components/Video'
+import BuyLink from '../components/BuyLink'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft, faAngleRight, faXmark } from '@fortawesome/free-solid-svg-icons'
 import PlusIcon from '../assets/add-icon.png';
@@ -31,7 +32,6 @@ function FilmDetails() {
   const [desc, setDesc] = useState(stateParamVal.synopsis);
   const [buyLink, setBuyLink] = useState('');
   const [buyLinkImg, setBuyLinkImg] = useState('');
-  const [showConfirmBuyLink, setShowConfirmBuyLink] = useState(false);
   const [posterUrl, setPosterUrl] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -61,35 +61,17 @@ function FilmDetails() {
     reelRef.current.scrollLeft - 1290
   }
 
-  function handleConfirmBuyLink(buyLinkId) {
-    setShowConfirmBuyLink(false);
-    handleDeleteBuyLink(buyLinkId);
-  };
-
-  function handleDeleteBuyLink(buyLinkId) {
-    fetch(`http://localhost:3000/api/delete/buyLink?id=${buyLinkId}`)
-      .then(response => response.json())
-      .then(data => {
-        window.location.replace("http://localhost:3000/#/films");
-        return alert("Buy link successfully deleted. Change can be viewed on the films's detail page.")
-      })
-      .catch(error => {
-        console.error(error);
-        return alert('Error: Could not delete buyLink!');
-      });
-  };
-
-  const reversedPhotos = stateParamVal.photos.reverse();
-  const photoReel = reversedPhotos.map(item => {
+  const photoReel = stateParamVal.photos.reverse().map(item => {
     return(
       <Photo
         photo = {item.photo}
+        id = {item.id}
+        type = {'film'}
       />
     )
   })
 
-  const reversedVids = stateParamVal.videos.reverse();
-  const videoReel = reversedVids.map(item => {   // later data will be equal to the state variable that accepted the api data from the fetch request
+  const videoReel = stateParamVal.videos.reverse().map(item => {  // later data will be equal to the state variable that accepted the api data from the fetch request
     return(
       <Video
           setButtonPopup = {setButtonPopup}
@@ -102,32 +84,13 @@ function FilmDetails() {
   })
 
   const buy_links = stateParamVal.buy_links.map(item => {
-    return(
-      <div className='filmlink'>
-        <a href={item.link}>
-          <img src={item.link_photo} />
-        </a>
-        {authenticated ? (
-          <div>
-            <button className="delete-buyLink" onClick={() => setShowConfirmBuyLink(true)}>Delete</button>
-            {showConfirmBuyLink && (
-              <div className = "popup">
-                <div className = "popup-inner-upcomingAdd">
-                  <div className="popup-header">
-                    <h2>Are you sure you want to delete this buy link?</h2>
-                  </div>
-                  <div className="popup-content">
-                    <div className="popup-deleteFeature">
-                      <button className="confirm-buttons" onClick={() => handleConfirmBuyLink(item.id)}>Yes</button>
-                      <button className="confirm-buttons" onClick={() => setShowConfirmBuyLink(false)}>No</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        ) : (null)}
-      </div>
+    return (
+      <BuyLink 
+        id = {item.id}
+        link = {item.link}
+        photo = {item.link_photo}
+        type = {'film'}
+      />
     )
   })
 
@@ -342,13 +305,13 @@ function FilmDetails() {
                 {updateCoverTrigger && (
                     <div className = "popup">
                       <div className = "popup-inner-upcomingAdd">
-                          <button className = "close-btn" onClick ={() => toggleUpdateCoverTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
+                          <button className = "close-btn" onClick ={() => toggleUpdateCoverTrigger()} >{<FontAwesomeIcon className='x-button' icon={faXmark} />} </button>
                           <div className="popup-header">
                               <h2>ENTER THE FILMS'S POSTER URL</h2>
                           </div>
                           <div className="popup-content">
                               <label htmlFor="poster-url">Enter poster URL:</label>
-                              <form onSubmit={handlePosterUrlSubmit}>
+                              <form className='popup-form' onSubmit={handlePosterUrlSubmit}>
                                   <input type="text" id="poster-url" name="poster-url" value={posterUrl} placeholder="Enter the URL of the film's poster" onChange={(e) => setPosterUrl(e.target.value)} />
                                   <button className="button-submitUpcoming" type="submit" disabled={loading}>Submit</button>
                               </form>
@@ -358,22 +321,24 @@ function FilmDetails() {
                           </div>
                           <div className="popup-content">
                               <label htmlFor="files">Select a file to upload:</label>
-                              <form onSubmit={handlePosterFileSubmit}>
+                              <form className='popup-form' onSubmit={handlePosterFileSubmit}>
                                   <input className="upload-content" type="file" id="files" onChange={(e) => setSelectedFile(e.target.files[0])} />
                                   <button className="button-submitUpcoming" type="submit" disabled={loading}>Upload</button>
                                   {loading && 
                                       <div className = "popup">
-                                          <div className = "popup-inner-upcomingAdd">
-                                              <div className="popup-header">
-                                                  <h2>Uploading file...</h2>
-                                              </div>
-                                              <label>This may take a while</label>
-                                              <div className="popup-content">
-                                                  <div className="loader"></div>
-                                              </div>
-                                              <button className="cancel-upload" type='cancel' onClick={handleCancelUpload}>Cancel</button>
+                                        <div className = "popup-inner-upcomingAdd">
+                                          <div className='loading'>
+                                            <div className="popup-header">
+                                              <h2>Uploading file...</h2>
+                                            </div>
+                                            <label>This may take a while</label>
+                                            <div className="popup-content">
+                                                <div className="loader"></div>
+                                            </div>
+                                            <button className="cancel-upload" type="cancel" onClick={handleCancelUpload}>Cancel</button>
                                           </div>
-                                      </div>
+                                        </div>
+                                    </div>
                                   }
                               </form>
                           </div>
@@ -423,7 +388,7 @@ function FilmDetails() {
                           </span>
 
                           <div className='textarea-container'>
-                            <span className = 'film-stars'> Stars: </span>
+                            <span className = 'stars'> Stars: </span>
                             <textarea type="text" value={stars} onChange={(e) => setStars(e.target.value)} />
                           </div>
 
@@ -450,12 +415,12 @@ function FilmDetails() {
                         <div>
                           <div className = "popup">
                             <div className = "popup-inner-upcomingAdd">
-                                <button className = "close-btn" onClick ={() => toggleLinkTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
+                                <button className = "close-btn" onClick ={() => toggleLinkTrigger()} >{<FontAwesomeIcon className='x-button' icon={faXmark} />} </button>
                                 <div className="popup-header">
                                     <h2>CREATE A NEW BUY LINK</h2>
                                 </div>
                                 <div className="popup-content">
-                                    <form onSubmit={handleBuyLinkSubmit}>
+                                    <form className='popup-form' onSubmit={handleBuyLinkSubmit}>
                                         <label htmlFor="buy-link">Enter the film's buy link:</label>
                                         <input type="text" id="buy-link" name="buy-link" value={buyLink} placeholder="Enter the link where you can buy the film" onChange={(e) => setBuyLink(e.target.value)} />
                                         
@@ -484,8 +449,8 @@ function FilmDetails() {
                   ) : (
                     <div className='editContent'>
                       <div className='titleEdit'>
-                        <h1 className = 'filmsTitle'>{stateParamVal.title}</h1>
                         <button className='buttonTitle' onClick={handleEditTitle}>EDIT TITLE</button>
+                        <h1 className = 'filmsTitle'>{stateParamVal.title}</h1>
                       </div>
 
                       <span className = 'director'> Director: {director} </span>
@@ -530,8 +495,8 @@ function FilmDetails() {
           <div className = 'filmTopReel'>
             <div className = 'filmVideoReelText'>VIDEOS</div>
             <div className = 'arrows'>
-              <FontAwesomeIcon icon={faAngleLeft} size="lg" style={{ marginRight: '18px' }} onClick = {() => scrollLeft(scrollElementVid)}/>
-              <FontAwesomeIcon icon={faAngleRight} size="lg" onClick = {() => scrollRight(scrollElementVid)}/>
+              <FontAwesomeIcon className='scroll-icon-left' icon={faAngleLeft} onClick = {() => scrollLeft(scrollElementVid)}/>
+              <FontAwesomeIcon className='scroll-icon-right' icon={faAngleRight} onClick = {() => scrollRight(scrollElementVid)}/>
             </div>
           </div>
           <div className = 'vidReel' ref = {scrollElementVid}>
@@ -557,8 +522,8 @@ function FilmDetails() {
           <div className = 'filmTopReel'>
             <div className = 'filmPhotoReelText'>PHOTOS</div>
             <div className = 'arrows'>
-              <FontAwesomeIcon icon={faAngleLeft} size="lg" style={{ marginRight: '18px' }} onClick = {() => scrollLeft(scrollElementPhoto)}/>
-              <FontAwesomeIcon icon={faAngleRight} size="lg" onClick = {() => scrollRight(scrollElementPhoto)}/>
+              <FontAwesomeIcon className='scroll-icon-left' icon={faAngleLeft} onClick = {() => scrollLeft(scrollElementPhoto)}/>
+              <FontAwesomeIcon className='scroll-icon-right' icon={faAngleRight} onClick = {() => scrollRight(scrollElementPhoto)}/>
             </div>
           </div>
           <div className = 'photoReel' ref = {scrollElementPhoto}>

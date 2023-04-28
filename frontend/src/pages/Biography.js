@@ -100,7 +100,7 @@ export default function Biography() {
         ) : (
           <div className="bioBody">
             <img className="bioImg" src={pic} />
-            <span className='bio-span'>{des}</span>
+            <p className='bio-span'>{des}</p>
             <Authenticate setAuthen={setAuthenticated}/>
               {authenticated ? (
             <div>

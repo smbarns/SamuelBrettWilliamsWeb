@@ -4,7 +4,7 @@
     align-items: center;
 }
 .filmImg{
-    height: 280px;
+    height: 310px;
     width: 360px;
 }
 .filmTitle{
@@ -24,14 +24,14 @@
 
 @media only screen and (max-width: 1900px) {
     .filmImg {
-        height: 300px;
+        height: 320px;
         width: 376px;
     }
 }
 
 @media only screen and (max-width: 1600px) {
     .filmImg {
-        height: 240px;
+        height: 260px;
         width: 316px;
     }
     .filmTitle {
@@ -69,7 +69,7 @@
 @media only screen and (max-width: 1105px) {
     .filmImg {
         height: 164px;
-        width: 203px;
+        width: 198px;
     }
     .filmTitle {
         font-size: 14px;
@@ -81,8 +81,8 @@
 
 @media only screen and (max-width: 1000px) {
     .filmImg {
-        height: 134px;
-        width: 165px;   
+        height: 144px;
+        width: 172px;   
     }
     .filmTitle {
         font-size: 12px;
@@ -94,8 +94,8 @@
 
 @media only screen and (max-width: 900px) {
     .filmImg {
-        height: 114px;
-        width: 148px;   
+        height: 134px;
+        width: 163px;   
     }
 }
 
@@ -112,10 +112,24 @@
     }
 }
 
+@media only screen and (max-width: 720px) {
+    .filmImg {
+        height: 114px;
+        width: 138px;   
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .filmImg {
+        height: 117px;
+        width: 142px;   
+    }
+}
+
 @media only screen and (max-width: 500px) {
     .filmImg {
-        height: 84px;
-        width: 100px;   
+        height: 100px;
+        width: 117px;   
     }
     .filmTitle {
         font-size: 8px;
@@ -125,15 +139,22 @@
     }
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 420px) {
     .filmImg {
-        height: 64px;
-        width: 80px;   
+        height: 84px;
+        width: 96px;   
     }
     .filmTitle {
         font-size: 7px;
     }
     .filmDuration {
         font-size: 4px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .filmImg {
+        height: 74px;
+        width: 86px;   
     }
 }

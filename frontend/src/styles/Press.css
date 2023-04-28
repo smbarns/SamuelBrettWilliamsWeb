@@ -64,3 +64,39 @@
     }
 
 
+/* media queries */
+
+/* styles for screens smaller than 768px */
+@media only screen and (max-width: 768px) {
+    .pressIcon{
+        width: 50%;
+        margin-inline: auto;
+    }
+    
+    .press_title{
+        font-size: 35px;
+    }
+    
+    .project_title{
+        font-size: 25px;
+    }
+}
+
+/* styles for screens smaller than 500px */
+@media only screen and (max-width: 500px) {
+    .pressIcon{
+        width: 80%;
+        margin-inline: auto;
+        margin-bottom: 50px;
+    }
+    
+    .press_title{
+        font-size: 25px;
+    }
+    
+    .project_title{
+        font-size: 20px;
+    }
+}
+
+

@@ -6,6 +6,7 @@ import {useRef} from 'react'
 import {useEffect, useState} from 'react'
 import Popup from '../components/Popup'
 import Video from '../components/Video'
+import BuyLink from '../components/BuyLink'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft, faAngleRight, faXmark } from '@fortawesome/free-solid-svg-icons'
 import PlusIcon from '../assets/add-icon.png';
@@ -30,7 +31,6 @@ function PlayDetails() {
   const [desc, setDesc] = useState(stateParamVal.synopsis);
   const [buyLink, setBuyLink] = useState('');
   const [buyLinkImg, setBuyLinkImg] = useState('');
-  const [showConfirmBuyLink, setShowConfirmBuyLink] = useState(false);
   const [posterUrl, setPosterUrl] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -60,28 +60,12 @@ function PlayDetails() {
     reelRef.current.scrollLeft - 1290
   }
 
-  function handleBuyLinkConfirm(buyLinkId) {
-    setShowConfirmBuyLink(false);
-    handleBuyLinkDelete(buyLinkId);
-  };
-
-  function handleBuyLinkDelete(buyLinkId) {
-    fetch(`http://localhost:3000/api/delete/buyLink?id=${buyLinkId}`)
-      .then(response => response.json())
-      .then(data => {
-        window.location.replace("http://localhost:3000/#/plays");
-        return alert("Buy link successfully deleted. Change can be viewed on the play's detail page.")
-      })
-      .catch(error => {
-        console.error(error);
-        return alert('Error: Could not delete buyLink!');
-      });
-  };
-
   const photoReel = stateParamVal.photos.reverse().map(item => {
     return(
       <Photo
-        photo = {item}
+        photo = {item.photo}
+        id = {item.id}
+        type = {'play'}
       />
     )
   })
@@ -100,31 +84,12 @@ function PlayDetails() {
 
   const buy_links = stateParamVal.buy_links.map(item => {
     return(
-      <div className='playlink'>
-        <a href={item.link}>
-          <img src={item.link_photo} />
-        </a>
-        {authenticated ? (
-          <div>
-            <button className="delete-buyLink" onClick={() => setShowConfirmBuyLink(true)}>Delete</button>
-            {showConfirmBuyLink && (
-              <div className = "popup">
-                <div className = "popup-inner-upcomingAdd">
-                  <div className="popup-header">
-                    <h2>Are you sure you want to delete this buy link?</h2>
-                  </div>
-                  <div className="popup-content">
-                    <div className="popup-deleteFeature">
-                      <button className="confirm-buttons" onClick={() => handleBuyLinkConfirm(item.id)}>Yes</button>
-                      <button className="confirm-buttons" onClick={() => setShowConfirmBuyLink(false)}>No</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        ) : (null)}
-      </div>
+      <BuyLink 
+        id = {item.id}
+        link = {item.link}
+        photo = {item.link_photo}
+        type = {'play'}
+      />
     )
   })
   
@@ -339,13 +304,13 @@ function PlayDetails() {
                 {updateCoverTrigger && (
                     <div className = "popup">
                       <div className = "popup-inner-upcomingAdd">
-                          <button className = "close-btn" onClick ={() => toggleUpdateCoverTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
+                          <button className = "close-btn" onClick ={() => toggleUpdateCoverTrigger()} >{<FontAwesomeIcon className='x-button' icon={faXmark} />} </button>
                           <div className="popup-header">
                               <h2>ENTER THE PLAY'S POSTER URL</h2>
                           </div>
                           <div className="popup-content">
                               <label htmlFor="poster-url">Enter poster URL:</label>
-                              <form onSubmit={handlePosterUrlSubmit}>
+                              <form className='popup-form' onSubmit={handlePosterUrlSubmit}>
                                   <input type="text" id="poster-url" name="poster-url" value={posterUrl} placeholder="Enter the URL of the play's poster" onChange={(e) => setPosterUrl(e.target.value)} />
                                   <button className="button-submitUpcoming" type="submit" disabled={loading}>Submit</button>
                               </form>
@@ -355,22 +320,24 @@ function PlayDetails() {
                           </div>
                           <div className="popup-content">
                               <label htmlFor="files">Select a file to upload:</label>
-                              <form onSubmit={handlePosterFileSubmit}>
+                              <form className='popup-form' onSubmit={handlePosterFileSubmit}>
                                   <input className="upload-content" type="file" id="files" onChange={(e) => setSelectedFile(e.target.files[0])} />
                                   <button className="button-submitUpcoming" type="submit" disabled={loading}>Upload</button>
                                   {loading && 
                                       <div className = "popup">
-                                          <div className = "popup-inner-upcomingAdd">
-                                              <div className="popup-header">
-                                                  <h2>Uploading file...</h2>
-                                              </div>
-                                              <label>This may take a while</label>
-                                              <div className="popup-content">
-                                                  <div className="loader"></div>
-                                              </div>
-                                              <button className="cancel-upload" type='cancel' onClick={handleCancelUpload}>Cancel</button>
+                                        <div className = "popup-inner-upcomingAdd">
+                                          <div className='loading'>
+                                            <div className="popup-header">
+                                              <h2>Uploading file...</h2>
+                                            </div>
+                                            <label>This may take a while</label>
+                                            <div className="popup-content">
+                                                <div className="loader"></div>
+                                            </div>
+                                            <button className="cancel-upload" type="cancel" onClick={handleCancelUpload}>Cancel</button>
                                           </div>
-                                      </div>
+                                        </div>
+                                    </div>
                                   }
                               </form>
                           </div>
@@ -414,12 +381,12 @@ function PlayDetails() {
                         </span>
 
                         <div className='textarea-container'>
-                          <span className = 'play-production'> Productions: </span>
+                          <span className = 'production'> Productions: </span>
                           <textarea type="text" value={production} onChange={(e) => setProduction(e.target.value)} />
                         </div>
 
                         <div className='textarea-container'>
-                          <span className = 'play-dev'> Development: </span>
+                          <span className = 'development'> Development: </span>
                           <textarea type="text" value={dev} onChange={(e) => setDev(e.target.value)} />
                         </div>
 
@@ -442,12 +409,12 @@ function PlayDetails() {
                       <div>
                         <div className = "popup">
                           <div className = "popup-inner-upcomingAdd">
-                              <button className = "close-btn" onClick ={() => toggleLinkTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
+                              <button className = "close-btn" onClick ={() => toggleLinkTrigger()} >{<FontAwesomeIcon className='x-button' icon={faXmark} />} </button>
                               <div className="popup-header">
                                   <h2>CREATE A NEW BUY LINK</h2>
                               </div>
                               <div className="popup-content">
-                                  <form onSubmit={handleBuyLinkSubmit}>
+                                  <form className='popup-form' onSubmit={handleBuyLinkSubmit}>
                                       <label htmlFor="buy-link">Enter the play's buy link:</label>
                                       <input type="text" id="buy-link" name="buy-link" value={buyLink} placeholder="Enter the link where you can buy the play" onChange={(e) => setBuyLink(e.target.value)} />
                                       
@@ -475,8 +442,8 @@ function PlayDetails() {
                 ) : (
                   <div className='editContent'>
                     <div className='titleEdit'>
-                      <h1 className = 'playsTitle'>{stateParamVal.title}</h1>
                       <button className='buttonTitle' onClick={handleEditTitle}>EDIT TITLE</button>
+                      <h1 className = 'playsTitle'>{stateParamVal.title}</h1>
                     </div>
 
                     <span className = "play-writer"> Writer: {writer} </span>
@@ -519,8 +486,8 @@ function PlayDetails() {
           <div className = 'playTopReel'>
             <div className = 'playVideoReelText'>VIDEOS</div>
             <div className = 'arrows'>
-              <FontAwesomeIcon icon={faAngleLeft} size="lg" style={{ marginRight: '18px' }} onClick = {() => scrollLeft(scrollElementVid)}/>
-              <FontAwesomeIcon icon={faAngleRight} size="lg" onClick = {() => scrollRight(scrollElementVid)}/>
+              <FontAwesomeIcon className='scroll-icon-left' icon={faAngleLeft} onClick = {() => scrollLeft(scrollElementVid)}/>
+              <FontAwesomeIcon className='scroll-icon-right' icon={faAngleRight} onClick = {() => scrollRight(scrollElementVid)}/>
             </div>
           </div>
           <div className = 'vidReel' ref = {scrollElementVid}>
@@ -542,22 +509,22 @@ function PlayDetails() {
         <Popup url = {popupUrl} trigger = {buttonPopup}  setTrigger = {setButtonPopup} ></Popup>
 
         <div className = 'playReel'>
-          {authenticated ? (
-            <div className="imgContainer-photos">
-              <div className="blank-add-photo">
-                <button onClick={(e) => setAddPhotoTrigger(!addPhotoTrigger)}>
-                <img src = {PlusIcon}></img></button>
-              </div>
-            </div>
-          ) : (null)}
           <div className = 'playTopReel'>
             <div className = 'playPhotoReelText'>PHOTOS</div>
             <div className = 'arrows'>
-              <FontAwesomeIcon icon={faAngleLeft} size="lg" style={{ marginRight: '18px' }} onClick = {() => scrollLeft(scrollElementPhoto)}/>
-              <FontAwesomeIcon icon={faAngleRight} size="lg" onClick = {() => scrollRight(scrollElementPhoto)}/>
+              <FontAwesomeIcon className='scroll-icon-left' icon={faAngleLeft} onClick = {() => scrollLeft(scrollElementPhoto)}/>
+              <FontAwesomeIcon className='scroll-icon-right' icon={faAngleRight} onClick = {() => scrollRight(scrollElementPhoto)}/>
             </div>
           </div>
           <div className = 'photoReel' ref = {scrollElementPhoto}>
+            {authenticated ? (
+              <div className="imgContainer-photos">
+                <div className="blank-add-photo">
+                  <button onClick={(e) => setAddPhotoTrigger(!addPhotoTrigger)}>
+                  <img src = {PlusIcon}></img></button>
+                </div>
+              </div>
+            ) : (null)}
             {photoReel}
           </div>
         </div> 
@@ -565,7 +532,6 @@ function PlayDetails() {
         {authenticated ? (
           <PhotoAddPopup addPhotoTrigger={addPhotoTrigger}  setAddPhotoTrigger={setAddPhotoTrigger} stateParamValPhotos={stateParamVal.photos.reverse()} stateParamValTitle={stateParamVal.title} type={'play'}></PhotoAddPopup>
         ) : (null)}
-        <Popup url = {popupUrl} trigger = {buttonPopup}  setTrigger = {setButtonPopup} ></Popup>
       </div>
     </div>
   )

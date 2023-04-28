@@ -1,42 +1,23 @@
 @import url('https://fonts.googleapis.com/css?family=Abel%27'); 
 
-.test{
-    padding-left:0px !important; 
-    margin-left: -121px;
-    padding-top: 100px;
+.bio-span {
+  font-size: 20px;
+  font-weight: lighter;
+  margin: 0;
 }
-.bio-span{
-    font-size: 20px;
-    font-weight: lighter;
-}
-.bioBody{
-    /*display: flex;
-    flex-direction: row;
-    margin-top: 100px;
-    position: relative;*/
-    /* margin: 20px; */
-    /* text-align: center; */
-    margin-left: 5px;
-}
-.bioBody img {
-    width: 500px; /*280px*/
-    height: auto; /*250px*/
-    float: right;
-    margin: 25px;
-    margin-left: 50px;
-    object-fit: contain;
 
-    /*margin-top: 100px;*/
+.bioBody {
+  margin-left: 5px;
 }
-.p {
-    text-align: justify;
-    font-size: 25px;
-  }
-/*.bioImg {
-    width: 100% !important;
-    height: 100% !important;
-    
-}*/
-.container img {
-    width: 100%;
- }
+
+.bioBody img {
+  float: right;
+  margin-left: 40px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+}
+
+.bioImg {
+  width: 400px;
+}
+

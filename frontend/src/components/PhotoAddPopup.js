@@ -15,7 +15,7 @@ function PhotoAddPopup(props) {
         props.setAddPhotoTrigger(!props.addPhotoTrigger);
     }
 
-    const handleVidUrlSubmit = (event) => {
+    const handlePhotoUrlSubmit = (event) => {
         event.preventDefault();
     
         if (photoUrl === "") {
@@ -53,7 +53,7 @@ function PhotoAddPopup(props) {
           });
     };
 
-    const handleVidFileSubmit = async (event) => {
+    const handlePhotoFileSubmit = async (event) => {
         event.preventDefault();
         if (!selectedFile) {
           return alert('Please upload a photo.');
@@ -118,37 +118,39 @@ function PhotoAddPopup(props) {
                     {props.addPhotoTrigger && (
                         <div className = "popup">
                             <div className = "popup-inner-upcomingAdd">
-                                <button className = "close-btn" onClick ={() => togglePhotoTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
+                                <button className = "close-btn" onClick ={() => togglePhotoTrigger()} >{<FontAwesomeIcon className='x-button' icon={faXmark} />} </button>
                                 <div className="popup-header">
                                     <h2>ENTER THE PHOTO'S URL LINK</h2>
                                 </div>
                                 <div className="popup-content">
                                     <label htmlFor="photo-url">Enter photo URL:</label>
-                                    <form onSubmit={handleVidUrlSubmit}>
+                                    <form className='popup-form' onSubmit={handlePhotoUrlSubmit}>
                                         <input type="text" id="photo-url" name="photo-url" value={photoUrl} placeholder="Enter the URL of a photo" onChange={(e) => setPhotoUrl(e.target.value)} />
                                         <button className="button-submitUpcoming" type="submit" disabled={loading}>Submit</button>
                                     </form>
                                 </div>
                                 <div className="popup-header">
-                                    <h2>OR UPLOAD A PHOTO FILE</h2>
+                                    <h2>OR UPLOAD A PHOTO</h2>
                                 </div>
                                 <div className="popup-content">
                                     <label htmlFor="files">Select a photo file to upload:</label>
-                                    <form onSubmit={handleVidFileSubmit}>
+                                    <form className='popup-form' onSubmit={handlePhotoFileSubmit}>
                                         <input className="upload-content" type="file" id="files" onChange={(e) => setSelectedFile(e.target.files[0])} />
                                         <button className="button-submitUpcoming" type="submit" disabled={loading}>Upload</button>
                                         {loading && 
-                                        <div className = "popup">
+                                          <div className = "popup">
                                             <div className = "popup-inner-upcomingAdd">
+                                              <div className='loading'>
                                                 <div className="popup-header">
-                                                    <h2>Uploading photo...</h2>
+                                                  <h2>Uploading file...</h2>
                                                 </div>
                                                 <label>This may take a while</label>
-                                                <div className="popup-content">
-                                                    <div className="loader"></div>
-                                                </div>
-                                                <button className="cancel-upload" onClick={handleCancelUpload}>Cancel</button>
+                                              <div className="popup-content">
+                                                  <div className="loader"></div>
+                                              </div>
+                                              <button className="cancel-upload" type="cancel" onClick={handleCancelUpload}>Cancel</button>
                                             </div>
+                                          </div>
                                         </div>
                                         }
                                     </form>

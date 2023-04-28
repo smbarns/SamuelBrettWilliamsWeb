@@ -296,14 +296,16 @@ function AddFilmsPopup(props) {
                                         {loading && 
                                             <div className = "popup">
                                                 <div className = "popup-inner-upcomingAdd">
-                                                    <div className="popup-header">
-                                                        <h2>Uploading file...</h2>
+                                                    <div className='loading'>
+                                                        <div className="popup-header">
+                                                            <h2>Uploading file...</h2>
+                                                        </div>
+                                                        <label>This may take a while</label>
+                                                        <div className="popup-content">
+                                                            <div className="loader"></div>
+                                                        </div>
+                                                        <button className="cancel-upload" type="cancel" onClick={handleCancelUpload}>Cancel</button>
                                                     </div>
-                                                    <label>This may take a while</label>
-                                                    <div className="popup-content">
-                                                        <div className="loader"></div>
-                                                    </div>
-                                                    <button className="cancel-upload" onClick={handleCancelUpload}>Cancel</button>
                                                 </div>
                                             </div>
                                         }

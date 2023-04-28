@@ -80,7 +80,7 @@ input:focus {
     }
 }
 
-@media only screen and (max-width: 1300px) {
+@media only screen and (max-width: 1105px) {
     .search input {
         width: 140px;
         font-size: 11px;
