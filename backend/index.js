@@ -701,6 +701,64 @@ app.get('/api/feature/delete/film', ensureAuthenticated, async (req, res) => {
     }
 })
 
+app.get('/api/delete/buyLink', ensureAuthenticated, async (req, res) => {
+    const search = req.query;
+    const id = Object.values(search).join();
+
+    try {
+        if (id) {
+            const buy_link = await db.Buy_links.findOne({where: {id: id}});
+            if (!buy_link) {
+                return res.status(404).json({ error: 'Buy link not found' });
+            }
+            await buy_link.destroy(); 
+            res.json({ message: 'Buy link deleted successfully' });
+        }
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+app.get('/api/delete/play', ensureAuthenticated, async (req, res) => {
+    const search = req.query;
+    const id = Object.values(search).join();
+    try {
+        if (id) {
+            
+            const removedPlay = await db.Plays.findOne({where: {id: id}});
+
+            await removedPlay.destroy(); 
+          
+        }
+    } catch (err) {
+        console.log(err);
+        res.send(err);
+    }
+})
+// app.get('/api/delete/play', ensureAuthenticated, async (req, res) => {
+//     const search = req.query;
+//     const id = Object.values(search).join();
+//     try {
+//         if (id) {
+            
+//             const removedFeature = await db.Plays.update({id: id+20}, {where: {id: id}});
+//             // await db.Plays.update({ featured: false }, 
+//             //     { where: {
+//             //         [Op.and]: [
+//             //             {id: id}
+//             //         ]
+//             //     }
+//             // });
+
+//             await buy_link.destroy(); 
+//             res.send(removedFeature);
+//         }
+//     } catch (err) {
+//         res.send(err);
+//     }
+// })
+
+
 app.post('/api/homepage/film/create/video', ensureAuthenticated, async (req, res) => {
     const vidAdd = req.body;
 

@@ -32,11 +32,10 @@ function Play(props) {
   }, [])
 
   const handleDelete = () => {
-    fetch(`http://localhost:3000/api/feature/delete/play?id=${props.id}`)
+    fetch(`http://localhost:3000/api/delete/play?id=${props.id}`)
       .then(response => response.json())
       .catch(error => {
         console.error(error);
-        return alert('Error: Could not delete feature!');
       });
     window.location.reload();
   };

@@ -29,6 +29,7 @@ export default function Plays() {
     return(
       <Play key = {item.id}
       {...item}
+
       />
     )
   })
