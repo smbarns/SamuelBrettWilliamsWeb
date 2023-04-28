@@ -118,13 +118,13 @@ function VideoAddPopup(props) {
                     {props.addVideoTrigger && (
                         <div className = "popup">
                             <div className = "popup-inner-upcomingAdd">
-                                <button className = "close-btn" onClick ={() => toggleVideoTrigger()} >{<FontAwesomeIcon icon={faXmark} size="xl" />} </button>
+                                <button className = "close-btn" onClick ={() => toggleVideoTrigger()} >{<FontAwesomeIcon className='x-button' icon={faXmark} />} </button>
                                 <div className="popup-header">
                                     <h2>ENTER THE VIDEO'S URL LINK</h2>
                                 </div>
                                 <div className="popup-content">
                                     <label htmlFor="video-url">Enter video URL:</label>
-                                    <form onSubmit={handleVidUrlSubmit}>
+                                    <form className='popup-form' onSubmit={handleVidUrlSubmit}>
                                         <input type="text" id="video-url" name="video-url" value={videoUrl} placeholder="Enter the URL of a video" onChange={(e) => setVideoUrl(e.target.value)} />
                                         <button className="button-submitUpcoming" type="submit" disabled={loading}>Submit</button>
                                     </form>
@@ -134,22 +134,24 @@ function VideoAddPopup(props) {
                                 </div>
                                 <div className="popup-content">
                                     <label htmlFor="files">Select a video file to upload:</label>
-                                    <form onSubmit={handleVidFileSubmit}>
+                                    <form className='popup-form' onSubmit={handleVidFileSubmit}>
                                         <input className="upload-content" type="file" id="files" onChange={(e) => setSelectedFile(e.target.files[0])} />
                                         <button className="button-submitUpcoming" type="submit" disabled={loading}>Upload</button>
                                         {loading && 
-                                        <div className = "popup">
+                                          <div className = "popup">
                                             <div className = "popup-inner-upcomingAdd">
+                                              <div className='loading'>
                                                 <div className="popup-header">
-                                                    <h2>Uploading video...</h2>
+                                                  <h2>Uploading file...</h2>
                                                 </div>
                                                 <label>This may take a while</label>
                                                 <div className="popup-content">
                                                     <div className="loader"></div>
                                                 </div>
-                                                <button className="cancel-upload" type='cancel' onClick={handleCancelUpload}>Cancel</button>
+                                                <button className="cancel-upload" type="cancel" onClick={handleCancelUpload}>Cancel</button>
+                                              </div>
                                             </div>
-                                        </div>
+                                          </div>
                                         }
                                     </form>
                                 </div>
