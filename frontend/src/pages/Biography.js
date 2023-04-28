@@ -114,22 +114,3 @@ export default function Biography() {
     </div>
   );
 }
-
-function checkViewportWidth() {
-  const width = window.innerWidth;
-  const container = document.querySelector('.container');
-
-  if (width < 768) {
-    container.classList.add('mobile');
-    container.classList.remove('tablet', 'desktop');
-  } else if (width < 992) {
-    container.classList.add('tablet');
-    container.classList.remove('mobile', 'desktop');
-  } else {
-    container.classList.add('desktop');
-    container.classList.remove('mobile', 'tablet');
-  }
-}
-
-window.addEventListener('resize', checkViewportWidth);
-checkViewportWidth();
