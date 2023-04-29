@@ -686,23 +686,6 @@ app.get('/api/feature/delete/film', ensureAuthenticated, async (req, res) => {
     }
 })
 
-app.get('/api/delete/buyLink', ensureAuthenticated, async (req, res) => {
-    const search = req.query;
-    const id = Object.values(search).join();
-
-    try {
-        if (id) {
-            const buy_link = await db.Buy_links.findOne({where: {id: id}});
-            if (!buy_link) {
-                return res.status(404).json({ error: 'Buy link not found' });
-            }
-            await buy_link.destroy(); 
-            res.json({ message: 'Buy link deleted successfully' });
-        }
-    } catch (err) {
-        res.send(err);
-    }
-});
 
 app.get('/api/delete/play', ensureAuthenticated, async (req, res) => {
     const search = req.query;
