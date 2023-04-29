@@ -24,8 +24,7 @@ A personal website for award-winning playwright, screenwriter, and director Samu
   - rguerrero@csus.edu 
 * Marc Alfonso
   - marcalfonso@csus.edu 
-* Ziwei Fang
-  - zfang@csus.edu
+
 
 ## Overview
 SamuelBrettWilliams.com is a website designed to increase our client’s online presence and serve as a portal for interested parties. We aim to provide user’s with organized and easy access to information about the client and his past and upcoming projects. User’s can directly send a message to Samuel Brett Williams or acquire his agent’s contact information through the contact directory. Our specialized admin feature also allows Williams to login and add, delete, or update information easily without the need to access the source code. 
