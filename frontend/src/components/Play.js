@@ -1,14 +1,11 @@
 import React from 'react'
-import placeholder from '../assets/placeholder.png'
 import '../styles/Play.css'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Authenticate from '../components/Authenticate.js';
 
 function Play(props) {
-
   const [data, setData] = useState(null);
-  const [pic, setPic] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -19,9 +16,7 @@ function Play(props) {
   useEffect(() => {
     fetch(`http://localhost:3000/api/plays?search=${title}`)
       .then((res) => res.json())
-      .then((data) => {
-        setPic(data[0].play_photo)
-      })
+      .then((data) => {})
       .catch(error => {
         console.error("Error fetching data: ", error);
         setError(error);
@@ -67,7 +62,7 @@ function Play(props) {
           development: props.development,
           videos: props.videos,
           buy_links: props.buy_links,
-        }} ><img className="playImg" src={placeholder} /> </Link>
+        }} ><img className="playImg" src={props.photo} /> </Link>
       </div>
       <span className="playTitle"> {props.title} </span>
       <span className="playDuration"> {props.type_play} </span>
@@ -75,23 +70,23 @@ function Play(props) {
         {authenticated ? (
           <div className='delete-button'>
             <button className="delete-feature" onClick={() => setShowConfirm(true)}>Delete</button>
-          </div>
-        ) : (null)}
-        {showConfirm && (
-          <div className = "popup">
-            <div className = "popup-inner-upcomingAdd">
-              <div className="popup-header">
-                <h2>Are you sure you want to delete this play?</h2>
-              </div>
-              <div className="popup-content">
-                <div className="popup-deleteFeature">
-                  <button className="confirm-buttons" onClick={handleConfirm}>Yes</button>
-                  <button className="confirm-buttons" onClick={handleCancel}>No</button>
+            {showConfirm && (
+              <div className = "popup">
+                <div className = "popup-inner-upcomingAdd">
+                  <div className="popup-header">
+                    <h2>Are you sure you want to delete this play?</h2>
+                  </div>
+                  <div className="popup-content">
+                    <div className="popup-deleteFeature">
+                      <button className="confirm-buttons" onClick={handleConfirm}>Yes</button>
+                      <button className="confirm-buttons" onClick={handleCancel}>No</button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
-        )}
+        ) : (null)}
     </div>
 
   )

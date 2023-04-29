@@ -32,11 +32,11 @@ function UpcomingAddPopup(props) {
     if (event.target.value === "") {
         return;
     }
-    fetch(`http://localhost:3000/api/films?title=${event.target.value}`)
+    fetch(`http://localhost:3000/api/feature/film?title=${event.target.value}`)
         .then(response => { return response.json() })
         .then(data => { 
             setFilmData(data);
-            setSelectedFilm(data[0].title);
+            setSelectedFilm(data.title);
             props.setTrigger(!props.trigger);
             setSecondTrigger(true);
         })
@@ -73,6 +73,7 @@ function UpcomingAddPopup(props) {
     .then(data => {
       setSelectedFilm('');
       setSecondTrigger(!secondTrigger);
+      window.location.reload();
     })
     .catch(error => {
       console.error('Error:', error);
@@ -120,6 +121,7 @@ function UpcomingAddPopup(props) {
         setSelectedFilm('');
         setSecondTrigger(!secondTrigger);
         console.log('Success:', data);
+        window.location.reload();
         return alert('URL saved successfully!');
       })
       .catch(error => {
@@ -173,6 +175,7 @@ function UpcomingAddPopup(props) {
         setLoading(false);
         setSecondTrigger(!secondTrigger);
         console.log('Success:', data);
+        window.location.reload();
         return alert('Video uploaded and saved successfully!');
       })
       .catch(error => {
@@ -234,11 +237,9 @@ function UpcomingAddPopup(props) {
                               <select id="link-select" disabled={loading} onChange={handleLinkSelect}>
                                   <option value="">--Choose a link--</option>
                                   {
-                                      filmData.map((film) => (
-                                          film.videos.map((vid) => (
-                                              <option value={vid.video}>{vid.video} </option>
-                                          ))
-                                      ))
+                                    filmData.videos.map((vid) => (
+                                        <option value={vid.video}>{vid.video} </option>
+                                    ))
 
                                   }
                               </select>

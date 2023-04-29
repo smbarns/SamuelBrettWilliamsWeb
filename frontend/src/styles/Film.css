@@ -6,6 +6,7 @@
 .filmImg{
     height: 310px;
     width: 360px;
+    object-fit: cover;
 }
 .filmTitle{
     font-weight: lighter;

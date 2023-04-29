@@ -574,9 +574,6 @@
 }
 
 @media only screen and (max-width: 1000px) {
-    .buttonPosterEdit {
-        width: 90px;
-    }
     .buttonDetailsUpdate button {
         font-size: 9px;
         width: 80px;
@@ -767,9 +764,6 @@
 }
 
 @media only screen and (max-width: 600px) {
-    .buttonPosterEdit {
-        width: 60px;
-    }
     .buttonDetailsUpdate button {
         font-size: 5px;
         padding: 3px 5px;

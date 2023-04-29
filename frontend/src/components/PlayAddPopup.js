@@ -36,6 +36,7 @@ function PlayAddPopup(props) {
         setPlayProduction('');
         setPlayDev('');
         setSelectedPlayType('');
+        window.location.reload();
     };
 
     const handlePlayTitleChange = (event) => {
@@ -137,8 +138,8 @@ function PlayAddPopup(props) {
         .then(data => {
             setPosterUrl('');
             setPlayTitle('');
-            setSecondTrigger(!secondTrigger);
             console.log('Success:', data);
+            toggleSecondTrigger();
             return alert('Poster URL updated successfully!');
         })
         .catch(error => {
@@ -186,8 +187,8 @@ function PlayAddPopup(props) {
             console.log(data.photo);
             setPlayTitle('');
             setLoading(false);
-            setSecondTrigger(!secondTrigger);
             console.log('Success:', data);
+            toggleSecondTrigger();
             return alert('Poster uploaded and updated successfully!');
           })
           .catch(error => {

@@ -1,12 +1,9 @@
 import React from 'react'
-import placeholder from '../assets/placeholder.png'
 import '../styles/Film.css'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 function Film(props) {
-
   const [data, setData] = useState(null);
-  const [pic, setPic] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -15,9 +12,7 @@ function Film(props) {
   useEffect(() => {
     fetch(`http://localhost:3000/api/films?search=${title}`)
       .then((res) => res.json())
-      .then((data) => {
-        setPic(data[0].film_photo)
-      })
+      .then((data) => {})
       .catch(error => {
         console.error("Error fetching data: ", error);
         setError(error);
@@ -45,7 +40,7 @@ function Film(props) {
           synopsis: props.description,
           photos: props.still_photos,
           videos: props.videos
-        }} ><img className="filmImg" src={placeholder} /></Link>
+        }} ><img className="filmImg" src={props.photo} /></Link>
       </div>
       <span className="filmTitle"> {props.title} </span>
       <span className="filmDuration"> {props.type_film} </span>

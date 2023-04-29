@@ -181,58 +181,10 @@ app.get('/api/homepage', async (req, res) => {
     }
 });
 
-//JSON for about description
-app.get('/api/homepage/about_description', async (req, res) => {
-    try {
-        const homepage = await db.Homepage.findAll({
-            attributes: ['id', 'about_des']
-        });
-        res.send(homepage);
-    } catch (err) {
-        res.send(err);
-    }
-});
-
-//JSON for client photo
-app.get('/api/homepage/client_photo', async (req, res) => {
-    try {
-        const homepage = await db.Homepage.findAll({
-            attributes: ['id', 'client_photo']
-        });
-        res.send(homepage);
-    } catch (err) {
-        res.send(err);
-    }
-});
-
 // JSON for all attributes of Biopage table
 app.get('/api/biopage', async (req, res) => {
     try {
         const biopage = await db.Biopage.findAll();
-        res.send(biopage);
-    } catch (err) {
-        res.send(err);
-    }
-});
-
-//JSON for client photo
-app.get('/api/biopage/client_photo', async (req, res) => {
-    try {
-        const biopage = await db.Biopage.findAll({
-            attributes: ['id', 'client_photo']
-        });
-        res.send(biopage);
-    } catch (err) {
-        res.send(err);
-    }
-});
-
-//JSON for bio description
-app.get('/api/biopage/bio_des', async (req, res) => {
-    try {
-        const biopage = await db.Biopage.findAll({
-            attributes: ['id', 'bio_des']
-        });
         res.send(biopage);
     } catch (err) {
         res.send(err);
@@ -249,6 +201,43 @@ app.post("/api/biopage", ensureAuthenticated, async (req, res) => {
         res.send(err);
     }
 });
+
+// Put method for updating client photo
+app.put('/api/bio/photo', ensureAuthenticated, async (req, res) => {
+    const photo = req.body.photo;
+
+    try {
+        const biopage = await db.Biopage.findOne({where: {id: 1}});
+        if (!biopage) {
+            return res.status(404).send('Biopage not found');
+        }
+
+        biopage.client_photo = photo;
+        await biopage.save();
+        return res.status(200).json(biopage);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+})
+
+app.put('/api/biopage/bio', ensureAuthenticated, async (req, res) => {
+    const bio = req.body.bio_des;
+
+    try {
+        const biopage = await db.Biopage.findOne({where: {id: 1}});
+        if (!biopage) {
+            return res.status(404).send('Biopage not found');
+        }
+
+        biopage.bio_des = bio;
+        await biopage.save();
+        return res.status(200).json(biopage);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+})
 
 // Search for film by title and display for all attributes of Films table
 app.get('/api/films', async (req, res) => {
@@ -270,6 +259,26 @@ app.get('/api/films', async (req, res) => {
         res.send(err.toString());
     }
 });
+
+// Gets film by query exact title name
+app.get('/api/feature/film', async (req, res) => {
+    const search = req.query;
+    const title = Object.values(search).join();
+
+    try {
+        if (title) {
+            const film = await db.Films.findOne({ where: {title: title}, 
+                include: [{ model: db.Buy_links, as: "buy_links" }, 
+                          { model: db.Videos, as: "videos" }, 
+                          { model: db.Still_photos, as: "still_photos" }]
+            });
+            res.send(film);
+        }
+    } catch (err) {
+        res.send(err);
+    }
+
+})
 
 // Returns list of film titles
 app.get('/api/films/titles', async (req, res) => {
@@ -334,18 +343,6 @@ app.post("/api/films", ensureAuthenticated, async (req, res) => {
                 res.send(film);
             })
     } catch (err) {
-        res.send(err);
-    }
-});
-
-app.get("/api/films/getImage/:title", async (req, res) => {
-    var title = req.params['title'];
-    try {
-        const film = db.film.getByTitle(title);
-        const film_photo = film.photo;
-        res.send(film_photo);
-    }
-    catch (err) {
         res.send(err);
     }
 });
@@ -417,18 +414,6 @@ app.post("/api/plays", ensureAuthenticated, async (req, res) => {
                 res.send(play);
             })
     } catch (err) {
-        res.send(err);
-    }
-});
-
-app.get("/api/plays/getImage/:title", async (req, res) => {
-    var title = req.params['title'];
-    try {
-        const play = db.play.getByTitle(title);
-        const play_photo = play.photo;
-        res.send(play_photo);
-    }
-    catch (err) {
         res.send(err);
     }
 });
@@ -724,40 +709,23 @@ app.get('/api/delete/play', ensureAuthenticated, async (req, res) => {
     const id = Object.values(search).join();
     try {
         if (id) {
-            
             const removedPlay = await db.Plays.findOne({where: {id: id}});
-
-            await removedPlay.destroy(); 
-          
+            if (!removedPlay) {
+                return res.status(404).json({ error: 'Play not found' });
+            }
+            const removedVideos = await db.Videos.findAll({where: {playId: id}});
+            const removedBuyLinks = await db.Buy_links.findAll({where: {playId: id}});
+            const removedStillPhotos = await db.Still_photos.findAll({where: {playId: id}});
+            await removedPlay.destroy();
+            await removedVideos.destroy();
+            await removedBuyLinks.destroy();
+            await removedStillPhotos.destroy();
+            res.json({ message: 'Play deleted successfully' });
         }
     } catch (err) {
-        console.log(err);
         res.send(err);
     }
 })
-// app.get('/api/delete/play', ensureAuthenticated, async (req, res) => {
-//     const search = req.query;
-//     const id = Object.values(search).join();
-//     try {
-//         if (id) {
-            
-//             const removedFeature = await db.Plays.update({id: id+20}, {where: {id: id}});
-//             // await db.Plays.update({ featured: false }, 
-//             //     { where: {
-//             //         [Op.and]: [
-//             //             {id: id}
-//             //         ]
-//             //     }
-//             // });
-
-//             await buy_link.destroy(); 
-//             res.send(removedFeature);
-//         }
-//     } catch (err) {
-//         res.send(err);
-//     }
-// })
-
 
 app.post('/api/homepage/film/create/video', ensureAuthenticated, async (req, res) => {
     const vidAdd = req.body;
