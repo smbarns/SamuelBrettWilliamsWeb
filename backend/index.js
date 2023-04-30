@@ -471,7 +471,13 @@ app.get("/api/press/author", async (req, res) => {
 app.post("/api/press", ensureAuthenticated, async (req, res) => {
     const data = req.body;
     try {
-        const press = await db.Press.create(data);
+        const press = await db.Press.create({
+            press_title: data.press_title,
+            project_name: data.project_name,
+            author: data.author,
+            quote: data.quote,
+            press_image: data.logo || null
+        });
         res.send(press);
     } catch (err) {
         res.send(err);
@@ -520,7 +526,7 @@ app.put('/api/press/edit/author', ensureAuthenticated, async (req, res) => {
 
 app.put('/api/press/edit/image', ensureAuthenticated, async (req, res) => {
     const pressId = req.body.id;
-    const newImage = req.body.newImage;
+    const newImage = req.body.logo;
 
     try {
         const press = await db.Press.findOne({where: {id: pressId}});
@@ -686,23 +692,41 @@ app.get('/api/feature/delete/film', ensureAuthenticated, async (req, res) => {
     }
 })
 
+app.get('/api/test', async (req, res) => {
+    try {
+        const removedPlay = await db.Plays.findOne({
+            where: {id: 1},
+            include: [{ model: db.Buy_links, as: "buy_links" },
+                      { model: db.Videos, as: "videos" },
+                      { model: db.Still_photos, as: "still_photos" }]
+        });
+        res.send(removedPlay);
+    } catch (err) {
+        res.send(err);
+    }
+})
+
 
 app.get('/api/delete/play', ensureAuthenticated, async (req, res) => {
     const search = req.query;
     const id = Object.values(search).join();
     try {
         if (id) {
-            const removedPlay = await db.Plays.findOne({where: {id: id}});
+            const removedPlay = await db.Plays.findOne({
+                where: {id: id},
+                include: [{ model: db.Buy_links, as: "buy_links" },
+                          { model: db.Videos, as: "videos" },
+                          { model: db.Still_photos, as: "still_photos" }]
+            });
             if (!removedPlay) {
                 return res.status(404).json({ error: 'Play not found' });
             }
-            const removedVideos = await db.Videos.findAll({where: {playId: id}});
-            const removedBuyLinks = await db.Buy_links.findAll({where: {playId: id}});
-            const removedStillPhotos = await db.Still_photos.findAll({where: {playId: id}});
-            await removedPlay.destroy();
-            await removedVideos.destroy();
-            await removedBuyLinks.destroy();
-            await removedStillPhotos.destroy();
+
+            await removedPlay.destroy({
+                include: [{ model: db.Buy_links },
+                      { model: db.Videos },
+                      { model: db.Still_photos }]
+            });
             res.json({ message: 'Play deleted successfully' });
         }
     } catch (err) {

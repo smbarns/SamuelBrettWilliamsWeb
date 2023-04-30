@@ -3,148 +3,120 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import '../styles/UpcomingAdd.css';
 
-function PlayAddPopup(props) {
-    const [playTitle, setPlayTitle] = useState('');
-    const [playWriter, setPlayWriter] = useState('');
-    const [playDesc, setPlayDesc] = useState('');
-    const [playProduction, setPlayProduction] = useState('');
-    const [playDev, setPlayDev] = useState('');
-    const [selectedPlayType, setSelectedPlayType] = useState('');
+function PressAddPopup(props) {
+    const [projectTitle, setProjectTitle] = useState('');
+    const [pressName, setPressName] = useState('');
+    const [pressQuote, setPressQuote] = useState('');
+    const [pressAuthor, setPressAuthor] = useState('');
     const [secondTrigger, setSecondTrigger] = useState(false);
-    const [posterUrl, setPosterUrl] = useState('');
+    const [logoUrl, setLogoUrl] = useState('');
+    const [pressId, setPressId] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
     const [loading, setLoading] = useState(false);
     const abortControllerRef = useRef(null);
 
     const toggleTrigger = () => {
         props.setTrigger(!props.trigger);
-        props.setPlayAddPop(false);
-        setPlayTitle('');
-        setPlayWriter('');
-        setPlayDesc('');
-        setPlayProduction('');
-        setPlayDev('');
-        setSelectedPlayType('');
+        props.setPressAddPop(false);
+        setProjectTitle('');
+        setPressName('');
+        setPressQuote('');
+        setPressAuthor('');
     }
 
     const toggleSecondTrigger = () => {
         setSecondTrigger(!secondTrigger);
-        props.setPlayAddPop(false);
-        setPlayTitle('');
-        setPlayWriter('');
-        setPlayDesc('');
-        setPlayProduction('');
-        setPlayDev('');
-        setSelectedPlayType('');
+        props.setPressAddPop(false);
+        setProjectTitle('');
+        setPressName('');
+        setPressQuote('');
+        setPressAuthor('');
         window.location.reload();
     };
 
-    const handlePlayTitleChange = (event) => {
-        setPlayTitle(event.target.value);
+    const handleProjectTitleChange = (event) => {
+        setProjectTitle(event.target.value);
     };
 
-    const handlePlayWriterChange = (event) => {
-        setPlayWriter(event.target.value);
+    const handlePressNameChange = (event) => {
+        setPressName(event.target.value);
     };
 
-    const handlePlayDescChange = (event) => {
-        setPlayDesc(event.target.value);
+    const handlePressQuoteChange = (event) => {
+        setPressQuote(event.target.value);
     };
 
-    const handlePlayProductionChange = (event) => {
-        setPlayProduction(event.target.value);
-    };
-
-    const handlePlayDevChange = (event) => {
-        setPlayDev(event.target.value);
-    };
-
-    const handleTypeSelect = (event) => {
-        if (event.target.value === "") {
-            return;
-        }
-        setSelectedPlayType(event.target.value);
+    const handlePressAuthorChange = (event) => {
+        setPressAuthor(event.target.value);
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (playTitle === '') {
-            return alert('Please enter a title for the play.')
-        } else if (selectedPlayType === '') {
-            return alert('Please select a play type.');
+        if (pressName === '') {
+            return alert('Please enter a press name.')
         }
 
-        for (let i=0; i<props.data.length; i++) {
-            if (playTitle === props.data[i].title) {
-              setPlayTitle('');
-              return alert('A play with that title already exists!');
-            }
-        }
-
-        fetch('http://localhost:3000/api/plays', {
+        fetch('http://localhost:3000/api/press', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                title: playTitle,
-                photo: "https://s3-us-west-2.amazonaws.com/samuel-brett-williams/1680048013900-no-poster-avaliable.png",
-                writer: playWriter,
-                productions: playProduction,
-                development: playDev,
-                description: playDesc,
-                type_play: selectedPlayType
+                press_title: pressName,
+                project_name: projectTitle,
+                quote: pressQuote,
+                author: pressAuthor,
             })
         })
         .then(response => response.json())
         .then(data => {
-            setPlayWriter('');
-            setPlayProduction('');
-            setPlayDev('');
-            setPlayDesc('');
-            setSelectedPlayType('');
+            setProjectTitle('');
+            setPressName('');
+            setPressQuote('');
+            setPressAuthor('');
             props.setTrigger(false);
             setSecondTrigger(true);
+            setPressId(data.id);
             console.log('Success:', data);
         })
         .catch(error => {
             console.error('Error:', error);
-            return alert('Error: Play data could not be saved!');
+            return alert('Error: Press data could not be saved!');
         });
     }
 
-    const handlePosterUrlChange = (event) => {
-        setPosterUrl(event.target.value);
+    const handleLogoUrlChange = (event) => {
+        setLogoUrl(event.target.value);
     };
 
     const handleUrlSubmit = (event) => {
         event.preventDefault();
 
-        if (posterUrl === "") {
-            return alert('Please enter a poster link.');
+        if (logoUrl === "") {
+            return alert('Please enter a logo image link.');
         }
 
-        fetch('http://localhost:3000/api/plays/photo', {
+        fetch('http://localhost:3000/api/press/edit/image', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                photo: posterUrl,
-                title: playTitle
+                logo: logoUrl,
+                id: pressId
             })
         })
         .then(response => response.json())
         .then(data => {
-            setPosterUrl('');
-            setPlayTitle('');
+            setLogoUrl('');
+            setPressId(null);
             console.log('Success:', data);
             toggleSecondTrigger();
-            return alert('Poster URL updated successfully!');
+            return alert('Logo URL updated successfully!');
         })
         .catch(error => {
             console.error('Error:', error);
-            return alert('Error: Poster URL could not be updated!');
+            return alert('Error: Logo URL could not be updated!');
         });
     }
 
@@ -155,7 +127,7 @@ function PlayAddPopup(props) {
     const handleFileSubmit = async (event) => {
         event.preventDefault();
         if (!selectedFile) {
-          return alert('Please upload a poster.');
+          return alert('Please upload an image.');
         }
     
         const formData = new FormData();
@@ -172,28 +144,27 @@ function PlayAddPopup(props) {
         })
         .then(response => response.json())
         .then(data => {
-          fetch('http://localhost:3000/api/plays/photo', {
+          fetch('http://localhost:3000/api/press/edit/image', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            photo: data[0],
-            title: playTitle
+            logo: logoUrl,
+            id: pressId
           })
         })
           .then(response => response.json())
           .then(data => {
-            console.log(data.photo);
-            setPlayTitle('');
+            setPressId(null);
             setLoading(false);
             console.log('Success:', data);
             toggleSecondTrigger();
-            return alert('Poster uploaded and updated successfully!');
+            return alert('Logo uploaded and updated successfully!');
           })
           .catch(error => {
             console.error('Error:', error);
-            return alert('Error: Poster could not be updated!');
+            return alert('Error: Logo could not be updated!');
           });
         })
         .catch(error => {
@@ -213,37 +184,27 @@ function PlayAddPopup(props) {
         <div>
             {props.trigger ? (
                 <div>
-                    {props.playAddPop && (
+                    {props.pressAddPop && (
                         <div className = "popup">
                             <div className = "popup-inner-upcomingAdd">
                                 <button className = "close-btn" onClick ={() => toggleTrigger()} >{<FontAwesomeIcon className='x-button' icon={faXmark} />} </button>
                                 <div className="popup-header">
-                                    <h2>ENTER PLAY DETAILS</h2>
+                                    <h2>ENTER PRESS DETAILS</h2>
                                 </div>
                                 <div className="popup-content">
                                 <form className='popup-form' onSubmit={handleSubmit}>
-                                    <label htmlFor="play-title">Title:</label>
-                                    <input type="text" id="play-title" name="play-title" value={playTitle} placeholder="Enter the play's title" onChange={handlePlayTitleChange} />
+                                    <label htmlFor="press-name">Press name:</label>
+                                    <input type="text" id="press-name" name="press-name" value={pressName} placeholder="Enter the name of the press" onChange={handlePressNameChange} />
+                                    
+                                    <label htmlFor="project-title">Project title:</label>
+                                    <input type="text" id="project-title" name="project-title" value={projectTitle} placeholder="Enter the project title that the press is referencing" onChange={handleProjectTitleChange} />
+                                    
+                                    <label htmlFor="press-quote">Quote:</label>
+                                    <textarea type="text" id="press-quote" name="press-quote" value={pressQuote} placeholder="Enter quote from the press" onChange={handlePressQuoteChange} />
 
-                                    <label htmlFor="play-writer">Writer(s):</label>
-                                    <textarea type="text" id="play-writer" name="play-writer" value={playWriter} placeholder="Enter the play's writer(s)" onChange={handlePlayWriterChange} />
-
-                                    <label htmlFor="play-desc">Synopsis:</label>
-                                    <textarea type="text" id="play-desc" name="play-desc" value={playDesc} placeholder="Enter the play's synopsis" onChange={handlePlayDescChange} />
+                                    <label htmlFor="press-author">Author(s):</label>
+                                    <input type="text" id="press-author" name="press-author" value={pressAuthor} placeholder="Enter the name of the author(s)" onChange={handlePressAuthorChange} />
                                     
-                                    <label htmlFor="play-production">Production(s):</label>
-                                    <textarea type="text" id="play-production" name="play-production" value={playProduction} placeholder="Enter the play's production(s)" onChange={handlePlayProductionChange} />
-                                    
-                                    <label htmlFor="play-dev">Development(s):</label>
-                                    <textarea type="text" id="play-dev" name="play-dev" value={playDev} placeholder="Enter the play's development(s)" onChange={handlePlayDevChange} />
-                                    
-                                    <label htmlFor="link-select">Type:</label>
-                                    <select id="link-select" onChange={handleTypeSelect}>
-                                        <option value="">--Choose the play's type--</option>
-                                        <option value="Full Length">Full Length </option>
-                                        <option value="One Act">One Act </option>
-                                        <option value="Ten Minute">Ten Minute </option>
-                                    </select>
                                     <button className="button-submitUpcoming" type="submit" >Submit</button>
                                 </form>
                                 </div>
@@ -258,17 +219,17 @@ function PlayAddPopup(props) {
                             <div className = "popup-inner-upcomingAdd">
                                 <button className = "close-btn" onClick ={() => toggleSecondTrigger()} >{<FontAwesomeIcon className='x-button' icon={faXmark}/>} </button>
                                 <div className="popup-header">
-                                    <h2>ENTER THE PLAY'S POSTER URL</h2>
+                                    <h2>ENTER THE PRESS'S LOGO IMAGE URL</h2>
                                 </div>
                                 <div className="popup-content">
-                                    <label htmlFor="poster-url">Enter poster URL:</label>
+                                    <label htmlFor="poster-url">Enter logo URL:</label>
                                     <form className='popup-form' onSubmit={handleUrlSubmit}>
-                                        <input type="text" id="poster-url" name="poster-url" value={posterUrl} placeholder="Enter the URL of the play's poster" onChange={handlePosterUrlChange} />
+                                        <input type="text" id="logo-url" name="logo-url" value={logoUrl} placeholder="Enter the URL of the press's logo image" onChange={handleLogoUrlChange} />
                                         <button className="button-submitUpcoming" type="submit" disabled={loading}>Submit</button>
                                     </form>
                                 </div>
                                 <div className="popup-header">
-                                    <h2>OR UPLOAD A POSTER</h2>
+                                    <h2>OR UPLOAD THE PRESS'S LOGO IMAGE</h2>
                                 </div>
                                 <div className="popup-content">
                                     <label htmlFor="files">Select a file to upload:</label>
@@ -302,4 +263,4 @@ function PlayAddPopup(props) {
     )
 }
 
-export default PlayAddPopup;
+export default PressAddPopup;

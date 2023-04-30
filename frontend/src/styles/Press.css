@@ -3,16 +3,20 @@
 @import url('https://fonts.googleapis.com/css?family=Lobster');
 
 .press{
-    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 100px;
+    flex-direction: row;
 }
 
 .pressIcon{
-    width: 27%;
-    display: inline-block;
-    vertical-align: top;
-    margin-inline: 50px;
-    margin-bottom: 100px;
+    width: calc((100% - 200px) / 3);
+    flex-shrink: 4;
 }
+
+.pressIcon:last-child:not(:nth-last-child(-n+2)) {
+    margin-right: 0;
+  }
 
 .press_title{
     font-size: 45px;
@@ -61,7 +65,22 @@
     background-color: transparent;
     border: none;
     outline:none;
-    }
+}
+
+.blank-add-press {
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgb(131, 127, 127);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.press-add-container {
+    align-items: center;
+    display: flex;
+    width: calc((100% - 200px) / 3);
+}
 
 
 /* media queries */

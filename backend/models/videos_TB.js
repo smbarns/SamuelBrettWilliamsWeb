@@ -18,11 +18,13 @@ module.exports = (sequelize, DataTypes) => {
     Videos.associate = (models) => {
         Videos.belongsTo(models.Films, {
             as: 'films',
-            foreignKey: 'filmId'
+            foreignKey: 'filmId',
+            onDelete: 'CASCADE'
         });
         Videos.belongsTo(models.Plays, {
             as: 'plays',
-            foreignKey: 'playId'
+            foreignKey: 'playId',
+            onDelete: 'CASCADE'
         });
     };
     return Videos;

@@ -15,11 +15,13 @@ module.exports = (sequelize, DataTypes) => {
     Still_photos.associate = (models) => {
         Still_photos.belongsTo(models.Films, {
             as: 'films',
-            foreignKey: 'filmId'
+            foreignKey: 'filmId',
+            onDelete: 'CASCADE'
         });
         Still_photos.belongsTo(models.Plays, {
             as: 'plays',
-            foreignKey: 'playId'
+            foreignKey: 'playId',
+            onDelete: 'CASCADE'
         });
     };
     return Still_photos;
