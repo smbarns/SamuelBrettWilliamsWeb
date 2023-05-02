@@ -18,6 +18,7 @@ function Press(props) {
   const [logoUrl, setLogoUrl] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const abortControllerRef = useRef(null);
 
   const toggleTrigger = () => {
@@ -182,6 +183,24 @@ function Press(props) {
     });
   }
 
+  const handleDelete = () => {
+    fetch(`/api/delete/press?id=${props.id}`)
+      .then(response => response.json())
+      .catch(error => {
+        console.error(error);
+      });
+    window.location.reload();
+  };
+
+  const handleConfirm = () => {
+    setShowConfirm(false);
+    handleDelete();
+  };
+
+  const handleCancel = () => {
+    setShowConfirm(false);
+  }
+
   return (
     <div className = "pressIcon">
         <Authenticate setAuthen={setAuthenticated}/>
@@ -277,6 +296,24 @@ function Press(props) {
 
                 <div className='editContent-press'>
                   <button className='buttonDetailsEdit' onClick={handleEditDetails}>EDIT DETAILS</button>
+                </div>
+                <div className='delete-button-press'>
+                  <button className="delete-feature" onClick={() => setShowConfirm(true)}>Delete</button>
+                  {showConfirm && (
+                    <div className = "popup">
+                      <div className = "popup-inner-upcomingAdd">
+                        <div className="popup-header">
+                          <h2>Are you sure you want to delete this press?</h2>
+                        </div>
+                        <div className="popup-content">
+                          <div className="popup-deleteFeature">
+                            <button className="confirm-buttons" onClick={handleConfirm}>Yes</button>
+                            <button className="confirm-buttons" onClick={handleCancel}>No</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

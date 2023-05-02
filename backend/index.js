@@ -682,6 +682,25 @@ app.get('/api/delete/play', ensureAuthenticated, async (req, res) => {
     }
 })
 
+app.get('/api/delete/press', ensureAuthenticated, async (req, res) => {
+    const search = req.query;
+    const id = Object.values(search).join();
+    
+    try {
+        if (id) {
+            const removedPress = await db.Press.findOne({where: {id: id}});
+            if (!removedPress) {
+                return res.status(404).json({ error: 'Press not found' });
+            }
+
+            await removedPress.destroy();
+            res.json({ message: 'Press deleted successfully' });
+        }
+    } catch (err) {
+        res.send(err);
+    }
+})
+
 app.post('/api/homepage/film/create/video', ensureAuthenticated, async (req, res) => {
     const vidAdd = req.body;
 

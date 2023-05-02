@@ -162,6 +162,12 @@
     margin-top: 10px;
 }
 
+.delete-button-press {
+    display: flex;
+    padding-top: 10px;
+    justify-content: center;
+}
+
 
 /* media queries */
 
