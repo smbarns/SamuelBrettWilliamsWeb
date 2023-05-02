@@ -13,6 +13,7 @@ export default function Biography() {
   const [pic, setPic] = useState();
   const [des, setDes] = useState();
   const [loading, setLoading] = useState(true);
+  const [pageLoading, setPageLoading] = useState(true);
   const [error, setError] = useState(null);
   const [editDes, setEditDes] = useState(false);
   const [editPic, setEditPic] = useState(false);
@@ -35,7 +36,7 @@ export default function Biography() {
         setError(error);
       })
       .finally(() => {
-        setLoading(false);
+        setPageLoading(false);
       })
   }, [])
 
@@ -156,7 +157,7 @@ export default function Biography() {
     setEditDes(false);
   }
 
-  if (loading) return <div className="page">Loading...</div>;
+  if (pageLoading) return <div className="page">Loading...</div>;
   if (error) return <div className="page">Error!</div>;
 
   return (

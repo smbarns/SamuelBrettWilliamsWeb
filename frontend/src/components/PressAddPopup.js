@@ -112,6 +112,7 @@ function PressAddPopup(props) {
             setPressId(null);
             console.log('Success:', data);
             toggleSecondTrigger();
+            window.location.reload();
             return alert('Logo URL updated successfully!');
         })
         .catch(error => {
@@ -160,6 +161,7 @@ function PressAddPopup(props) {
             setLoading(false);
             console.log('Success:', data);
             toggleSecondTrigger();
+            window.location.reload();
             return alert('Logo uploaded and updated successfully!');
           })
           .catch(error => {

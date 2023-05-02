@@ -69,7 +69,7 @@
 
 .blank-add-press {
     width: 100%;
-    height: 100%;
+    height: 90%;
     border: 2px solid rgb(131, 127, 127);
     display: flex;
     justify-content: center;
@@ -80,6 +80,86 @@
     align-items: center;
     display: flex;
     width: calc((100% - 200px) / 3);
+}
+
+.popup-header-press {
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+    flex-direction: column;
+}
+
+.optional {
+    color: #b3a6a7;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.editContent-press {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.buttonDetailsUpdate-press {
+    margin-top: 10px;
+    display: flex;
+    gap: 5px;
+    justify-content: flex-end;
+}
+
+.buttonDetailsUpdate-press button {
+    float: right;
+    width: 150px;
+    background-color: #240f0e;
+    color: #e6d8d9;
+    border-color: #716161;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-family: sans-serif;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.buttonDetailsUpdate-press button:hover {
+    background-color: #655b5b;
+    cursor: pointer;
+}
+
+.edit-press input, .edit-press textarea {
+    background-color: #f2f2f2;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 10px;
+    transition: all .3s;
+    width: 100%;
+}
+
+.project_title-edit {
+    font-size: 30px;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 35px;
+    font-family: Oswald;
+}
+
+.edit-press textarea {
+    font-weight: lighter;
+    font-size: 20px;
+    font-family: Abel;
+    resize: vertical;
+    height: 200px;
+}
+
+.author-edit {
+    font-weight: 300;
+    font-size: 24px;
+    margin-top: 10px;
 }
 
 

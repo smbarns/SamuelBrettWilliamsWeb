@@ -115,7 +115,7 @@ function PlayDetails() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            title: stateParamVal.title, 
+            id: stateParamVal.id,
             newTitle: newTitle
         })
     })
@@ -141,7 +141,7 @@ function PlayDetails() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            title: stateParamVal.title, 
+            id: stateParamVal.id,
             newWriter: writer,
             newProduction: production,
             newDev: dev,
@@ -182,7 +182,7 @@ function PlayDetails() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            title: stateParamVal.title, 
+            id: stateParamVal.id,
             newBuyLink: buyLink,
             newBuyLinkImg: buyLinkImg
         })
@@ -214,7 +214,7 @@ function PlayDetails() {
         },
         body: JSON.stringify({
             photo: posterUrl,
-            title: stateParamVal.title
+            id: stateParamVal.id
         })
     })
     .then(response => response.json())
@@ -258,7 +258,7 @@ function PlayDetails() {
       },
       body: JSON.stringify({
         photo: data[0],
-        title: stateParamVal.title
+        id: stateParamVal.id
       })
     })
       .then(response => response.json())

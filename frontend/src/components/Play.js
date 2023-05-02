@@ -62,6 +62,7 @@ function Play(props) {
           development: props.development,
           videos: props.videos,
           buy_links: props.buy_links,
+          id: props.id,
         }} ><img className="playImg" src={props.photo} /> </Link>
       </div>
       <span className="playTitle"> {props.title} </span>

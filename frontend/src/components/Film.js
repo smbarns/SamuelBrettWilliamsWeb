@@ -39,7 +39,8 @@ function Film(props) {
           buy_links: props.buy_links,
           synopsis: props.description,
           photos: props.still_photos,
-          videos: props.videos
+          videos: props.videos,
+          id: props.id,
         }} ><img className="filmImg" src={props.photo} /></Link>
       </div>
       <span className="filmTitle"> {props.title} </span>

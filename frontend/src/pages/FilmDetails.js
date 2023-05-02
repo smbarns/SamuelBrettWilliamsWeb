@@ -116,7 +116,7 @@ function FilmDetails() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            title: stateParamVal.title, 
+            id: stateParamVal.id,
             newTitle: newTitle
         })
     })
@@ -142,7 +142,7 @@ function FilmDetails() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            title: stateParamVal.title,
+            id: stateParamVal.id,
             newDirector: director,
             newWriter: writer,
             newStars: stars,
@@ -184,7 +184,7 @@ function FilmDetails() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            title: stateParamVal.title, 
+            id: stateParamVal.id,
             newBuyLink: buyLink,
             newBuyLinkImg: buyLinkImg
         })
@@ -216,7 +216,7 @@ function FilmDetails() {
         },
         body: JSON.stringify({
             photo: posterUrl,
-            title: stateParamVal.title
+            id: stateParamVal.id
         })
     })
     .then(response => response.json())
@@ -260,7 +260,7 @@ function FilmDetails() {
       },
       body: JSON.stringify({
         photo: data[0],
-        title: stateParamVal.title
+        id: stateParamVal.id
       })
     })
       .then(response => response.json())

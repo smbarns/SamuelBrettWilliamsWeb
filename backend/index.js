@@ -484,9 +484,9 @@ app.post("/api/press", ensureAuthenticated, async (req, res) => {
     }
 });
 
-app.put('/api/press/edit/quote', ensureAuthenticated, async (req, res) => {
+app.put('/api/press/edit/press_title', ensureAuthenticated, async (req, res) => {
     const pressId = req.body.id;
-    const newQuote = req.body.newQuote;
+    const pressTitle = req.body.press_title;
 
     try {
         const press = await db.Press.findOne({where: {id: pressId}});
@@ -494,7 +494,7 @@ app.put('/api/press/edit/quote', ensureAuthenticated, async (req, res) => {
             return res.status(404).send('Press not found');
         }
 
-        press.quote = newQuote;
+        press.press_title = pressTitle;
         await press.save();
 
         return res.status(200).json(press);
@@ -504,9 +504,11 @@ app.put('/api/press/edit/quote', ensureAuthenticated, async (req, res) => {
     }
 });
 
-app.put('/api/press/edit/author', ensureAuthenticated, async (req, res) => {
+app.put('/api/press/edit/details', ensureAuthenticated, async (req, res) => {
     const pressId = req.body.id;
-    const newAuthor = req.body.newAuthor;
+    const project_title = req.body.project_title;
+    const quote = req.body.quote;
+    const author = req.body.author;
 
     try {
         const press = await db.Press.findOne({where: {id: pressId}});
@@ -514,7 +516,9 @@ app.put('/api/press/edit/author', ensureAuthenticated, async (req, res) => {
             return res.status(404).send('Press not found');
         }
 
-        press.author = newAuthor;
+        press.project_name = project_title;
+        press.quote = quote;
+        press.author = author;
         await press.save();
 
         return res.status(200).json(press);
@@ -522,7 +526,7 @@ app.put('/api/press/edit/author', ensureAuthenticated, async (req, res) => {
         console.error(err);
         return res.status(500).send('Server error');
     }
-});
+})
 
 app.put('/api/press/edit/image', ensureAuthenticated, async (req, res) => {
     const pressId = req.body.id;
@@ -543,47 +547,6 @@ app.put('/api/press/edit/image', ensureAuthenticated, async (req, res) => {
         return res.status(500).send('Server error');
     }
 });
-
-app.put('/api/press/edit/link', ensureAuthenticated, async (req, res) => {
-    const pressId = req.body.id;
-    const newLink = req.body.newLink;
-
-    try {
-        const press = await db.Press.findOne({where: {id: pressId}});
-        if (!press) {
-            return res.status(404).send('Press not found');
-        }
-
-        press.press_link = newLink;
-        await press.save();
-
-        return res.status(200).json(press);
-    } catch (err) {
-        console.error(err);
-        return res.status(500).send('Server error');
-    }
-});
-//adding a new press item
-app.put('/api/press/add', ensureAuthenticated, async (req, res) => {
-    const newAuthor = req.body.author;
-    const newQuote = req.body.quote;
-    const newPressImage = req.body.press_image;
-    const newPressLink = req.body.press_link;
-  
-    try {
-      const press = await db.Press.create({
-        author: newAuthor,
-        quote: newQuote,
-        press_image: newPressImage,
-        press_link: newPressLink
-      });
-  
-      return res.status(200).json(press);
-    } catch (err) {
-      console.error(err);
-      return res.status(500).send('Server error');
-    }
-  });
 
 // JSON for contact page
 app.get('/api/contactpage', async (req, res) => {
@@ -692,21 +655,6 @@ app.get('/api/feature/delete/film', ensureAuthenticated, async (req, res) => {
     }
 })
 
-app.get('/api/test', async (req, res) => {
-    try {
-        const removedPlay = await db.Plays.findOne({
-            where: {id: 1},
-            include: [{ model: db.Buy_links, as: "buy_links" },
-                      { model: db.Videos, as: "videos" },
-                      { model: db.Still_photos, as: "still_photos" }]
-        });
-        res.send(removedPlay);
-    } catch (err) {
-        res.send(err);
-    }
-})
-
-
 app.get('/api/delete/play', ensureAuthenticated, async (req, res) => {
     const search = req.query;
     const id = Object.values(search).join();
@@ -804,10 +752,10 @@ app.post('/api/upload/files', upload.array('files', 5), ensureAuthenticated, (re
 
 app.put('/api/films/photo', ensureAuthenticated, async (req, res) => {
     const photo = req.body.photo;
-    const filmTitle = req.body.title;
+    const filmId = req.body.id;
 
     try {
-        const film = await db.Films.findOne({where: {title: filmTitle}}); 
+        const film = await db.Films.findOne({where: {id: filmId}}); 
         if (!film) {
           return res.status(404).send('Film not found');
         }
@@ -824,11 +772,11 @@ app.put('/api/films/photo', ensureAuthenticated, async (req, res) => {
 });
 
 app.put('/api/films/edit/title', ensureAuthenticated, async (req, res) => {
-    const filmTitle = req.body.title;
+    const filmId = req.body.id;
     const newTitle = req.body.newTitle;
 
     try {
-        const film = await db.Films.findOne({where: {title: filmTitle}});
+        const film = await db.Films.findOne({where: {id: filmId}});
         if (!film) {
             return res.status(404).send('Film not found');
         }
@@ -844,7 +792,7 @@ app.put('/api/films/edit/title', ensureAuthenticated, async (req, res) => {
 });
 
 app.put('/api/films/edit/details', ensureAuthenticated, async (req, res) => {
-    const filmTitle = req.body.title;
+    const filmId = req.body.id;
     const newDirector = req.body.newDirector;
     const newWriter = req.body.newWriter;
     const newStars = req.body.newStars;
@@ -852,7 +800,7 @@ app.put('/api/films/edit/details', ensureAuthenticated, async (req, res) => {
     const newDesc = req.body.newDesc;
 
     try {
-        const film = await db.Films.findOne({where: {title: filmTitle}});
+        const film = await db.Films.findOne({where: {id: filmId}});
         if (!film) {
             return res.status(404).send('Film not found');
         }
@@ -872,12 +820,12 @@ app.put('/api/films/edit/details', ensureAuthenticated, async (req, res) => {
 });
 
 app.put('/api/films/add/buy_link', ensureAuthenticated, async (req, res) => {
-    const filmTitle = req.body.title;
+    const filmId = req.body.id;
     const newBuyLink = req.body.newBuyLink;
     const newBuyLinkImg = req.body.newBuyLinkImg;
 
     try {
-        const film = await db.Films.findOne({where: {title: filmTitle}});
+        const film = await db.Films.findOne({where: {id: filmId}});
         if (!film) {
             return res.status(404).send('Film not found');
         }
@@ -897,10 +845,10 @@ app.put('/api/films/add/buy_link', ensureAuthenticated, async (req, res) => {
 
 app.put('/api/plays/photo', ensureAuthenticated, async (req, res) => {
     const photo = req.body.photo;
-    const playTitle = req.body.title;
+    const playId = req.body.id;
 
     try {
-        const play = await db.Plays.findOne({where: {title: playTitle}}); 
+        const play = await db.Plays.findOne({where: {id: playId}}); 
         if (!play) {
           return res.status(404).send('Play not found');
         }
@@ -917,11 +865,11 @@ app.put('/api/plays/photo', ensureAuthenticated, async (req, res) => {
 });
 
 app.put('/api/plays/edit/title', ensureAuthenticated, async (req, res) => {
-    const playTitle = req.body.title;
+    const playId = req.body.id;
     const newTitle = req.body.newTitle;
 
     try {
-        const play = await db.Plays.findOne({where: {title: playTitle}});
+        const play = await db.Plays.findOne({where: {id: playId}});
         if (!play) {
             return res.status(404).send('Play not found');
         }
@@ -937,14 +885,14 @@ app.put('/api/plays/edit/title', ensureAuthenticated, async (req, res) => {
 });
 
 app.put('/api/plays/edit/details', ensureAuthenticated, async (req, res) => {
-    const playTitle = req.body.title;
+    const playId = req.body.id;
     const newWriter = req.body.newWriter;
     const newProduction = req.body.newProduction;
     const newDev = req.body.newDev;
     const newDesc = req.body.newDesc;
 
     try {
-        const play = await db.Plays.findOne({where: {title: playTitle}});
+        const play = await db.Plays.findOne({where: {id: playId}});
         if (!play) {
             return res.status(404).send('Play not found');
         }
@@ -963,12 +911,12 @@ app.put('/api/plays/edit/details', ensureAuthenticated, async (req, res) => {
 });
 
 app.put('/api/plays/add/buy_link', ensureAuthenticated, async (req, res) => {
-    const playTitle = req.body.title;
+    const playId = req.body.id;
     const newBuyLink = req.body.newBuyLink;
     const newBuyLinkImg = req.body.newBuyLinkImg;
 
     try {
-        const play = await db.Plays.findOne({where: {title: playTitle}});
+        const play = await db.Plays.findOne({where: {id: playId}});
         if (!play) {
             return res.status(404).send('Play not found');
         }
