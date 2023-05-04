@@ -38,6 +38,7 @@
 .playSynopsis{
     font-size: 24px;
     margin-top: 50px;
+    white-space: pre-line;
 }
 .production{
     font-size: 24px;

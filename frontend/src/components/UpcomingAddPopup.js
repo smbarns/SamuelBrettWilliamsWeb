@@ -260,8 +260,8 @@ function UpcomingAddPopup(props) {
                             <h2>OR UPLOAD A VIDEO FILE</h2>
                         </div>
                         <div className="popup-content">
-                        <label htmlFor="files">Select a video file to upload:</label>
-                        <form className='popup-form' onSubmit={handleFileSubmit}>
+                          <label htmlFor="files">Select a video file to upload:</label>
+                          <form className='popup-form' onSubmit={handleFileSubmit}>
                             <input className="upload-content" type="file" id="files" onChange={handleFileSelect} />
                             <button className="button-submitUpcoming" type="submit" disabled={loading}>Upload</button>
                             {loading && 
@@ -280,7 +280,7 @@ function UpcomingAddPopup(props) {
                                 </div>
                               </div>
                             }
-                        </form>
+                          </form>
                         </div>
                     </div>
                 </div>

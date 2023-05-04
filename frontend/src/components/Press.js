@@ -232,7 +232,7 @@ function Press(props) {
               <div className = "popup">
                 <div className = "popup-inner-upcomingAdd">
                   <button className = "close-btn" onClick ={() => toggleSecondTrigger()} >{<FontAwesomeIcon className='x-button' icon={faXmark} />} </button>
-                  <div className="popup-header-press">
+                  <div className="popup-header-img">
                     <label className='optional'>Logo url/upload is optional. Press 'x' to opt-out</label>
                     <h2>ENTER THE PRESS'S LOGO IMAGE URL</h2>
                   </div>

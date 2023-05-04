@@ -12,7 +12,7 @@ export default function Biography() {
   const [data, setData] = useState(null);
   const [pic, setPic] = useState();
   const [des, setDes] = useState();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [error, setError] = useState(null);
   const [editDes, setEditDes] = useState(false);
