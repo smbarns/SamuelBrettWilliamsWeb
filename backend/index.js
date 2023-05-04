@@ -548,6 +548,44 @@ app.put('/api/press/edit/image', ensureAuthenticated, async (req, res) => {
     }
 });
 
+app.put('/api/contact/edit/client_info', ensureAuthenticated, async (req, res) => {
+    const newClientInfo = req.body.client_info;
+
+    try {
+        const contactpage = await db.Contactpage.findOne({where: {id: 1}});
+        if (!contactpage) {
+            return res.status(404).send('Contact page not found');
+        }
+
+        contactpage.client_info = newClientInfo;
+        await contactpage.save();
+
+        return res.status(200).json(contactpage);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+})
+
+app.put('/api/contact/edit/agent_info', ensureAuthenticated, async (req, res) => {
+    const newAgentInfo = req.body.agent_info;
+
+    try {
+        const contactpage = await db.Contactpage.findOne({where: {id: 1}});
+        if (!contactpage) {
+            return res.status(404).send('Contact page not found');
+        }
+
+        contactpage.agent_info = newAgentInfo;
+        await contactpage.save();
+
+        return res.status(200).json(contactpage);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+})
+
 // JSON for contact page
 app.get('/api/contactpage', async (req, res) => {
     try {
@@ -579,21 +617,21 @@ const validateEmail = (req, res, next) => {
     }
 };
 
-// contact page send email *UNFINISHED*
+// contact page send email
 app.post('/api/sendEmail', async (req, res) => {
-        const { firstName, lastName, email, message } = req.body;
-        try{
-            const response = await recieveEmail({
-                email,
-                firstName,
-                lastName,
-                message,
-            })
-            res.status(200).send('Email sent successfully')
-        }catch (err){
-            console.log('Email sent unsuccessfully.')
-            res.status(500).send(err);
-        }
+    const { firstName, lastName, email, message } = req.body;
+    try{
+        const response = await recieveEmail({
+            email,
+            firstName,
+            lastName,
+            message,
+        })
+        res.send(response);
+    }catch (err){
+        console.log('Email sent unsuccessfully.')
+        res.status(500).send(err);
+    }
 });
 
 app.get('/api/video/featured/film', async (req, res) => {
@@ -1209,7 +1247,7 @@ async function validatePassword(email, password) {
     if (!admin) {
         throw new Error("Admin not found");
     }
-    const passwordMatch = await bcrypt.compareSync(password, admin.password);
+    const passwordMatch = bcrypt.compareSync(password, admin.password);
     if (!passwordMatch) {
         throw new Error("Incorrect password");
     }

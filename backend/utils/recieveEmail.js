@@ -19,18 +19,19 @@ const recieveEmail = async ({email, firstName, lastName, message}) => {
 	`;
 
 	const emailOptions = {
-		from: `<${process.env.FROM_EMAIL}>`,
-		to: email,
+		from: `${process.env.FROM_NAME} <${process.env.FROM_EMAIL}>`,
+		to: `${process.env.SMTP_USER}`,
 		subject: 'New message from your website',
 		html: emailBody,
 	};
 
-	console.log(emailOptions);
-
-	const info = await transporter.sendMail(emailOptions);
-	console.log(info);
-
-	return info;
+	try {
+		const info = await transporter.sendMail(emailOptions);
+		return info;
+	} catch (error) {
+		console.log(error);
+		throw new Error('Error sending email');
+	}
 };
 
 module.exports = recieveEmail;
