@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 const expect = chai.expect;
 
 const credentials = {
-    email: "test@email.com",
+    email: "alina.jeleznaia@gmail.com",
     password: "password"
 }
 

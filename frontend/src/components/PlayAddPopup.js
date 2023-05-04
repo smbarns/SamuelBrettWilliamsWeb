@@ -4,6 +4,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import '../styles/UpcomingAdd.css';
 
 function PlayAddPopup(props) {
+    const [playId, setPlayId] = useState(null);
     const [playTitle, setPlayTitle] = useState('');
     const [playWriter, setPlayWriter] = useState('');
     const [playDesc, setPlayDesc] = useState('');
@@ -98,11 +99,13 @@ function PlayAddPopup(props) {
         })
         .then(response => response.json())
         .then(data => {
+            setPlayTitle('');
             setPlayWriter('');
             setPlayProduction('');
             setPlayDev('');
             setPlayDesc('');
             setSelectedPlayType('');
+            setPlayId(data.id);
             props.setTrigger(false);
             setSecondTrigger(true);
             console.log('Success:', data);
@@ -131,13 +134,12 @@ function PlayAddPopup(props) {
             },
             body: JSON.stringify({
                 photo: posterUrl,
-                title: playTitle
+                id: playId
             })
         })
         .then(response => response.json())
         .then(data => {
             setPosterUrl('');
-            setPlayTitle('');
             console.log('Success:', data);
             toggleSecondTrigger();
             return alert('Poster URL updated successfully!');
@@ -179,13 +181,12 @@ function PlayAddPopup(props) {
           },
           body: JSON.stringify({
             photo: data[0],
-            title: playTitle
+            id: playId
           })
         })
           .then(response => response.json())
           .then(data => {
             console.log(data.photo);
-            setPlayTitle('');
             setLoading(false);
             console.log('Success:', data);
             toggleSecondTrigger();
@@ -240,9 +241,9 @@ function PlayAddPopup(props) {
                                     <label htmlFor="link-select">Type:</label>
                                     <select id="link-select" onChange={handleTypeSelect}>
                                         <option value="">--Choose the play's type--</option>
-                                        <option value="Full Length">Full Length </option>
-                                        <option value="One Act">One Act </option>
-                                        <option value="Ten Minute">Ten Minute </option>
+                                        <option value="Full Length">Full Length</option>
+                                        <option value="One Act">One Act</option>
+                                        <option value="Ten Minute">Ten Minute</option>
                                     </select>
                                     <button className="button-submitUpcoming" type="submit" >Submit</button>
                                 </form>

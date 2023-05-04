@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import axios from "axios";
 
 import '../styles/ForgotPassword.css';
 
@@ -11,31 +10,55 @@ export default function ForgotPassword() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		// try {
-		// 	setLoading(true);
-		// 	await axios.post('http://localhost:3000/api/forgot-password', { email });
-		// 	setMessage('Password reset email sent');
-		// 	setLoading(false);
-		// } catch (err) {
-		// 	setMessage(console.log(err.message));
-		// }
+		setLoading(true);
+		fetch('/api/forgot-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email
+            })
+        })
+		.then(response => {
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			  }
+			  return response.json();
+			})
+			.then(data => {
+			  setLoading(false);
+			  console.log('Email sent:', data);
+			  setMessage('Password reset email sent');
+			  return alert('Reset password form sent successfully! Please check your eamil.');
+			})
+			.catch(error => {
+			  setLoading(false);
+			  setMessage('Error: Invalid email');
+			  console.error('Error sending email:', error);
+			});
 	};
 
   return (
-		<div className='forgot-password'>
-			<h2>Forgot Password</h2>
-			<form onSubmit={handleSubmit}>
-				<label htmlFor='email'>Email:</label>
+	<section className="admin">
+		<div className='admin_content'>
+			<h3 className="admin_title">Forgot Password</h3>
+			<form className="admin_form" onSubmit={handleSubmit}>
+				<label className='forgot-pass-label' htmlFor='email'>Email:</label>
 				<input
+					className="admin_input forgot-pass-input"
 					type='email'
 					id='email'
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
 					placeholder='Please enter your email here'
 				/>
-				<button type='submit'>{loading ? 'Sending...' : 'Submit'}</button>
+				<div className="forgot-pass-button">
+					<button type='submit'>{loading ? 'Sending...' : 'Submit'}</button>
+				</div>
 			</form>
-			{message && <p>{message}</p>}
+			{message && <p className='forgot-pass-message'>{message}</p>}
 		</div>
+	</section>
 	);
 }

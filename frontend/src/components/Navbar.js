@@ -11,7 +11,7 @@ function Navbar() {
           <Link to ="plays">PLAYS</Link>
        </div>
        <div className = "title">
-          SAMUEL BRETT WILLIAMS
+          <Link to="">SAMUEL BRETT WILLIAMS</Link>
        </div>
        <div className ="links">
           <Link to ="films">FILMS</Link>

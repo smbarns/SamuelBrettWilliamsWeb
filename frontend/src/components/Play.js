@@ -14,7 +14,7 @@ function Play(props) {
   const title = encodeURIComponent(props.title);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/plays?search=${title}`)
+    fetch(`/api/plays?search=${title}`)
       .then((res) => res.json())
       .then((data) => {})
       .catch(error => {
@@ -27,7 +27,7 @@ function Play(props) {
   }, [])
 
   const handleDelete = () => {
-    fetch(`http://localhost:3000/api/delete/play?id=${props.id}`)
+    fetch(`/api/delete/play?id=${props.id}`)
       .then(response => response.json())
       .catch(error => {
         console.error(error);

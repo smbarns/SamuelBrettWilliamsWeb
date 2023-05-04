@@ -30,12 +30,25 @@
     text-decoration: none;
 }
 
+.admin-link button {
+  color: #b3a6a7;
+  text-decoration: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-family: Quicksand,sans-serif;
+  font-size: x-large;
+}
+
 @media only screen and (max-width: 1600px) {
     .socialBar {
       height: 50px;
     }
-    .admin-link a {
+    .admin-link a, .admin-link button {
       font-size: large; 
+    }
+    .admin-link {
+      margin-right: 40px;
     }
   }
   
@@ -43,11 +56,14 @@
     .socialBar {
         height: 40px;
     }
-    .admin-link a {
+    .admin-link a, .admin-link button {
       font-size: small;
     }
     .icons {
         font-size: large;
+    }
+    .admin-link {
+      margin-right: 30px;
     }
   }
   
@@ -55,12 +71,15 @@
     .socialBar {
       height: 35px;
     }
-    .admin-link a {
+    .admin-link a, .admin-link button {
       font-size: x-small;
     }
     .icons {
         font-size: small;
         padding-left: 35px;
+    }
+    .admin-link {
+      margin-right: 20px;
     }
   }
   
@@ -69,9 +88,9 @@
       height: 25px;
     }
     .admin-link {
-        margin-right: 30px;
+        margin-right: 15px;
     }
-    .admin-link a {
+    .admin-link a, .admin-link button {
       font-size: 7px;
     }
     .icons {
@@ -84,11 +103,11 @@
     .socialBar {
         height: 20px;
     }
-    .admin-link a {
+    .admin-link a, .admin-link button {
       font-size: 5px;
     }
     .admin-link {
-        margin-right: 20px;
+        margin-right: 10px;
     }
     .icons {
         font-size: xx-small;

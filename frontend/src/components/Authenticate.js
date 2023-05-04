@@ -4,7 +4,7 @@ function Authenticate ({ setAuthen }) {
 
   useEffect(() => {
     // Make a request to check the authentication status
-    fetch('http://localhost:3000/check_auth')
+    fetch('/check_auth')
         .then(function(response) {
             if (response.ok) {
             response.json().then(data => {

@@ -1,4 +1,3 @@
-
 import React, {useState} from "react"
 import '../styles/Admin.css'
 import {NavLink} from 'react-router-dom'
@@ -38,6 +37,7 @@ export default function Admin() {
         });
       } else if (response.ok) {
         window.location.replace("http://localhost:3000/#/");
+        window.location.reload();
       } else {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -49,15 +49,15 @@ export default function Admin() {
 
   return (
       <section className='admin'>
-          <div className="admin__content">
-              <h3 className="admin__title">Admin Login</h3>
-              <form className="admin__form" onSubmit={handleSubmit}>
-                  {errorMessage && <div>{errorMessage}</div>}
-                  <input className="admin__input admin__input--email" placeholder="Username or Email Address" type="email" value={email} onChange={handleEmailChange}/>
-                  <input className="admin__input admin__input--password" placeholder="Password" type="password" value={password} onChange={handlePasswordChange} />
-                  <div className="admin__form-actions">
+          <div className="admin_content">
+              <h3 className="admin_title">Admin Login</h3>
+              <form className="admin_form" onSubmit={handleSubmit}>
+                  {errorMessage && <div className="admin-incorrect">{errorMessage}</div>}
+                  <input className="admin_input admin_input-email" placeholder="Enter email address" type="email" value={email} onChange={handleEmailChange}/>
+                  <input className="admin_input admin_input-password" placeholder="Password" type="password" value={password} onChange={handlePasswordChange} />
+                  <div className="admin_form-actions">
                     <button className="btn btn-submit" type="submit">Login</button>
-                    <NavLink to='/forgot_password'>Forgot password</NavLink>
+                    <NavLink to='/forgot_password'>Forgot password?</NavLink>
                   </div>
               </form>
           </div>

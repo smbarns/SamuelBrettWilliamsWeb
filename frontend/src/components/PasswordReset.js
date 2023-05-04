@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-// import axios from 'axios';
 
 import '../styles/PasswordReset.css';
 
@@ -13,7 +12,7 @@ const PasswordReset = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [message, setMessage] = useState('');
 
-	let token = console.log(searchParams.get('token'));
+	console.log(searchParams.get('token'));
 
 	const passwordConfirmHandler = (e) => {
 		if (e.target.value !== password) {
@@ -27,42 +26,57 @@ const PasswordReset = () => {
 	const submitHandler = async (e) => {
 		e.preventDefault();
 
-		// const resopnse = await axios.post(
-		// 	'http://localhost:3000/api/reset-password',
-		// 	{
-		// 		token: searchParams.get('token'),
-		// 		password,
-		// 	}
-		// );
-		// console.log(resopnse);
-		setMessage('Password Changed');
+		fetch('/api/reset-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                token: searchParams.get('token'),
+				password: password
+            })
+        })
+		.then(response => response.json())
+		.then(data => {
+			console.log(data);
+			setMessage('Password changed successfully!');
+			return alert('Password changed successfully!');
+		})
+		.catch(error => {
+			console.error('Error changing password:', error);
+			setMessage('Error: Password could not be changed');
+		});
 	};
+	
 	return (
 		<section className='password-reset'>
-			<div className='password-reset__content'>
-				<h2>Password Reset</h2>
+			<div className='admin_content'>
+				<h3 className='admin_title'>Password Reset</h3>
 
-				<form className='password-reset__form' onSubmit={submitHandler}>
+				<form className='admin_form' onSubmit={submitHandler}>
 					<input
+						className="admin_input newPass"
 						type='password'
 						onChange={(e) => setPassword(e.target.value)}
 						placeholder='New password'
 					/>
 					<input
+						className='admin_input confirm-pass'
 						type='password'
 						onChange={passwordConfirmHandler}
-						placeholder='confirm new password'
+						placeholder='Confirm new password'
 					/>
 
 					{notMatched && (
-						<label className='reset-password__notmatched'>
-							Password does not match!..
+						<label className='reset-password_notmatched'>
+							Password does not match!
 						</label>
 					)}
+					<div className="forgot-pass-button">
+						<button type='submit'>Submit</button>
+					</div>
 
-					<button type='submit'>Submit</button>
-
-					<h5>{message}</h5>
+					<p className='changed-pass'>{message}</p>
 				</form>
 			</div>
 		</section>

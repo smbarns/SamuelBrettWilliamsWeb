@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import { useState } from 'react'
 import '../styles/Navbar.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,9 +9,22 @@ import {
     faTwitter,
     faInstagram
   } from "@fortawesome/free-brands-svg-icons";
-import '../styles/SocialMediaBar.css'
+import '../styles/SocialMediaBar.css';
+import Authenticate from '../components/Authenticate.js';
 
 function SocialMediaBar() {
+    const [authenticated, setAuthenticated] = useState();
+
+    const handleLogout = () => {
+        fetch('/logout', { method: 'GET' })
+        .then(() => {
+            window.location.href = '/';
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    };
+
     return (
         <div className='socialBar'>
             <div className='social-links'>
@@ -28,7 +42,12 @@ function SocialMediaBar() {
                 </a>
             </div>
             <div className='admin-link'>
-                <Link to ="admin_login">ADMIN</Link>
+                <Authenticate setAuthen={setAuthenticated}/>
+                {authenticated ? (
+                    <button onClick={handleLogout}>LOGOUT</button>
+                ) : (
+                    <Link to ="admin_login">ADMIN</Link>
+                )}
             </div>
         </div>
     )

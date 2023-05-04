@@ -720,6 +720,33 @@ app.get('/api/delete/play', ensureAuthenticated, async (req, res) => {
     }
 })
 
+app.get('/api/delete/film', ensureAuthenticated, async (req, res) => {
+    const search = req.query;
+    const id = Object.values(search).join();
+    try {
+        if (id) {
+            const removedFilm = await db.Films.findOne({
+                where: {id: id},
+                include: [{ model: db.Buy_links, as: "buy_links" },
+                          { model: db.Videos, as: "videos" },
+                          { model: db.Still_photos, as: "still_photos" }]
+            });
+            if (!removedFilm) {
+                return res.status(404).json({ error: 'Film not found' });
+            }
+
+            await removedFilm.destroy({
+                include: [{ model: db.Buy_links },
+                      { model: db.Videos },
+                      { model: db.Still_photos }]
+            });
+            res.json({ message: 'Film deleted successfully' });
+        }
+    } catch (err) {
+        res.send(err);
+    }
+})
+
 app.get('/api/delete/press', ensureAuthenticated, async (req, res) => {
     const search = req.query;
     const id = Object.values(search).join();
@@ -1153,13 +1180,23 @@ app.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, admin, info) => {
       if (err) { return next(err); }
       if (!admin) { 
-        return res.status(401).json({ message: 'Invalid username or password.' });
+        return res.status(401).json({ message: 'Invalid email or password.' });
       }
       req.logIn(admin, (err) => {
         if (err) { return next(err); }
         return res.json({ message: 'Successfully authenticated.' });
       });
     })(req, res, next);
+});
+
+app.get('/logout', (req, res) => {
+    req.logout((err) => {
+        if (err) {
+          console.log('Error logging out:', err);
+          return next(err);
+        }
+    })
+    res.redirect('/');
 });
 
 app.use((err, req, res, next) => {
@@ -1267,10 +1304,9 @@ app.post("/api/admin", async (req, res) => {
 })
 
 // Route to handle forget password request
-// Route to handle forget password request
 app.post('/api/forgot-password', async (req, res) => {
 	console.log('Forgot Password', req.body.email);
-	const { email } = req.body;
+	const email = req.body.email;
 	try {
 		const user = await db.Admin.findOne({ where: { email } });
 
@@ -1279,27 +1315,22 @@ app.post('/api/forgot-password', async (req, res) => {
 		}
 
 		// Generate password reset token and save to database
-		// const token = bcrypt.hashSync(email + Date.now(), 10);
 		const token = uuidv4();
-		// await db.PasswordReset.create({
-		// 	email,
-		// 	token,
-		// });
 
 		// udpate user token
 		await user.update({ passwordResetToken: token.split('-')[4] });
 
 		// Send password reset email to user
-		const resetLink = `${process.env.FRONTEND_URL}/#/reset-password?token=${token}`;
+		const resetLink = `http://localhost:3000/#/reset-password?token=${token}`;
 
 		const response = await sendEmail({
 			email,
-			subject: 'Resest your password',
+			subject: 'Reset your password',
 			message: ` <p>You have requested to reset your password. Please click the link below to reset your password:</p>
 			<a href="${resetLink}">${resetLink}</a>`,
 		});
 
-		res.send('Password reset email sent');
+		res.send(response);
 	} catch (err) {
 		console.log('this is error');
 		res.status(500).send(err);
@@ -1308,7 +1339,8 @@ app.post('/api/forgot-password', async (req, res) => {
   
 // Route to handle password reset request
 app.post('/api/reset-password', async (req, res) => {
-	const { token, password } = req.body;
+    const token = req.body.token;
+    const password = req.body.password;
 
 	try {
 		const user = await db.Admin.findOne({
@@ -1318,17 +1350,9 @@ app.post('/api/reset-password', async (req, res) => {
 			return res.status(404).send('Invalid or expired token');
 		}
 
-		// Update user password in the database
-		// const user = await db.User.findOne({
-		// 	where: { email: passwordReset.email },
-		// });
-		const hashedPassword = bcrypt.hashSync(password, 10);
 		await user.update({ password: password, passwordResetToken: '' });
 
-		// Delete the password reset token from the database
-		// await db.PasswordReset.destroy({ where: { passwordResetToken:token } });
-
-		res.send('Password updated successfully');
+		res.send(user);
 	} catch (err) {
 		res.status(500).send(err);
 	}
