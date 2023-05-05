@@ -3,12 +3,13 @@ const chaiHttp = require("chai-http");
 const indexModule = require("../index.js")
 const app = indexModule.express
 const db = require('../models');
+const cheerio = require('cheerio');
 
 chai.use(chaiHttp);
 const expect = chai.expect;
 
 const credentials = {
-    email: "alina.jeleznaia@gmail.com",
+    email: "test@email.com",
     password: "password"
 }
 
@@ -54,6 +55,47 @@ describe("Update Admin Password", () => {
             done();
         })
     });
+
+    describe('forgot/reset password route', () => {
+        it('forgot-password sends email with reset token and reset password updates new pass in database', (done) => {
+            chai.request(app)
+                .post('/api/forgot-password')
+                .send(credentials)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    const message = res.body.message;
+                    const $ = cheerio.load(message); // Parse the HTML using Cheerio
+                    const resetLink = $('a').attr('href');
+                    const urlObject = url.parse(resetLink);
+                    const queryParams = new URLSearchParams(urlObject.query);
+                    const token = queryParams.get('token');
+                    const newpass = {
+                        password: "newpass",
+                        token: token
+                    }
+                    chai.request(app)
+                        .post('/api/reset-password')
+                        .send(newpass)
+                        .end((err, res) => {
+                            res.should.have.status(200);
+                        })
+                    indexModule.validatePassword(credentials.email, newpass.password)
+                        .then(result => {
+                            expect(result).to.be.true
+                        });
+                    done();
+                })
+            done();
+        })
+    });
+
+    /*after(async () => {
+        const admin = await db.Admin.findOne({where: {email: credentials.email}});
+        if (admin !== null) {
+            await admin.destroy();
+        }
+    });*/
+
 });
 
 

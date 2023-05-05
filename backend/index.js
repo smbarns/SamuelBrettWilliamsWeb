@@ -221,6 +221,7 @@ app.put('/api/bio/photo', ensureAuthenticated, async (req, res) => {
     }
 })
 
+// Put for bio in biopage
 app.put('/api/biopage/bio', ensureAuthenticated, async (req, res) => {
     const bio = req.body.bio_des;
 
@@ -429,45 +430,7 @@ app.get("/api/press", async (req, res) => {
     }
 })
 
-//Press api for quotes
-app.get("/api/press/quote", async (req, res) => {
-    const data = req.body;
-    try {
-        const quote = await db.Press.findAll({
-            attributes: ['id', 'quote']
-        });
-        res.send(quote);
-    } catch (err) {
-        res.send(err);
-    }
-})
-
-//Press api for press image
-app.get("/api/press/press_image", async (req, res) => {
-    const data = req.body;
-    try {
-        const press_image = await db.Press.findAll({
-            attributes: ['id', 'press_image']
-        });
-        res.send(press_image);
-    } catch (err) {
-        res.send(err);
-    }
-})
-
-//Press api for author
-app.get("/api/press/author", async (req, res) => {
-    const data = req.body;
-    try {
-        const author = await db.Press.findAll({
-            attributes: ['id', 'author']
-        });
-        res.send(author);
-    } catch (err) {
-        res.send(err);
-    }
-})
-
+// Post method for press
 app.post("/api/press", ensureAuthenticated, async (req, res) => {
     const data = req.body;
     try {
@@ -484,6 +447,7 @@ app.post("/api/press", ensureAuthenticated, async (req, res) => {
     }
 });
 
+// Put method for edit press title
 app.put('/api/press/edit/press_title', ensureAuthenticated, async (req, res) => {
     const pressId = req.body.id;
     const pressTitle = req.body.press_title;
@@ -504,6 +468,8 @@ app.put('/api/press/edit/press_title', ensureAuthenticated, async (req, res) => 
     }
 });
 
+
+// Put method for edit press details
 app.put('/api/press/edit/details', ensureAuthenticated, async (req, res) => {
     const pressId = req.body.id;
     const project_title = req.body.project_title;
@@ -528,6 +494,7 @@ app.put('/api/press/edit/details', ensureAuthenticated, async (req, res) => {
     }
 })
 
+// Put method for edit press logo image
 app.put('/api/press/edit/image', ensureAuthenticated, async (req, res) => {
     const pressId = req.body.id;
     const newImage = req.body.logo;
@@ -548,6 +515,7 @@ app.put('/api/press/edit/image', ensureAuthenticated, async (req, res) => {
     }
 });
 
+// Put method for contact edit client info
 app.put('/api/contact/edit/client_info', ensureAuthenticated, async (req, res) => {
     const newClientInfo = req.body.client_info;
 
@@ -567,6 +535,7 @@ app.put('/api/contact/edit/client_info', ensureAuthenticated, async (req, res) =
     }
 })
 
+// Put method for contact edit agent info
 app.put('/api/contact/edit/agent_info', ensureAuthenticated, async (req, res) => {
     const newAgentInfo = req.body.agent_info;
 
@@ -634,6 +603,7 @@ app.post('/api/sendEmail', async (req, res) => {
     }
 });
 
+// Gets the film videos that are featured on homepage
 app.get('/api/video/featured/film', async (req, res) => {
     const search = req.query;
     const title = Object.values(search).join();
@@ -656,6 +626,7 @@ app.get('/api/video/featured/film', async (req, res) => {
     }
 })
 
+// Sets a film video to show up on the homepage
 app.post('/api/film/homeSet', ensureAuthenticated, async (req, res,) => {
     const title = req.body.title;
     const url = req.body.url;
@@ -671,6 +642,7 @@ app.post('/api/film/homeSet', ensureAuthenticated, async (req, res,) => {
     }
 })
 
+// Deletes featured film video from homepage
 app.get('/api/feature/delete/film', ensureAuthenticated, async (req, res) => {
     const search = req.query;
     const id = Object.values(search).join();
@@ -693,6 +665,7 @@ app.get('/api/feature/delete/film', ensureAuthenticated, async (req, res) => {
     }
 })
 
+// Deletes play
 app.get('/api/delete/play', ensureAuthenticated, async (req, res) => {
     const search = req.query;
     const id = Object.values(search).join();
@@ -720,6 +693,7 @@ app.get('/api/delete/play', ensureAuthenticated, async (req, res) => {
     }
 })
 
+// Deletes film
 app.get('/api/delete/film', ensureAuthenticated, async (req, res) => {
     const search = req.query;
     const id = Object.values(search).join();
@@ -747,6 +721,7 @@ app.get('/api/delete/film', ensureAuthenticated, async (req, res) => {
     }
 })
 
+// Deletes press
 app.get('/api/delete/press', ensureAuthenticated, async (req, res) => {
     const search = req.query;
     const id = Object.values(search).join();
@@ -766,6 +741,7 @@ app.get('/api/delete/press', ensureAuthenticated, async (req, res) => {
     }
 })
 
+// Creates new video, saves to film, and features on homepage
 app.post('/api/homepage/film/create/video', ensureAuthenticated, async (req, res) => {
     const vidAdd = req.body;
 
@@ -784,6 +760,7 @@ app.post('/api/homepage/film/create/video', ensureAuthenticated, async (req, res
     }
 });
 
+// Updates homepage client photo
 app.put('/api/homepage/photo', ensureAuthenticated, async (req, res) => {
     const photo = req.body.photo;
 
@@ -802,6 +779,7 @@ app.put('/api/homepage/photo', ensureAuthenticated, async (req, res) => {
     }
 });
 
+// Updates homepage about description
 app.put("/api/homepage/edit/about", ensureAuthenticated, async (req, res) => {
     const desc = req.body.about_des;
 
@@ -834,6 +812,7 @@ app.post('/api/upload/files', upload.array('files', 5), ensureAuthenticated, (re
     res.send(urls);
 });
 
+// Updates film photo
 app.put('/api/films/photo', ensureAuthenticated, async (req, res) => {
     const photo = req.body.photo;
     const filmId = req.body.id;
@@ -855,6 +834,7 @@ app.put('/api/films/photo', ensureAuthenticated, async (req, res) => {
     }
 });
 
+// Updates film title
 app.put('/api/films/edit/title', ensureAuthenticated, async (req, res) => {
     const filmId = req.body.id;
     const newTitle = req.body.newTitle;
@@ -875,6 +855,7 @@ app.put('/api/films/edit/title', ensureAuthenticated, async (req, res) => {
     }
 });
 
+// Updates film details
 app.put('/api/films/edit/details', ensureAuthenticated, async (req, res) => {
     const filmId = req.body.id;
     const newDirector = req.body.newDirector;
@@ -903,6 +884,7 @@ app.put('/api/films/edit/details', ensureAuthenticated, async (req, res) => {
     }
 });
 
+// Creates new buy link and adds it to film
 app.put('/api/films/add/buy_link', ensureAuthenticated, async (req, res) => {
     const filmId = req.body.id;
     const newBuyLink = req.body.newBuyLink;
@@ -927,6 +909,7 @@ app.put('/api/films/add/buy_link', ensureAuthenticated, async (req, res) => {
     }
 });
 
+// Updates play photo
 app.put('/api/plays/photo', ensureAuthenticated, async (req, res) => {
     const photo = req.body.photo;
     const playId = req.body.id;
@@ -948,6 +931,7 @@ app.put('/api/plays/photo', ensureAuthenticated, async (req, res) => {
     }
 });
 
+// Updates play title
 app.put('/api/plays/edit/title', ensureAuthenticated, async (req, res) => {
     const playId = req.body.id;
     const newTitle = req.body.newTitle;
@@ -968,6 +952,7 @@ app.put('/api/plays/edit/title', ensureAuthenticated, async (req, res) => {
     }
 });
 
+// Updates play details
 app.put('/api/plays/edit/details', ensureAuthenticated, async (req, res) => {
     const playId = req.body.id;
     const newWriter = req.body.newWriter;
@@ -994,6 +979,7 @@ app.put('/api/plays/edit/details', ensureAuthenticated, async (req, res) => {
     }
 });
 
+// Creates new buy link and adds to play
 app.put('/api/plays/add/buy_link', ensureAuthenticated, async (req, res) => {
     const playId = req.body.id;
     const newBuyLink = req.body.newBuyLink;
@@ -1018,6 +1004,7 @@ app.put('/api/plays/add/buy_link', ensureAuthenticated, async (req, res) => {
     }
 });
 
+// Deletes buylink
 app.get('/api/delete/buyLink', ensureAuthenticated, async (req, res) => {
     const search = req.query;
     const id = Object.values(search).join();
@@ -1037,6 +1024,7 @@ app.get('/api/delete/buyLink', ensureAuthenticated, async (req, res) => {
     }
 });
 
+// Deletes video
 app.get('/api/delete/video', ensureAuthenticated, async (req, res) => {
     const search = req.query;
     const id = Object.values(search).join();
@@ -1056,6 +1044,7 @@ app.get('/api/delete/video', ensureAuthenticated, async (req, res) => {
     }
 });
 
+// Deletes still photo
 app.get('/api/delete/photo', ensureAuthenticated, async (req, res) => {
     const search = req.query;
     const id = Object.values(search).join();
@@ -1075,6 +1064,7 @@ app.get('/api/delete/photo', ensureAuthenticated, async (req, res) => {
     }
 });
 
+// Creates new video and saves to play
 app.post('/api/play/create/video', ensureAuthenticated, async (req, res) => {
     const vidAdd = req.body;
 
@@ -1092,6 +1082,7 @@ app.post('/api/play/create/video', ensureAuthenticated, async (req, res) => {
     }
 });
 
+// Creates new still photo and adds to play
 app.post('/api/play/create/photo', ensureAuthenticated, async (req, res) => {
     const photoAdd = req.body;
 
@@ -1109,6 +1100,7 @@ app.post('/api/play/create/photo', ensureAuthenticated, async (req, res) => {
     }
 });
 
+// Creates new video and adds to film
 app.post('/api/film/create/video', ensureAuthenticated, async (req, res) => {
     const vidAdd = req.body;
 
@@ -1126,6 +1118,7 @@ app.post('/api/film/create/video', ensureAuthenticated, async (req, res) => {
     }
 });
 
+// Creates new still photo and adds to film
 app.post('/api/film/create/photo', ensureAuthenticated, async (req, res) => {
     const photoAdd = req.body;
 
@@ -1176,6 +1169,7 @@ passport.deserializeUser(async (id, done) => {
 
 app.use(flash());
 
+// Login authentication
 app.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, admin, info) => {
       if (err) { return next(err); }
@@ -1189,6 +1183,7 @@ app.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
+// Logout user
 app.get('/logout', (req, res) => {
     req.logout((err) => {
         if (err) {
@@ -1204,6 +1199,7 @@ app.use((err, req, res, next) => {
     res.status(500).send('An error occurred.');
 });
 
+// Checks authentication
 app.get('/check_auth', (req, res) => {
     if (req.isAuthenticated()) {
         res.json({ authenticated: true });
@@ -1218,34 +1214,6 @@ function ensureAuthenticated(req, res, next) {
     }
     res.redirect('/login');
 };
-
-//delete films from data and associated dependencies 
-app.delete('/api/films/:id', ensureAuthenticated,(req, res) => {
-    const filmId = req.params.id;
-    // Delete any associated reviews first
-    db.Videos.destroy({ where: { filmId : filmId } })
-        .then(() => {
-            // Delete any associated videos
-            return db.Still_photos.destroy({ where: { filmId: filmId } });
-        })
-        .then(() => {
-            // Delete any associated cast members
-            return db.Buy_links.destroy({ where: { filmId: filmId } });
-        })
-        .then(() => {
-            // Once all associated records have been deleted, delete the film itself
-            return db.Films.destroy({ where: { id: filmId } });
-        })
-        .then(() => {
-            res.status(204).send(); // Return a 204 No Content response if the delete was successful
-        })
-        .catch(error => {
-            console.error("Error deleting film: ", error);
-            res.status(500).json({ error: "Failed to delete film" }); // Return a 500 Internal Server Error response if there was an error
-        });
-});
-
-  
 
 // updates password if the user exists in database
 app.put("/api/admin/:id/password", async (req, res) => {
@@ -1367,4 +1335,4 @@ db.sequelize.sync().then(
     })
     .catch((err) => {
         console.log(err);
-    });
+});
