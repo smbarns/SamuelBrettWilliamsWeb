@@ -43,7 +43,7 @@ export default function Plays() {
   }
 
    useEffect(() => {
-     fetch('http://localhost:3000/api/plays')
+     fetch('/api/plays')
        .then(response => {
          if (response.ok) {
            return response.json()

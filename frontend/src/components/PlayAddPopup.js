@@ -82,7 +82,7 @@ function PlayAddPopup(props) {
             }
         }
 
-        fetch('http://localhost:3000/api/plays', {
+        fetch('/api/plays', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -127,7 +127,7 @@ function PlayAddPopup(props) {
             return alert('Please enter a poster link.');
         }
 
-        fetch('http://localhost:3000/api/plays/photo', {
+        fetch('/api/plays/photo', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -167,14 +167,14 @@ function PlayAddPopup(props) {
         abortControllerRef.current = abortController;
     
         setLoading(true);
-        fetch('http://localhost:3000/api/upload/files', {
+        fetch('/api/upload/files', {
             method: 'POST',
             body: formData,
             signal: abortController.signal
         })
         .then(response => response.json())
         .then(data => {
-          fetch('http://localhost:3000/api/plays/photo', {
+          fetch('/api/plays/photo', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'

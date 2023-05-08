@@ -29,7 +29,7 @@ function VideoAddPopup(props) {
           }
         }
     
-        fetch(`http://localhost:3000/api/${props.type}/create/video`, {
+        fetch(`/api/${props.type}/create/video`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ function VideoAddPopup(props) {
             setVideoUrl('');
             props.setAddVideoTrigger(!props.addVideoTrigger);
             console.log('Success:', data);
-            window.location.replace(`http://localhost:3000/#/${props.type}s`);
+            window.location.replace(`/#/${props.type}s`);
             return alert(`Video URL saved successfully! The video is now viewable on the ${props.type}'s detail page.`);
           })
           .catch(error => {
@@ -66,14 +66,14 @@ function VideoAddPopup(props) {
         abortControllerRef.current = abortController;
     
         setLoading(true);
-        fetch('http://localhost:3000/api/upload/files', {
+        fetch('/api/upload/files', {
             method: 'POST',
             body: formData,
             signal: abortController.signal
         })
         .then(response => response.json())
         .then(data => {
-          fetch(`http://localhost:3000/api/${props.type}/create/video`, {
+          fetch(`/api/${props.type}/create/video`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -89,7 +89,7 @@ function VideoAddPopup(props) {
             setLoading(false);
             props.setAddVideoTrigger(!props.addVideoTrigger);
             console.log('Success:', data);
-            window.location.replace(`http://localhost:3000/#/${props.type}s`);
+            window.location.replace(`/#/${props.type}s`);
             return alert(`Video uploaded and saved successfully! It is now viewable on the ${props.type}'s detail page.`);
           })
           .catch(error => {

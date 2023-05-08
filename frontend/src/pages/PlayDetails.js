@@ -109,7 +109,7 @@ function PlayDetails() {
         return alert('Please enter a new title for the play.');
     }
 
-    fetch('http://localhost:3000/api/plays/edit/title', {
+    fetch('/api/plays/edit/title', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -123,7 +123,7 @@ function PlayDetails() {
     .then(data => {
         setIsEditingTitle(false);
         console.log('Success:', data);
-        window.location.replace("http://localhost:3000/#/plays");
+        window.location.replace("/#/plays");
         return alert('Play title updated successfully. This change is now viewable on the plays page and on the details page for the specific play.');
     })
     .catch(error => {
@@ -135,7 +135,7 @@ function PlayDetails() {
   const handleDetailsSave = (event) => {
     event.preventDefault();
 
-    fetch('http://localhost:3000/api/plays/edit/details', {
+    fetch('/api/plays/edit/details', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -176,7 +176,7 @@ function PlayDetails() {
       return alert('Please enter the URL of the buy link logo image');
     }
 
-    fetch('http://localhost:3000/api/plays/add/buy_link', {
+    fetch('/api/plays/add/buy_link', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -191,7 +191,7 @@ function PlayDetails() {
     .then(data => {
         setAddLinkTrigger(false);
         console.log('Success:', data);
-        window.location.replace("http://localhost:3000/#/plays");
+        window.location.replace("/#/plays");
         return alert('Buy link was successfully added to the play. It is now viewable in the details page.')
     })
     .catch(error => {
@@ -207,7 +207,7 @@ function PlayDetails() {
         return alert('Please enter a poster link.');
     }
 
-    fetch('http://localhost:3000/api/plays/photo', {
+    fetch('/api/plays/photo', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -244,14 +244,14 @@ function PlayDetails() {
     abortControllerRef.current = abortController;
 
     setLoading(true);
-    fetch('http://localhost:3000/api/upload/files', {
+    fetch('/api/upload/files', {
         method: 'POST',
         body: formData,
         signal: abortController.signal
     })
     .then(response => response.json())
     .then(data => {
-      fetch('http://localhost:3000/api/plays/photo', {
+      fetch('/api/plays/photo', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

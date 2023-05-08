@@ -32,7 +32,7 @@ function UpcomingAddPopup(props) {
     if (event.target.value === "") {
         return;
     }
-    fetch(`http://localhost:3000/api/feature/film?title=${event.target.value}`)
+    fetch(`/api/feature/film?title=${event.target.value}`)
         .then(response => { return response.json() })
         .then(data => { 
             setFilmData(data);
@@ -59,7 +59,7 @@ function UpcomingAddPopup(props) {
       return alert('Please select a video link.');
     }
 
-    fetch('http://localhost:3000/api/film/homeSet', {
+    fetch('/api/film/homeSet', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -82,7 +82,7 @@ function UpcomingAddPopup(props) {
   }
 
   const fetchFilmTitles = async() => {
-    const response = await fetch('http://localhost:3000/api/films/titles');
+    const response = await fetch('/api/films/titles');
     const titlesData = await response.json();
     setFilmTitles(titlesData);
   }
@@ -105,7 +105,7 @@ function UpcomingAddPopup(props) {
       }
     }
 
-    fetch('http://localhost:3000/api/homepage/film/create/video', {
+    fetch('/api/homepage/film/create/video', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -151,14 +151,14 @@ function UpcomingAddPopup(props) {
     abortControllerRef.current = abortController;
 
     setLoading(true);
-    fetch('http://localhost:3000/api/upload/files', {
+    fetch('/api/upload/files', {
         method: 'POST',
         body: formData,
         signal: abortController.signal
     })
     .then(response => response.json())
     .then(data => {
-      fetch('http://localhost:3000/api/homepage/film/create/video', {
+      fetch('/api/homepage/film/create/video', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -14,10 +14,10 @@ function Video(props) {
   }
 
   function handleDelete(videoId) {
-    fetch(`http://localhost:3000/api/delete/video?id=${videoId}`)
+    fetch(`/api/delete/video?id=${videoId}`)
       .then(response => response.json())
       .then(data => {
-        window.location.replace(`http://localhost:3000/#/${props.type}s`);
+        window.location.replace(`/#/${props.type}s`);
         return alert(`Video successfully deleted. Change can be viewed on the ${props.type}'s detail page.`)
       })
       .catch(error => {

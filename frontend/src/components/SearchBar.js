@@ -15,7 +15,7 @@ function SearchBar(props){
     
     const handleSubmit = event => {
         event.preventDefault();
-            fetch(`http://localhost:3000/api/${props.name}?title=${query}`)
+            fetch(`/api/${props.name}?title=${query}`)
               .then(response => {
                 if (response.ok) {
                   return response.json()

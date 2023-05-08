@@ -22,7 +22,7 @@ export default function PressPages() {
   })
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/press')
+    fetch('/api/press')
       .then(response => {
         if (response.ok) {
           return response.json()

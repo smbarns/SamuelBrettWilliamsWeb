@@ -19,7 +19,7 @@ export default function Admin() {
     event.preventDefault();
     const emailAddress = email.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
 
-    fetch("http://localhost:3000/login", {
+    fetch("/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -31,12 +31,12 @@ export default function Admin() {
     })
     .then(function(response) {
       if (response.status === 401) {
-        window.location.replace("http://localhost:3000/#/admin_login");
+        window.location.replace("/#/admin_login");
         response.json().then(data => {
           setErrorMessage(data.message);
         });
       } else if (response.ok) {
-        window.location.replace("http://localhost:3000/#/");
+        window.location.replace("/#/");
         window.location.reload();
       } else {
         throw new Error(`HTTP error! status: ${response.status}`);

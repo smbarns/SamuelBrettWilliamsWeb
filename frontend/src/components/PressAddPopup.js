@@ -56,7 +56,7 @@ function PressAddPopup(props) {
             return alert('Please enter a press name.')
         }
 
-        fetch('http://localhost:3000/api/press', {
+        fetch('/api/press', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -96,7 +96,7 @@ function PressAddPopup(props) {
             return alert('Please enter a logo image link.');
         }
 
-        fetch('http://localhost:3000/api/press/edit/image', {
+        fetch('/api/press/edit/image', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -138,14 +138,14 @@ function PressAddPopup(props) {
         abortControllerRef.current = abortController;
     
         setLoading(true);
-        fetch('http://localhost:3000/api/upload/files', {
+        fetch('/api/upload/files', {
             method: 'POST',
             body: formData,
             signal: abortController.signal
         })
         .then(response => response.json())
         .then(data => {
-          fetch('http://localhost:3000/api/press/edit/image', {
+          fetch('/api/press/edit/image', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'

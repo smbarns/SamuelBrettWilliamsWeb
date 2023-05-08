@@ -25,7 +25,6 @@ function Popup(props) {
             playing= {true}
             controls = {true}
             muted = {true}
-            origin ='http://localhost:3000'
             disableDeferredLoading = {true}
           />
         </div>

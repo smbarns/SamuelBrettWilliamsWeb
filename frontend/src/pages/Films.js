@@ -40,7 +40,7 @@ export default function Films() {
    }
 
    useEffect(() => {
-     fetch('http://localhost:3000/api/films')
+     fetch('/api/films')
        .then(response => {
          if (response.ok) {
            return response.json()

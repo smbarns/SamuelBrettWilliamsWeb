@@ -38,7 +38,7 @@ function Home() {
   };
   
   const handleSave = () => {
-    fetch('http://localhost:3000/api/homepage/edit/about', {
+    fetch('/api/homepage/edit/about', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ about_des: newDes }),
@@ -67,7 +67,7 @@ function Home() {
         return alert('Please enter a photo link.');
     }
 
-    fetch('http://localhost:3000/api/homepage/photo', {
+    fetch('/api/homepage/photo', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -102,14 +102,14 @@ function Home() {
     abortControllerRef.current = abortController;
 
     setLoading(true);
-    fetch('http://localhost:3000/api/upload/files', {
+    fetch('/api/upload/files', {
         method: 'POST',
         body: formData,
         signal: abortController.signal
     })
     .then(response => response.json())
     .then(data => {
-      fetch('http://localhost:3000/api/homepage/photo', {
+      fetch('/api/homepage/photo', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -162,7 +162,7 @@ function Home() {
   }
 
 useEffect(() => {
-  fetch('http://localhost:3000/api/homepage')
+  fetch('/api/homepage')
     .then(response => {
       if (response.ok) {
         return response.json()

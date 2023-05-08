@@ -29,7 +29,7 @@ function PhotoAddPopup(props) {
           }
         }
     
-        fetch(`http://localhost:3000/api/${props.type}/create/photo`, {
+        fetch(`/api/${props.type}/create/photo`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ function PhotoAddPopup(props) {
             setPhotoUrl('');
             props.setAddPhotoTrigger(!props.addPhotoTrigger);
             console.log('Success:', data);
-            window.location.replace(`http://localhost:3000/#/${props.type}s`);
+            window.location.replace(`/#/${props.type}s`);
             return alert(`Photo URL saved successfully! The photo is now viewable on the ${props.type}'s detail page.`);
           })
           .catch(error => {
@@ -66,14 +66,14 @@ function PhotoAddPopup(props) {
         abortControllerRef.current = abortController;
     
         setLoading(true);
-        fetch('http://localhost:3000/api/upload/files', {
+        fetch('/api/upload/files', {
             method: 'POST',
             body: formData,
             signal: abortController.signal
         })
         .then(response => response.json())
         .then(data => {
-          fetch(`http://localhost:3000/api/${props.type}/create/photo`, {
+          fetch(`/api/${props.type}/create/photo`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -89,7 +89,7 @@ function PhotoAddPopup(props) {
             setLoading(false);
             props.setAddPhotoTrigger(!props.addPhotoTrigger);
             console.log('Success:', data);
-            window.location.replace(`http://localhost:3000/#/${props.type}s`);
+            window.location.replace(`/#/${props.type}s`);
             return alert(`Photo uploaded and saved successfully! It is now viewable on the ${props.type}'s detail page.`);
           })
           .catch(error => {

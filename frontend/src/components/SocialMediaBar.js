@@ -37,7 +37,7 @@ function SocialMediaBar() {
                 <a href = "https://www.instagram.com/samuelbrett44/" className = "icons">
                     <FontAwesomeIcon icon = {faInstagram}/>
                 </a>
-                <a href = "https://www.youtube.com" className = "icons">
+                <a href = "https://www.youtube.com/results?search_query=samuel+brett+williams" className = "icons">
                     <FontAwesomeIcon icon = {faYoutube}/>
                 </a>
             </div>

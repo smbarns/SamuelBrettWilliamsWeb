@@ -18,10 +18,10 @@ function Photo(props) {
   }
 
   function handleDelete(photoID) {
-    fetch(`http://localhost:3000/api/delete/photo?id=${photoID}`)
+    fetch(`/api/delete/photo?id=${photoID}`)
     .then(response => response.json())
     .then(data => {
-      window.location.replace(`http://localhost:3000/#/${props.type}s`);
+      window.location.replace(`/#/${props.type}s`);
       return alert(`Photo successfully deleted. Change can be viewed on the ${props.type}'s detail page.`)
     })
     .catch(error => {

@@ -110,7 +110,7 @@ function FilmDetails() {
         return alert('Please enter a new title for the film.');
     }
 
-    fetch('http://localhost:3000/api/films/edit/title', {
+    fetch('/api/films/edit/title', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -124,7 +124,7 @@ function FilmDetails() {
     .then(data => {
         setIsEditingTitle(false);
         console.log('Success:', data);
-        window.location.replace("http://localhost:3000/#/films");
+        window.location.replace("/#/films");
         return alert("Film title updated successfully. This change is now viewable on the films page and on the detail page for the specific film.");
     })
     .catch(error => {
@@ -136,7 +136,7 @@ function FilmDetails() {
   const handleDetailsSave = (event) => {
     event.preventDefault();
 
-    fetch('http://localhost:3000/api/films/edit/details', {
+    fetch('/api/films/edit/details', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -178,7 +178,7 @@ function FilmDetails() {
       return alert('Please enter the URL of the buy link logo image');
     }
 
-    fetch('http://localhost:3000/api/films/add/buy_link', {
+    fetch('/api/films/add/buy_link', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -193,7 +193,7 @@ function FilmDetails() {
     .then(data => {
         setAddLinkTrigger(false);
         console.log('Success:', data);
-        window.location.replace("http://localhost:3000/#/films");
+        window.location.replace("/#/films");
         return alert('Buy link was successfully added to the film. It is now viewable in the details page.')
     })
     .catch(error => {
@@ -209,7 +209,7 @@ function FilmDetails() {
         return alert('Please enter a poster link.');
     }
 
-    fetch('http://localhost:3000/api/films/photo', {
+    fetch('/api/films/photo', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -246,14 +246,14 @@ function FilmDetails() {
     abortControllerRef.current = abortController;
 
     setLoading(true);
-    fetch('http://localhost:3000/api/upload/files', {
+    fetch('/api/upload/files', {
         method: 'POST',
         body: formData,
         signal: abortController.signal
     })
     .then(response => response.json())
     .then(data => {
-      fetch('http://localhost:3000/api/films/photo', {
+      fetch('/api/films/photo', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

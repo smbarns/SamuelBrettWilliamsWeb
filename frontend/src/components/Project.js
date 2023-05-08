@@ -11,7 +11,7 @@ function Project(props) {
   function popupBtn() {
       props.setButtonPopup(true);
 
-      fetch(`http://localhost:3000/api/video/featured/film?title=${props.title}`)
+      fetch(`/api/video/featured/film?title=${props.title}`)
       .then(response => response.json())
       .then(data => {
         console.log(data);
@@ -23,7 +23,7 @@ function Project(props) {
   }
 
   const handleDelete = () => {
-    fetch(`http://localhost:3000/api/feature/delete/film?id=${props.id}`)
+    fetch(`/api/feature/delete/film?id=${props.id}`)
       .then(response => response.json())
       .catch(error => {
         console.error(error);

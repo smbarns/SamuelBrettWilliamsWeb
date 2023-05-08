@@ -25,7 +25,7 @@ export default function Biography() {
   const abortControllerRef = useRef(null);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/biopage')
+    fetch('/api/biopage')
       .then((res) => res.json())
       .then((data) => {
         setDes(data[0].bio_des);
@@ -51,7 +51,7 @@ export default function Biography() {
         return alert('Please enter a photo link.');
     }
 
-    fetch('http://localhost:3000/api/bio/photo', {
+    fetch('/api/bio/photo', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -86,14 +86,14 @@ export default function Biography() {
     abortControllerRef.current = abortController;
 
     setLoading(true);
-    fetch('http://localhost:3000/api/upload/files', {
+    fetch('/api/upload/files', {
         method: 'POST',
         body: formData,
         signal: abortController.signal
     })
     .then(response => response.json())
     .then(data => {
-      fetch('http://localhost:3000/api/bio/photo', {
+      fetch('/api/bio/photo', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -139,7 +139,7 @@ export default function Biography() {
   };
 
   const handleSave = () => {
-    fetch('http://localhost:3000/api/biopage/bio', {
+    fetch('/api/biopage/bio', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ bio_des: newDes }),
