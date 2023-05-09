@@ -43,7 +43,7 @@ function PhotoAddPopup(props) {
           .then(data => {
             setPhotoUrl('');
             props.setAddPhotoTrigger(!props.addPhotoTrigger);
-            console.log('Success:', data);
+            console.log('Success');
             window.location.replace(`/#/${props.type}s`);
             return alert(`Photo URL saved successfully! The photo is now viewable on the ${props.type}'s detail page.`);
           })
@@ -85,10 +85,9 @@ function PhotoAddPopup(props) {
         })
           .then(response => response.json())
           .then(data => {
-            console.log(data.photo);
             setLoading(false);
             props.setAddPhotoTrigger(!props.addPhotoTrigger);
-            console.log('Success:', data);
+            console.log('Success');
             window.location.replace(`/#/${props.type}s`);
             return alert(`Photo uploaded and saved successfully! It is now viewable on the ${props.type}'s detail page.`);
           })

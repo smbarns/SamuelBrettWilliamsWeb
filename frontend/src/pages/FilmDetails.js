@@ -123,7 +123,7 @@ function FilmDetails() {
     .then(response => response.json())
     .then(data => {
         setIsEditingTitle(false);
-        console.log('Success:', data);
+        console.log('Success');
         window.location.replace("/#/films");
         return alert("Film title updated successfully. This change is now viewable on the films page and on the detail page for the specific film.");
     })
@@ -153,7 +153,7 @@ function FilmDetails() {
     .then(response => response.json())
     .then(data => {
         setIsEditingDetails(false);
-        console.log('Success:', data);
+        console.log('Success');
     })
     .catch(error => {
         console.error('Error:', error);
@@ -192,7 +192,7 @@ function FilmDetails() {
     .then(response => response.json())
     .then(data => {
         setAddLinkTrigger(false);
-        console.log('Success:', data);
+        console.log('Success');
         window.location.replace("/#/films");
         return alert('Buy link was successfully added to the film. It is now viewable in the details page.')
     })
@@ -224,7 +224,7 @@ function FilmDetails() {
         setCover(posterUrl);
         setPosterUrl('');
         setUpdateCoverTrigger(!updateCoverTrigger);
-        console.log('Success:', data);
+        console.log('Success');
         return alert('Poster URL updated successfully!');
     })
     .catch(error => {
@@ -265,11 +265,10 @@ function FilmDetails() {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data.photo);
         setLoading(false);
         setCover(data.photo);
         setUpdateCoverTrigger(!updateCoverTrigger);
-        console.log('Success:', data);
+        console.log('Success');
         return alert('Poster uploaded and updated successfully!');
       })
       .catch(error => {

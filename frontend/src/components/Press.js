@@ -44,7 +44,7 @@ function Press(props) {
     })
     .then(response => response.json())
     .then(data => {
-      console.log('Success:', data);
+      console.log('Success');
       setTrigger(false);
       toggleSecondTrigger();
     })
@@ -78,7 +78,7 @@ function Press(props) {
     .then(response => response.json())
     .then(data => {
         setLogoUrl('');
-        console.log('Success:', data);
+        console.log('Success');
         toggleSecondTrigger();
         window.location.reload();
         return alert('Logo URL updated successfully!');
@@ -126,7 +126,7 @@ function Press(props) {
       .then(response => response.json())
       .then(data => {
         setLoading(false);
-        console.log('Success:', data);
+        console.log('Success');
         toggleSecondTrigger();
         window.location.reload();
         return alert('Logo uploaded and updated successfully!');
@@ -175,7 +175,7 @@ function Press(props) {
     .then(response => response.json())
     .then(data => {
         setIsEditingPressDetails(false);
-        console.log('Success:', data);
+        console.log('Success');
     })
     .catch(error => {
         console.error('Error:', error);

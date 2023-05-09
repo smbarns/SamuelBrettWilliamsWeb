@@ -120,7 +120,7 @@ function UpcomingAddPopup(props) {
         setVideoUrl('');
         setSelectedFilm('');
         setSecondTrigger(!secondTrigger);
-        console.log('Success:', data);
+        console.log('Success');
         window.location.reload();
         return alert('URL saved successfully!');
       })
@@ -170,11 +170,10 @@ function UpcomingAddPopup(props) {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data.video);
         setSelectedFilm('');
         setLoading(false);
         setSecondTrigger(!secondTrigger);
-        console.log('Success:', data);
+        console.log('Success');
         window.location.reload();
         return alert('Video uploaded and saved successfully!');
       })

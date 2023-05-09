@@ -93,7 +93,6 @@ function Contact() {
       return response.json();
     })
     .then(data => {
-      console.log('Email sent:', data);
       resetFields();
       return alert('Message sent successfully!');
     })
@@ -126,7 +125,7 @@ function Contact() {
     .then(response => response.json())
     .then(data => {
       setIsEditingClientInfo(false);
-      console.log('Success:', data);
+      console.log('Success');
     })
     .catch(error => {
       console.error('Error:', error);
@@ -157,7 +156,7 @@ function Contact() {
     .then(response => response.json())
     .then(data => {
       setIsEditingAgentInfo(false);
-      console.log('Success:', data);
+      console.log('Success');
     })
     .catch(error => {
       console.error('Error:', error);

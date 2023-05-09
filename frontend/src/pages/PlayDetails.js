@@ -122,7 +122,7 @@ function PlayDetails() {
     .then(response => response.json())
     .then(data => {
         setIsEditingTitle(false);
-        console.log('Success:', data);
+        console.log('Success');
         window.location.replace("/#/plays");
         return alert('Play title updated successfully. This change is now viewable on the plays page and on the details page for the specific play.');
     })
@@ -151,7 +151,7 @@ function PlayDetails() {
     .then(response => response.json())
     .then(data => {
         setIsEditingDetails(false);
-        console.log('Success:', data);
+        console.log('Success');
     })
     .catch(error => {
         console.error('Error:', error);
@@ -190,7 +190,7 @@ function PlayDetails() {
     .then(response => response.json())
     .then(data => {
         setAddLinkTrigger(false);
-        console.log('Success:', data);
+        console.log('Success');
         window.location.replace("/#/plays");
         return alert('Buy link was successfully added to the play. It is now viewable in the details page.')
     })
@@ -222,7 +222,7 @@ function PlayDetails() {
         setCover(posterUrl);
         setPosterUrl('');
         setUpdateCoverTrigger(!updateCoverTrigger);
-        console.log('Success:', data);
+        console.log('Success');
         return alert('Poster URL updated successfully!');
     })
     .catch(error => {
@@ -263,12 +263,11 @@ function PlayDetails() {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data.photo);
         setLoading(false);
         setCover(data.photo);
         setUpdateCoverTrigger(!updateCoverTrigger);
         setSelectedFile(null);
-        console.log('Success:', data);
+        console.log('Success');
         return alert('Poster uploaded and updated successfully!');
       })
       .catch(error => {

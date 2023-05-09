@@ -117,7 +117,7 @@ function AddFilmsPopup(props) {
             setFilmId(data.id);
             props.setTrigger(false);
             setSecondTrigger(true);
-            console.log('Success:', data);
+            console.log('Success');
         })
         .catch(error => {
             console.error('Error:', error);
@@ -149,7 +149,7 @@ function AddFilmsPopup(props) {
         .then(response => response.json())
         .then(data => {
             setPosterUrl('');
-            console.log('Success:', data);
+            console.log('Success');
             toggleSecondTrigger();
             return alert('Poster URL updated successfully!');
         })
@@ -195,9 +195,8 @@ function AddFilmsPopup(props) {
         })
           .then(response => response.json())
           .then(data => {
-            console.log(data.photo);
             setLoading(false);
-            console.log('Success:', data);
+            console.log('Success');
             toggleSecondTrigger();
             return alert('Poster uploaded and updated successfully!');
           })

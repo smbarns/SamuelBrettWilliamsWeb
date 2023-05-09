@@ -1273,7 +1273,6 @@ app.post("/api/admin", async (req, res) => {
 
 // Route to handle forget password request
 app.post('/api/forgot-password', async (req, res) => {
-	console.log('Forgot Password', req.body.email);
 	const email = req.body.email;
 	try {
 		const user = await db.Admin.findOne({ where: { email } });

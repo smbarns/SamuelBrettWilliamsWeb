@@ -43,7 +43,7 @@ function VideoAddPopup(props) {
           .then(data => {
             setVideoUrl('');
             props.setAddVideoTrigger(!props.addVideoTrigger);
-            console.log('Success:', data);
+            console.log('Success');
             window.location.replace(`/#/${props.type}s`);
             return alert(`Video URL saved successfully! The video is now viewable on the ${props.type}'s detail page.`);
           })
@@ -85,10 +85,9 @@ function VideoAddPopup(props) {
         })
           .then(response => response.json())
           .then(data => {
-            console.log(data.video);
             setLoading(false);
             props.setAddVideoTrigger(!props.addVideoTrigger);
-            console.log('Success:', data);
+            console.log('Success');
             window.location.replace(`/#/${props.type}s`);
             return alert(`Video uploaded and saved successfully! It is now viewable on the ${props.type}'s detail page.`);
           })

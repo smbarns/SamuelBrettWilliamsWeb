@@ -12,8 +12,6 @@ const PasswordReset = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [message, setMessage] = useState('');
 
-	console.log(searchParams.get('token'));
-
 	const passwordConfirmHandler = (e) => {
 		if (e.target.value !== password) {
 			setNotMatched(true);
@@ -38,7 +36,7 @@ const PasswordReset = () => {
         })
 		.then(response => response.json())
 		.then(data => {
-			console.log(data);
+			console.log('Success');
 			setMessage('Password changed successfully!');
 			return alert('Password changed successfully!');
 		})
@@ -73,7 +71,7 @@ const PasswordReset = () => {
 						</label>
 					)}
 					<div className="forgot-pass-button">
-						<button type='submit'>Submit</button>
+						<button disabled={notMatched} type='submit'>Submit</button>
 					</div>
 
 					<p className='changed-pass'>{message}</p>

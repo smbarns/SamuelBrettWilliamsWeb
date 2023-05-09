@@ -64,7 +64,7 @@ export default function Biography() {
     .then(data => {
         setPhotoUrl('');
         setUpdatePhotoTrigger(!updatePhotoTrigger);
-        console.log('Success:', data);
+        console.log('Success');
         window.location.reload();
     })
     .catch(error => {
@@ -104,10 +104,9 @@ export default function Biography() {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data.photo);
         setLoading(false);
         setUpdatePhotoTrigger(!updatePhotoTrigger);
-        console.log('Success:', data);
+        console.log('Success');
         window.location.reload();
       })
       .catch(error => {

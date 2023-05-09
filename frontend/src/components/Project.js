@@ -14,7 +14,6 @@ function Project(props) {
       fetch(`/api/video/featured/film?title=${props.title}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         props.setUrl(data.video);
       })
       .catch(error => {
