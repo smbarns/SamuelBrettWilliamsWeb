@@ -28,7 +28,7 @@ export default function ForgotPassword() {
 			})
 			.then(data => {
 			  setLoading(false);
-			  console.log('Email sent:', data);
+			  console.log('Email sent');
 			  setMessage('Password reset email sent');
 			  return alert('Reset password form sent successfully! Please check your eamil.');
 			})
