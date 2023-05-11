@@ -247,17 +247,17 @@ function Contact() {
           <form className="contact-form" onSubmit={handleSubmit} >
             <div className="top-contact-container">
               <div className="first-name">
-                <input className='contact-first-name' type="text" id="firstName" name="firstName" placeholder="First Name*" onChange={handleFirstNameChange}/>
+                <input className='contact-first-name' type="text" id="firstName" value={firstName} name="firstName" placeholder="First Name*" onChange={handleFirstNameChange}/>
               </div>
               <div className="last-name">
-                  <input className='contact-last-name' type="text" id="lastName" name="lastName" placeholder="Last Name*" onChange={handleLastNameChange}/>
+                  <input className='contact-last-name' type="text" id="lastName" value={lastName} name="lastName" placeholder="Last Name*" onChange={handleLastNameChange}/>
               </div>  
             </div>
             <div className="form-group">
-              <input className='contact-email' type="email" id="email" name="email" placeholder="Email Address*" onChange={handleEmailChange}  />
+              <input className='contact-email' type="email" id="email" name="email" value={email} placeholder="Email Address*" onChange={handleEmailChange}  />
             </div>
             <div className="form-group">
-              <textarea className='contact-message' id="message" name="message" rows="10" placeholder="Message*" onChange={handleMessageChange}></textarea>
+              <textarea className='contact-message' id="message" name="message" value={message} rows="10" placeholder="Message*" onChange={handleMessageChange}></textarea>
             </div>
             <button type="submit">Send</button>
           </form>

@@ -229,6 +229,7 @@ const config = {
           muted={true} 
           loop={true} 
           config={config}
+          playsinline={true}
           style={{ pointerEvents: 'none' }}/>
       </div>
       <div className="page">
