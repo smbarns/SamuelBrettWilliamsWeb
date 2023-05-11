@@ -252,8 +252,8 @@ function AddFilmsPopup(props) {
                                     <label htmlFor="link-select">Type:</label>
                                     <select id="link-select" onChange={handleTypeSelect}>
                                         <option value="">--Choose the film's type--</option>
-                                        <option value="Full Length">Feature Film</option>
-                                        <option value="One Act">Short Film</option>
+                                        <option value="Feature Film">Feature Film</option>
+                                        <option value="Short Film">Short Film</option>
                                     </select>
                                     <button className="button-submitUpcoming" type="submit" >Submit</button>
                                 </form>
