@@ -1288,7 +1288,7 @@ app.post('/api/forgot-password', async (req, res) => {
 		await user.update({ passwordResetToken: token.split('-')[4] });
 
 		// Send password reset email to user
-		const resetLink = `http://localhost:3000/#/reset-password?token=${token}`;
+		const resetLink = `https://samuelbrettwilliams/#/reset-password?token=${token}`;
 
 		const response = await sendEmail({
 			email,

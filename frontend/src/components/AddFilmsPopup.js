@@ -269,7 +269,7 @@ function AddFilmsPopup(props) {
                             <div className = "popup-inner-upcomingAdd">
                                 <button className = "close-btn" onClick ={() => toggleSecondTrigger()} >{<FontAwesomeIcon className='x-button' icon={faXmark}/>} </button>
                                 <div className="popup-header-img">
-                                    <label className='optional'>Logo url/upload is optional. Press 'x' to opt-out</label>
+                                    <label className='optional'>Photo url/upload is optional. Press 'x' to opt-out</label>
                                     <h2>ENTER THE FILMS'S POSTER URL</h2>
                                 </div>
                                 <div className="popup-content">

@@ -30,7 +30,7 @@ export default function ForgotPassword() {
 			  setLoading(false);
 			  console.log('Email sent');
 			  setMessage('Password reset email sent');
-			  return alert('Reset password form sent successfully! Please check your eamil.');
+			  return alert('Reset password form sent successfully! Please check your email.');
 			})
 			.catch(error => {
 			  setLoading(false);
