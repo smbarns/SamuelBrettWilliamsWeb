@@ -98,8 +98,8 @@ function UpcomingAddPopup(props) {
       return alert('Please enter a video link.');
     }
 
-    for (let i=0; i<filmData[0].videos.length; i++) {
-      if (videoUrl === filmData[0].videos[i].video) {
+    for (let i=0; i<filmData.videos.length; i++) {
+      if (videoUrl === filmData.videos[i].video) {
         setVideoUrl('');
         return alert('This video link already exists!');
       }
